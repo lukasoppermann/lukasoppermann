@@ -1,10 +1,10 @@
-import AppMenu from '@components/appmenu'
+import Navigation from '@components/navigation'
 import '@styles/globals.scss'
 
 function MyApp ({ Component, pageProps }) {
   return (
     <>
-      <AppMenu />
+      <Navigation />
       <Component {...pageProps} />
     </>
   )

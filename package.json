@@ -42,5 +42,12 @@
     "plugins": [
       "@typescript-eslint"
     ]
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "rules": {
+      "no-use-before-define": "off",
+      "@typescript-eslint/no-use-before-define": "off"
+    }
   }
 }
