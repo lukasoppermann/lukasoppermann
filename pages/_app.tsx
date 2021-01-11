@@ -1,4 +1,5 @@
-import Navigation from '@components/navigation'
+import Navigation from '@components/Navigation'
+import Footer from '@components/Footer'
 import '@styles/globals.scss'
 
 function MyApp ({ Component, pageProps }) {
@@ -6,6 +7,7 @@ function MyApp ({ Component, pageProps }) {
     <>
       <Navigation />
       <Component {...pageProps} />
+      <Footer />
     </>
   )
 }

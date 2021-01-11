@@ -1,7 +1,7 @@
 import ActivatableLink from '@components/ActivatableLink'
 
 // ${embedFile('./public/svgs/veare-wordmark.svg')}
-export default function Navigation () {
+const Navigation = () => {
   return (
     <>
       <menu className='Menu__overlay'>
@@ -27,3 +27,5 @@ export default function Navigation () {
     </>
   )
 }
+
+export default Navigation
