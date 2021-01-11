@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.1.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg viewBox="0 0 17 21">
+	<rect id="Fill" y="0" style="clip-path:url(#FillMask_1_);" width="15" height="19"/>
+  <path class="paper" d="M11,19H0V0h15v15l-4,0V19z M10,18v-4h4V1H1v17H10z"/>
+  <path class="arrow" d="M9,5H6v4H4l3.5,3L11,9H9V5z"/>
+  <polygon class="corner" points="11,19 11,15 15,15 "/>
+  <polygon class="shadow" points="16,1 15,1 15,15 15,15 11,19 11,19 1,19 1,20 11.4,20 16,15.4 "/>
+  <polygon class="shadow-2" points="17,3 16,3 16,6 16,15.4 11.4,20 3,20 3,21 11.8,21 17,15.8 "/>
+</svg>

@@ -1,9 +1,12 @@
 import ActivatableLink from '@components/ActivatableLink'
+import Logo from '@components/Logo'
+import styles from '@styles/components/Navigatin.module.scss'
 
 // ${embedFile('./public/svgs/veare-wordmark.svg')}
 const Navigation = () => {
   return (
     <>
+      <Logo />
       <menu className='Menu__overlay'>
         <a className='Menu__icon' />
         <nav className='Menu__items'>

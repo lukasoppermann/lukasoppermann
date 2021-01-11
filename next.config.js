@@ -1,6 +1,7 @@
+const withPlugins = require('next-compose-plugins')
 const withMDX = require('@next/mdx')()
 
-module.exports = withMDX({
+module.exports = withPlugins([[withMDX]], {
   pageExtensions: ['mdx', 'ts', 'tsx'],
   async rewrites () {
     return [
