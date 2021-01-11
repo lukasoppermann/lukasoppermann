@@ -30,9 +30,6 @@
     "standardx": "^7.0.0"
   },
   "standard.options": {
-    "globals": [
-      "fetch"
-    ],
     "ignore": [
       "node_modules/**"
     ],
@@ -42,6 +39,10 @@
     ]
   },
   "standardx": {
+    "globals": [
+      "localStorage",
+      "fetch"
+    ],
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint"
