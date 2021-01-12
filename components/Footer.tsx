@@ -44,7 +44,7 @@ const Footer = () => {
       </section>
       <section className='Footer__legal'>
         <hr />
-        <a className='veare-wordmark' href='/' aria-label='Go to homepage' name='footer home link'><Logo /></a>
+        <a className='veare-wordmark' href='/' aria-label='Go to homepage'><Logo /></a>
         <div className='Footer__legal__info'>
           <a href='/'>Index</a>
           <a href='/about-lukas-oppermann'>About</a>

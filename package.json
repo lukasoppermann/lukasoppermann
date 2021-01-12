@@ -21,6 +21,8 @@
     "next": "10.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-markdown": "^5.0.3",
+    "react-remark": "^2.0.3",
     "react-transition-group": "^4.4.1",
     "rehype-react": "^6.1.0",
     "remark": "^13.0.0",

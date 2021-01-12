@@ -12,9 +12,9 @@ export const getMarkdownBySlug = async (slug, directory) => {
   // parse with gray matter to get meta data
   const { data, content } = matter(fileContents)
   // parse markdown
-  const parsedFile = parseMarkdown(content)
+  // const parsedFile = parseMarkdown(content)
   // return
-  return { slug: realSlug, meta: data, content: parsedFile }
+  return { slug: realSlug, meta: data, content: content }
 }
 
 export const getAllMarkdown = async (directory) => {

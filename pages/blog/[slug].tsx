@@ -1,13 +1,15 @@
 import { DIR_BLOG } from 'config/directories'
 import { getAllMarkdown, getMarkdownBySlug } from '@lib/getMarkdown'
 import { parseMarkdown } from '@lib/parseMarkdown'
+import Markdown from '@components/Markdown'
 
 
 const Post = ({ content, meta }) => {
   // console.log(parseMarkdown(content));
   
   return (
-    <article dangerouslySetInnerHTML={{__html: content}}>
+    <article>
+      <Markdown>{content}</Markdown>
     </article>
   )
 }
