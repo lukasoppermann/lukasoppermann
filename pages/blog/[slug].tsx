@@ -1,7 +1,11 @@
 import { DIR_BLOG } from 'config/directories'
 import { getAllMarkdown, getMarkdownBySlug } from '@lib/getMarkdown'
+import { parseMarkdown } from '@lib/parseMarkdown'
+
 
 const Post = ({ content, meta }) => {
+  // console.log(parseMarkdown(content));
+  
   return (
     <article dangerouslySetInnerHTML={{__html: content}}>
     </article>
@@ -16,7 +20,7 @@ export async function getStaticPaths() {
   const paths = mdFiles.map(({ slug }) => ({
     params: { slug },
   }))
-
+  
   return { paths, fallback: true }
 }
 
@@ -25,11 +29,9 @@ export async function getStaticProps({ params }) {
   const { slug } = params
   
   // get mardown file
-  const content = await getMarkdownBySlug(slug, DIR_BLOG)
-  console.log(content);
-  
+  const results = await getMarkdownBySlug(slug, DIR_BLOG)
   // Pass data to the component props
-  return { props: {...content} }
+  return { props: {...results}}
 }
 
 export default Post
