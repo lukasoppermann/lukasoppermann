@@ -1,22 +1,22 @@
-import getPost from '@lib/getPosts'
+import { DIR_BLOG } from 'config/directories'
+import { getAllMarkdown } from '@lib/getMarkdown'
+import PostPreview from '@components/PostPreview'
 
-export default function Blog ({ post }) {
+export default function Blog ({ posts }) {
   return (
     <>
       <div>Blog overview</div>
-      {post.content}
+      {posts.map(post => PostPreview(post))}
     </>
   )
 }
 
 export async function getStaticProps ({ params }) {
-  const content = await getPost()
+  const posts = getAllMarkdown(DIR_BLOG)
 
   return {
     props: {
-      post: {
-        content
-      }
+      posts: posts
     }
   }
 }
