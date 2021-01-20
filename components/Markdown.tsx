@@ -19,7 +19,7 @@ const h = require('hastscript')
 
 const htmlDirectives = () => {
   const tags = {
-    image: 'image'
+    image: 'img'
   }
 
   return transform
@@ -31,6 +31,8 @@ const htmlDirectives = () => {
   function ondirective (node) {
     const data = node.data || (node.data = {})
     const hast = h(node.name, node.attributes)
+
+    console.debug(node)
 
     data.hName = tags[hast.tagName] || hast.tagName
     data.hProperties = hast.properties
@@ -49,8 +51,8 @@ const Markdown = props => {
         [unwrapImages],
         [toc],
         [a11yEmoji],
-        // [directive],
-        // [htmlDirectives],
+        [directive],
+        [htmlDirectives],
         [externalLinks, { target: '_blank', rel: ['noreferrer', 'noopener'] }],
         [smartypants, { backticks: false }],
         [footnotes, { inlineNotes: true }]
@@ -59,7 +61,7 @@ const Markdown = props => {
       rehypePlugins={[raw]}
       rehypeReactOptions={{
         components: {
-          img: props => <Image {...props} />,
+          // img: props => <Image {...props} />,
           p: props => <p className='custom-paragraph' {...props} />
         }
       }}
