@@ -12,32 +12,6 @@ import footnotes from 'remark-footnotes'
 import smartypants from '@silvenon/remark-smartypants'
 import a11yEmoji from '@fec/remark-a11y-emoji'
 import raw from 'rehype-raw'
-import directive from 'remark-directive'
-
-const visit = require('unist-util-visit')
-const h = require('hastscript')
-
-const htmlDirectives = () => {
-  const tags = {
-    image: 'img'
-  }
-
-  return transform
-
-  function transform (tree) {
-    visit(tree, ['textDirective', 'leafDirective', 'containerDirective'], ondirective)
-  }
-
-  function ondirective (node) {
-    const data = node.data || (node.data = {})
-    const hast = h(node.name, node.attributes)
-
-    console.debug(node)
-
-    data.hName = tags[hast.tagName] || hast.tagName
-    data.hProperties = hast.properties
-  }
-}
 
 const Markdown = props => {
   return (
@@ -51,8 +25,6 @@ const Markdown = props => {
         [unwrapImages],
         [toc],
         [a11yEmoji],
-        [directive],
-        [htmlDirectives],
         [externalLinks, { target: '_blank', rel: ['noreferrer', 'noopener'] }],
         [smartypants, { backticks: false }],
         [footnotes, { inlineNotes: true }]
