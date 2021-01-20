@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
-import { parseMarkdown } from '@lib/parseMarkdown'
+// import { parseMarkdown } from '@lib/parseMarkdown'
 
 export const getMarkdownBySlug = (slug, directory) => {
   const realSlug = slug.replace('.mdx', '')

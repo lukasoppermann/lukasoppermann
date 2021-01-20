@@ -1,3 +1,4 @@
+import { GetStaticProps } from 'next'
 import readMarkdownFile from '@lib/readMarkdownFile'
 
 export default ({ content }) => {
@@ -8,7 +9,7 @@ export default ({ content }) => {
   )
 }
 
-export async function getStaticProps ({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const content = await readMarkdownFile('pages/imprint.md')
 
   return {

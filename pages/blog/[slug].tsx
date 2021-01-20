@@ -1,20 +1,16 @@
 import { DIR_BLOG } from 'config/directories'
 import { getAllMarkdown, getMarkdownBySlug } from '@lib/getMarkdown'
-import { parseMarkdown } from '@lib/parseMarkdown'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Markdown from '@components/Markdown'
 
-
 const Post = ({ content, meta }) => {
-  // console.log(parseMarkdown(content));
   
   return (
-    <article>
-      <Markdown>{content}</Markdown>
-    </article>
+    <Markdown>{content}</Markdown>
   )
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const mdFiles = await getAllMarkdown(DIR_BLOG)
   
   if (!mdFiles) return { paths: [], fallback: true }
@@ -26,7 +22,7 @@ export async function getStaticPaths() {
   return { paths, fallback: true }
 }
 
-export async function getStaticProps({ params }) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   // get slug from url
   const { slug } = params
   

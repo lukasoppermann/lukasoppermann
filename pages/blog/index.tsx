@@ -1,3 +1,5 @@
+import { GetStaticProps } from 'next'
+
 import { DIR_BLOG } from 'config/directories'
 import { getAllMarkdown } from '@lib/getMarkdown'
 import PostPreview from '@components/PostPreview'
@@ -11,7 +13,7 @@ export default function Blog ({ posts }) {
   )
 }
 
-export async function getStaticProps ({ params }) {
+export const getStaticProps: GetStaticProps = async () => {
   const posts = getAllMarkdown(DIR_BLOG)
 
   return {
