@@ -29,43 +29,42 @@
   // xh
   --ts-size-title: 7.2rem;
   --ts-line-height-title: 1.1;
-/* ====================================
-  Font families
-==================================== */
-// Sans Serif
---font-sans: 'Source Sans Pro', helvetica, sans-serif;
-// weights
---font-sans-weight-regular: 400;
---font-sans-weight-bold: 600;
-// styles
---font-sans-style-normal: normal;
---font-sans-style-italic: italic;
-// ====================================
-// Serif
---font-serif: 'Noto Serif', georgia, serif;
-// weights
---font-serif-weight-regular: 400;
---font-serif-weight-bold: 700;
-// styles
---font-serif-style-normal: normal;
---font-serif-style-italic: italic;
-// ====================================
-// Monospace
---font-mono: 'Source Code Pro', monospace;
-// weights
-// --font-mono-weight-regular: 400;
---font-mono-weight-bold: 700;
-// styles
---font-mono-style-normal: normal;
---font-mono-style-italic: italic;
-// ====================================
-//
-// Typestyles
-//
---typestyle-body-small: 
-  var(--ts-size-sm)/calc(var(--ts-size-sm) * var(--ts-size-sm))  
-  var(--font-sans)
-  var(--font-sans-style-normal)
-  var(--font-sans-weight-regular);
---typestyle-body-small--size: var(--ts-size-sm);
+  /* ====================================
+    Font families
+  ==================================== */
+  // Sans Serif
+  --font-sans: 'Source Sans Pro', helvetica, sans-serif;
+  // weights
+  --font-sans-weight-regular: 400;
+  --font-sans-weight-bold: 600;
+  // styles
+  --font-sans-style-normal: normal;
+  --font-sans-style-italic: italic;
+  // ====================================
+  // Serif
+  --font-serif: 'Noto Serif', georgia, serif;
+  // weights
+  --font-serif-weight-regular: 400;
+  --font-serif-weight-bold: 700;
+  // styles
+  --font-serif-style-normal: normal;
+  --font-serif-style-italic: italic;
+  // ====================================
+  // Monospace
+  --font-mono: 'Source Code Pro', monospace;
+  // weights
+  // --font-mono-weight-regular: 400;
+  --font-mono-weight-bold: 700;
+  // styles
+  --font-mono-style-normal: normal;
+  --font-mono-style-italic: italic;
+  // ====================================
+  //
+  // Typestyles
+  //
+  --typestyle__body-small--size: var(--ts-size-sm);
+  --typestyle__body-small--lineheight: calc(var(--ts-size-sm) * var(--ts-size-sm));
+  --typestyle__body-small--family: var(--font-sans);
+  --typestyle__body-small--style: var(--font-sans-style-normal);
+  --typestyle__body-small--weight: var(--font-sans-weight-regular);
 }

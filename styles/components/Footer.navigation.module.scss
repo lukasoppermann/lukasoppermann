@@ -8,13 +8,11 @@
   align-items: center;
   menu {
     display: flex;
-    margin-bottom: size(2);
-    margin-top: size(4);
+    margin: size(4) 0 size(2);
     grid-column: columns;
     justify-content: center;
     flex-wrap: wrap;
-    font: var(--typestyle-body-small);
-    font-size: var(--typestyle-body-small--size);
+    @include type(body-small);
     @include at_least(desktop) {
       margin-top: 0;
       grid-column: column 2 / columns;
