@@ -1,3 +1,15 @@
-body.dark-mode {
+@import './core.colors.scss';
+
+body.dark-mode, [darkmode] {
+  // background colors
   --background-color: #232323;
+  --background-dark: var(--grey-800);
+  // on colors
+  --on-background__high_emphasis: var(--neutrals-0);
+  --on-background__low_emphasis: red;
+  --on-background__disabled: var(--neutrals-800);
+  
+  // text colors
+  --text-on-dark__high_em: var(--neutrals-0);
+  --text-on-dark__med_em: var(--white-tint-60);
 }

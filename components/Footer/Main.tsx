@@ -1,9 +1,14 @@
-import Logo from '@components/Logo'
-import styles from '@styles/components/Footer.module.scss'
+import styles from '@styles/components/Footer.main.module.scss'
+import FooterNavigation from './Navigation'
+
+interface FooterProps extends DetailedHTMLProps{
+  darkmode?: string;
+}
 
 const Footer = () => {
   return (
-    <footer className={styles.container}>
+    // @ts-ignore
+    <footer className={styles.container} darkmode='true'>
       <section className='Footer__read-and-write'>
         <h6 className='Footer__read__headline'>Writing</h6>
         <ol className='Footer__read__articles'>
@@ -15,7 +20,7 @@ const Footer = () => {
         <div className='Footer__contact'>
           <h6 className='Footer__contact__headline'>Get in touch</h6>
           <h2 className='Footer__contact__lukas'>Lukas Oppermann</h2>
-          <h3 className='Footer__contact__job-title'>Creative Director &<br /> Lead UI/UX Designer</h3>
+          <h3 className={styles.contact__job_title}>Creative Director &<br /> Lead UI/UX Designer</h3>
 
           <h6 className='Footer__contact__say-hi'>Schedule a call or say&nbsp;hi&nbsp;<span className='smilie'>👋</span></h6>
           <a className='Footer__contact__email' target='_blank' rel='noreferrer' href='mailto:lukas@vea.re?subject=Hey 👋,%20what&apos;s%20up?&body=Great%20to%20hear%20from%20you,%20how%20can%20I%20help?'>lukas@vea.re</a>
@@ -42,18 +47,7 @@ const Footer = () => {
           <p>$ git checkout my code projects on <a href='https://github.com/lukasoppermann' rel='noreferrer' target='_blank'>Github</a></p>
         </div>
       </section>
-      <section className='Footer__legal'>
-        <hr />
-        <a className='veare-wordmark' href='/' aria-label='Go to homepage'><Logo /></a>
-        <div className='Footer__legal__info'>
-          <a href='/'>Index</a>
-          <a href='/about-lukas-oppermann'>About</a>
-          <a href='/now'>Now</a>
-          <a href='/blog'>Writing</a>
-          <a href='/privacy'>Imprint & privacy policy</a>
-          <small className='Footer__copyright'>Copyright {new Date().getFullYear()} — Lukas&nbsp;Oppermann</small>
-        </div>
-      </section>
+      <FooterNavigation />
     </footer>
   )
 }

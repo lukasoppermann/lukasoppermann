@@ -1,0 +1,37 @@
+/* ====================================
+  GENERAL
+==================================== */
+html {
+  font-size: 62.5%; /* sets 1rem = 10px */
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+
+  /* ====================================
+       Text Settings
+  ==================================== */
+
+  /* Anitalising for Safari, Chrome and firefox */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* enables common ligatures and kerning */
+  text-rendering: optimizeLegibility;
+
+  /*
+  to get special ligatures like ct, st, or it
+
+  font-variant-ligatures: discretionary-ligatures;
+  -ms-font-feature-settings:"liga", "dlig";
+  -o-font-feature-settings:"liga", "dlig";
+  -webkit-font-feature-settings:"liga", "dlig";
+  font-feature-settings:"liga", "dlig";
+  */
+  background-color: rgb(var(--black-rgb)) !important; // visible when over-pulling
+
+  /* ====================================
+      Base css varibales
+  ==================================== */
+  --base-unit: .8rem;
+  --column-gap: 32px;
+  --viewport-height: 100vh;
+}
