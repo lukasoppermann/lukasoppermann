@@ -1,6 +1,7 @@
 import Logo from '@components/Logo'
 import styles from '@styles/components/Footer.navigation.module.scss'
 import Separator from '@components/Separator'
+import Link from 'next/link'
 
 const Navigation = () => {
   return (
@@ -8,11 +9,11 @@ const Navigation = () => {
       <Separator />
       <Logo homepageLink className={styles.logo} />
       <menu>
-        <a href='/'>Index</a>
-        <a href='/about-lukas-oppermann'>About</a>
-        <a href='/now'>Now</a>
-        <a href='/blog'>Writing</a>
-        <a href='/privacy'>Imprint & privacy policy</a>
+        <Link href='/'><a>Index</a></Link>
+        <Link href='/about-lukas-oppermann'><a>About</a></Link>
+        <Link href='/now'><a>Now</a></Link>
+        <Link href='/blog'><a>Writing</a></Link>
+        <Link href='/privacy'><a>Imprint & privacy policy</a></Link>
         <small>Copyright {new Date().getFullYear()} — Lukas&nbsp;Oppermann</small>
       </menu>
     </section>

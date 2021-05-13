@@ -1,0 +1,57 @@
+@import '../includes/grid.scss';
+@import '../mixins/_mixins.scss';
+/* ====================================
+    Social links
+  ==================================== */
+  .container {
+    @extend .Grid;
+    width: 100%;
+    grid-template-rows: 1px auto;
+    align-items: center;
+    padding-bottom: size(4);
+    .column {
+      margin-top: size(4);
+      grid-column-end: span 2;
+      grid-column-start: columns;
+      @include at_least(landscape) {
+        grid-column-end: span 1;
+        &:nth-of-type(2n) {
+          grid-column-start: auto;
+        }
+      }
+      @include at_least(tablet) {
+        grid-column-end: span 3;
+      }
+      @include at_least(desktop) {
+        grid-column-end: span 3;
+        &:not(:first-of-type) {
+          grid-column-start: auto;
+        }
+      }
+      p,
+      h6 {
+        @include type(h6);
+        margin-bottom: 0;
+        margin-top: 0;
+      }
+      h6 {
+        color: var(--on-background__high_emphasis);
+        text-transform: uppercase;
+        @include at_least(desktop) {
+          margin-bottom: size(1);
+        }
+      }
+      p {
+        color: var(--on-background__low_emphasis);
+        max-width: 250px;
+        @include at_least(desktop) {
+          max-width: 180px;
+        }
+        a {
+          color: var(--on-background__high_emphasis);
+          text-decoration: none;
+          @include underlineFill(var(--on-background__accent), var(--on-background__medium_emphasis), 0);
+        }
+      }
+    }
+  }

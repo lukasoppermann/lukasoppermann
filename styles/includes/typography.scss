@@ -1,3 +1,4 @@
+@import '../mixins/_devicesizes.scss';
 :root {
   /* ====================================
       Type Scale
@@ -62,9 +63,20 @@
   //
   // Typestyles
   //
+  // body small
   --typestyle__body-small--size: var(--ts-size-sm);
   --typestyle__body-small--lineheight: calc(var(--ts-size-sm) * var(--ts-size-sm));
   --typestyle__body-small--family: var(--font-sans);
   --typestyle__body-small--style: var(--font-sans-style-normal);
   --typestyle__body-small--weight: var(--font-sans-weight-regular);
+  // body small
+  --typestyle__h6--size: var(--ts-size-sm);
+  --typestyle__h6--lineheight: calc(var(--ts-size-sm) * var(--ts-size-sm));
+  @include at_least(desktop) {
+    --typestyle__h6--size: var(--ts-size-xs);
+    --typestyle__h6--lineheight: calc(var(--ts-size-xs) * var(--ts-size-xs));
+  }
+  --typestyle__h6--family: var(--font-mono);
+  --typestyle__h6--style: var(--font-mono-style-normal);
+  --typestyle__h6--weight: var(--font-mono-weight-bold);
 }

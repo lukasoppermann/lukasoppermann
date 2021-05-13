@@ -20,7 +20,7 @@
       flex-wrap: nowrap;
     }
     a, small {
-      color: var(--neutrals-500);
+      color: var(--on-background__low_emphasis);
       text-decoration: none;
       padding: size(2) 0;
       font-size: inherit;
@@ -53,11 +53,11 @@
       }
       &:hover {
         text-decoration: none;
-        color: var(--whites-tint);
+        color: var(--on-background__high_emphasis);
       }
     }
     small {
-      color: var(--whites-tint);
+      color: var(--on-background__medium_emphasis);
       @include smaller_than(tablet) {
         margin-top: size(3);
         width: 100%;
@@ -68,7 +68,7 @@
           @include pseudo("relative");
           content: "•";
           padding: 0 size(2);
-          color: var(--neutrals-700);
+          color: var(--on-background__disabled);
         }
       }
     }
