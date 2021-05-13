@@ -1,3 +1,19 @@
-body.dark-mode {
+@import './core.colors.scss';
+
+body.dark-mode, [darkmode] {
+  // background colors
   --background-color: #232323;
+  --background-dark: var(--grey-800);
+  --background-accent: var(--blue);
+  // on colors
+  --on-background__high_emphasis: rgba(var(--neutrals-0-rgb), .88);
+  --on-background__medium_emphasis: rgba(var(--neutrals-0-rgb), .66);
+  --on-background__low_emphasis: rgba(var(--neutrals-0-rgb), .44);
+  --on-background__disabled: rgba(var(--neutrals-0-rgb), .22);
+
+  --on-background__accent: var(--blue);
+  
+  // text colors
+  --text-on-dark__high_em: var(--neutrals-0);
+  --text-on-dark__med_em: var(--white-tint-60);
 }

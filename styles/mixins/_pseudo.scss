@@ -1,0 +1,5 @@
+@mixin pseudo($pos: absolute) {
+  content: "";
+  display: inline;
+  position: unquote($pos);
+}

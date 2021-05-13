@@ -1,3 +1,14 @@
-body.light-mode {
-  --background-color: #fff;
+@import './core.colors.scss';
+
+body.light-mode, [lightmode] {
+  // background colors
+  --background-color: var(--neutrals-0);
+  --background-dark: var(--grey-800);
+  --background-accent: var(--blue);
+  // on colors
+  --on-background__low_emphasis: green;
+  --on-background__disabled: red;
+  // text colors
+  --text-on-dark__high_em: var(--neutrals-0);
+  --text-on-dark__med_em: var(--white-tint-60);
 }

@@ -9,7 +9,9 @@ import '@styles/globals.scss'
 function MyApp ({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter()
   // @ts-ignore
-  const darkMode = useDarkMode(false)
+  const darkMode = useDarkMode(false, {
+    storageKey: null
+  })
 
   return (
     <>

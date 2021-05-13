@@ -1,0 +1,42 @@
+@import '../includes/grid.scss';
+@import '../mixins/_mixins.scss';
+
+$surface: var(--neutrals-0);
+
+.container {
+  width: 100%;
+  padding: 20px 0;
+  background: var(--background-dark);
+  color: var(--text-on-dark__high_em);
+}
+
+.info {
+  @extend .Grid;
+  width: 100%;
+  padding: size(5) 0;
+  @include at_least(landscape) {
+    padding: size(10) 0;
+  }
+  .column {
+    grid-column: columns;
+    // @include font(serif, regular, italic);
+    // @include type-scale(lg);
+    // font-weight: normal;
+    // color: var(--whites-tint);
+    // text-transform: none;
+    // margin-top: 0;
+    // margin-bottom: size(3);
+    @include at_least(desktop) {
+      margin-bottom: 0;
+      &:nth-child(1) {
+        grid-column: columns / span 4;
+      }
+      &:nth-child(2) {
+        grid-column: column 7 / span 3;
+      }
+      &:nth-child(3) {
+        grid-column: column 10 / span 3;
+      }
+    }
+  }
+}

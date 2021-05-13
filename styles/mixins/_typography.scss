@@ -1,0 +1,10 @@
+@mixin type($name: null) {
+  @if $name == null {
+    @error "$name must be of provided to type mixing";
+  }
+  font-size: var(--typestyle__#{$name}--size);
+  line-height: var(--typestyle__#{$name}--lineheight);
+  font-family: var(--typestyle__#{$name}--family);
+  font-weight: var(--typestyle__#{$name}--weight);
+  font-style: var(--typestyle__#{$name}--stle);
+}

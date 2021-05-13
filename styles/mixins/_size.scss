@@ -1,0 +1,8 @@
+@function size($multiplier: 1) {
+  @if type_of($multiplier) == number {
+    @return calc(var(--base-unit, 8px) * #{$multiplier});
+  }
+  @else {
+    @error "$multiplier must be of type number";
+  }
+}

@@ -1,0 +1,93 @@
+@import '../includes/grid.scss';
+@import '../mixins/_mixins.scss';
+
+.container {
+  @extend .Grid;
+  width: 100%;
+  grid-template-rows: 1px auto;
+  align-items: center;
+  menu {
+    display: flex;
+    margin: size(4) 0 size(2);
+    grid-column: columns;
+    justify-content: center;
+    flex-wrap: wrap;
+    @include type(body-small);
+    @include at_least(desktop) {
+      margin-top: 0;
+      grid-column: column 2 / columns;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+    }
+    a, small {
+      color: var(--on-background__low_emphasis);
+      text-decoration: none;
+      padding: size(2) 0;
+      font-size: inherit;
+      line-height: inherit;
+      text-align: center;
+      @include at_least(tablet) {
+        text-align: right;
+      }
+    }
+    a {
+      @include smaller_than(tablet) {
+        padding-left: size(2);
+        padding-right: size(2);
+      }
+      &:not(:first-child) {
+        position: relative;
+        @include at_least(landscape) {
+          margin-left: size(4);
+          &::before {
+            @include pseudo();
+            content: "/";
+            padding: 0 size(1.5);
+            left: size(-4);
+            color: var(--on-background__disabled);
+          }
+          &:hover::before {
+            text-decoration: none;
+          }
+        }
+      }
+      &:hover {
+        text-decoration: none;
+        color: var(--on-background__high_emphasis);
+      }
+    }
+    small {
+      color: var(--on-background__medium_emphasis);
+      @include smaller_than(tablet) {
+        margin-top: size(3);
+        width: 100%;
+        text-align: center;
+      }
+      &::before {
+        @include at_least(tablet) {
+          @include pseudo("relative");
+          content: "•";
+          padding: 0 size(2);
+          color: var(--on-background__disabled);
+        }
+      }
+    }
+  }
+  .logo {
+    position: relative;
+    margin-top: size(4);
+    margin-bottom: size(5);
+    grid-row: -1;
+    grid-column: columns;
+    justify-items: center;
+    text-align: center;
+    @include at_least(desktop) {
+      grid-column: column / column 2;
+      grid-row: auto;
+    }
+    svg {
+      vertical-align: top;
+      height: size(2.5);
+    }
+  }
+}
