@@ -2,18 +2,25 @@
 
 body.dark-mode, [darkmode] {
   // background colors
-  --background-color: #232323;
-  --background-dark: var(--grey-800);
-  --background-accent: var(--blue);
+  --background: #030506;
+  --surface: #0D0F11;
+  --surface-variant: #141617;
+  --surface-alternative: #FDFEFF;
+  --accent: #FFC800;
+  // UI Colors
+  --ui--low-contrast: #141617;
+  --ui--fair-contrast: #1E2021;
+  --ui--medium-contrast: #323435;
+  --ui--high-contrast: #464849;
   // on colors
-  --on-background__high_emphasis: rgba(var(--neutrals-0-rgb), .88);
-  --on-background__medium_emphasis: rgba(var(--neutrals-0-rgb), .66);
-  --on-background__low_emphasis: rgba(var(--neutrals-0-rgb), .44);
-  --on-background__disabled: rgba(var(--neutrals-0-rgb), .22);
+  --on-background__high-emphasis: rgba(var(--neutrals-0-rgb), .85);
+  --on-background__medium-emphasis: rgba(var(--neutrals-0-rgb), .60);
+  --on-background__low-emphasis: rgba(var(--neutrals-0-rgb), .50);
 
   --on-background__accent: var(--blue);
   
   // text colors
   --text-on-dark__high_em: var(--neutrals-0);
   --text-on-dark__med_em: var(--white-tint-60);
+
 }

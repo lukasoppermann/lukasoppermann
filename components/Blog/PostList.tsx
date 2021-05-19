@@ -1,0 +1,25 @@
+import { css } from '@emotion/css'
+import { PostPreview } from './PostPreview'
+
+type PostListProps = {
+  posts: PostPreviewType[]
+}
+
+const style = css`
+  list-style: none;
+  & li {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ui--fair-contrast);
+  }
+`
+
+const PostList = ( {posts}: PostListProps ) => {
+  return (
+    <ol className={`${style} PostList`}>
+      {posts.map((post: PostPreviewType) => <li key={post.slug}><PostPreview post={post} /></li>)}
+    </ol>
+  )
+}
+
+export { PostList }

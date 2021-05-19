@@ -14,4 +14,4 @@ const ActivatableLink = ({ children, href, ...props }) => {
   )
 }
 
-export default ActivatableLink
+export { ActivatableLink }

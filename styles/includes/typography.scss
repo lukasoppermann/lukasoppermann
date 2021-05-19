@@ -1,5 +1,14 @@
 @import '../mixins/_devicesizes.scss';
 :root {
+  // font sizes
+  --font-size--caption: 1.3rem;
+  --font-size--default: 1.6rem;
+  --font-size--headline: 2rem;
+  // font lineheight
+  --font-lineheight--default: 1.4;
+  // font weights
+  --font-weight--regular: 400;
+  --font-weight--bold: 600;
   /* ====================================
       Type Scale
   ==================================== */

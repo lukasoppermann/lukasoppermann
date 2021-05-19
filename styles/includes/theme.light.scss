@@ -2,12 +2,21 @@
 
 body.light-mode, [lightmode] {
   // background colors
-  --background-color: var(--neutrals-0);
-  --background-dark: var(--grey-800);
-  --background-accent: var(--blue);
+  --background: #FDFEFF;
+  --surface: #FDFEFF;
+  --surface-variant: #F3F4F5;
+  --surface-alternative: #030506;
+  --accent: #FFC800;
+  // UI Colors
+  --ui--low-contrast: #F3F4F5;
+  --ui--fair-contrast: #E9EAEB;
+  --ui--medium-contrast: #D5D6D7;
+  --ui--high-contrast: #C1C2C3;  
   // on colors
-  --on-background__low_emphasis: green;
-  --on-background__disabled: red;
+  --on-background__high-emphasis: rgba(var(--neutrals-1000-rgb), .88);
+  --on-background__medium-emphasis: rgba(var(--neutrals-1000-rgb), .66);
+  --on-background__low-emphasis: rgba(var(--neutrals-1000-rgb), .44);
+
   // text colors
   --text-on-dark__high_em: var(--neutrals-0);
   --text-on-dark__med_em: var(--white-tint-60);

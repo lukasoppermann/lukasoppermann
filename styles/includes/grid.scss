@@ -1,49 +1,45 @@
-@import '../mixins/_devicesizes.scss';
 /* ====================================
-    GRID with 32px gutter
+    GRID
 ==================================== */
 .Grid {
+  --grid-column-gap: 12px;
+  --grid-margin: 12px;
+  --grid-columns: 6;
+  --grid-column-width: 1fr;
+  @media (min-width: 768px) {
+    --grid-column-gap: 24px;
+    --grid-margin: 24px;
+    --grid-columns: 12;
+  }
+  @media (min-width: 1024px) {
+    --grid-column-gap: 32px;
+    --grid-margin: 32px;
+    --grid-columns: 12;
+  }
+  @media (min-width: 1280px) {
+    --grid-column-gap: 48px;
+    --grid-margin: 48px;
+    --grid-columns: 12;
+  }
+  @media (min-width: 1600px) {
+    --grid-column-gap: 48px;
+    --grid-columns: 12;
+    --grid-column-width: minmax(auto, 74px);
+    --grid-margin: auto;
+  }
+  // grid
   display: grid;
-  grid-column-gap: var(--column-gap, 32px);
   grid-row-gap: 0;
   grid-template-rows: auto;
   grid-auto-rows: min-content;
   // mobile columns
+  grid-column-gap: var(--grid-column-gap);
   grid-template-columns:
     [margin-left full-bleed-start]
-    0
-    [full-width-start columns-start full-content-start]
-    repeat(2, [column] 1fr)
-    [column columns-end full-content-end full-width-end]
-    0
-    [full-bleed-end margin-right];
-  // mobile landscape
-  @include at_least(tablet) {
-    grid-template-columns:
-      [margin-left full-bleed-start]
-      0px
-      [full-width-start columns-start full-content-start]
-      repeat(6, [column] 1fr)
-      [column columns-end full-content-end full-width-end]
-      0px
-      [full-bleed-end margin-right];
-  }
-  @include at_least(desktop) {
-    grid-template-columns:
-      [full-bleed-start margin-left]
-      minmax(0, 1fr)
-      [column full-width-start sidebar-left-start sidebar-left full-content-start columns-start]
-      minmax(48px, 95px)
-      [column sidebar-left]
-      minmax(48px, 95px)
-      [column sidebar-left-end sidebar-left]
-      repeat(8, [column] minmax(48px, 95px))
-      [column sidebar-right sidebar-right-start]
-      minmax(48px, 95px)
-      [column sidebar-right]
-      minmax(48px, 95px)
-      [column sidebar-right sidebar-right-end full-content-end full-width-end  columns-end]
-      minmax(0, 1fr)
-      [margin-right full-bleed-end];
-  }
+    var(--grid-margin)
+    [columns-start]
+    repeat(var(--grid-columns), [column] var(--grid-column-width))
+    [column columns-end margin-right]
+    var(--grid-margin)
+    [full-bleed-end];
 }

@@ -1,6 +1,5 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
-import Navigation from '@components/Navigation'
-import Footer from '@components/Footer'
+import { Header, Footer } from '@components'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { useRouter } from 'next/router'
 import useDarkMode from 'use-dark-mode'
@@ -9,13 +8,11 @@ import '@styles/globals.scss'
 function MyApp ({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter()
   // @ts-ignore
-  const darkMode = useDarkMode(false, {
-    storageKey: null
-  })
+  const darkMode = useDarkMode(false)
 
   return (
     <>
-      <Navigation />
+      <Header />
       <TransitionGroup>
         <CSSTransition
           key={asPath}
