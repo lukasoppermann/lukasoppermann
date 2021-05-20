@@ -16,9 +16,6 @@ const style = css`
   .content {
     grid-column: full-bleed;
     margin-bottom: 80px;
-    h1, h2, h3, h4, p, ul, ol {
-      grid-column: columns / span 6;
-    }
     h1, h2 {
       margin-top: 32px;
       margin-bottom: 24px;
@@ -30,6 +27,30 @@ const style = css`
     p, ul, ol {
       color: var(--on-background__medium-emphasis);
       margin-bottom: 16px;
+    }
+    .imprint__contact-details {
+      grid-column: column 8 / span 6;
+      grid-row: 1;
+    }
+    .imprint__main-content {
+      grid-column: columns / span 6;
+      grid-row: 1;
+      & :first-child {
+        margin-top: 0;
+      }
+    }
+    @media (max-width: 992px) {
+      .imprint__contact-details {
+        grid-column: columns;
+        grid-row: 1;
+      }
+      .imprint__main-content {
+        grid-column: columns;
+        grid-row: 2;
+        & :first-child {
+          margin-top: 0;
+        }
+      }
     }
   }
 `
@@ -44,7 +65,7 @@ export default function imprint ({ content }) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const content = await readMarkdownFile('pages/imprint.md')
+  const content = await readMarkdownFile('pages/imprint.mdx')
 
   return {
     props: {
