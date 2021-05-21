@@ -3,30 +3,46 @@ import { css } from '@emotion/css'
 import Link from 'next/link'
 
 const style = css`
-  height: 64px;
+  margin-top: 64px;
   align-items: center;
   align-self: flex-end;
-  & .logo {
+  .logo {
+    grid-row: 1;
     grid-column: columns / span 2;
   }
   nav {
     height: 100%;
+    grid-row: 1;
     grid-column: column 3 / span 10;
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
+    a, span {
+      display: inline-block;
+      color: var(--on-background__medium-emphasis);
+      font-size: var(--font-size--caption);
+      display: flex;
+      height: 64px;
+      padding-left: 32px;
+      align-items: center;
+    }
+    a:hover {
+      color: var(--on-background__high-emphasis);
+      cursor: pointer;
+    }
+    a:first-child {
+      padding-left: 0 !important;
+    }
   }
-  a, span {
-    float: left;
-    color: var(--on-background__medium-emphasis);
-    font-size: var(--font-size--caption);
-    display: flex;
-    height: 100%;
-    padding-left: 32px;
-    align-items: center;
-  }
-  a:hover {
-    color: var(--on-background__high-emphasis);
-    cursor: pointer;
+  @media (max-width: 992px) {
+    padding-bottom: 24px;
+    .logo {
+      display: none;
+    }
+    nav {
+      grid-column: columns;
+      justify-content: center;
+    }
   }
 `
 
@@ -41,7 +57,7 @@ const Footer = () =>{
       <Link href="/imprint">
         <a>Imprint & privacy policy</a>
       </Link>
-      <span>Copyright 2021 — Lukas Oppermann</span>
+      <span className="copyright">Copyright 2021 — Lukas Oppermann</span>
     </nav>
   </footer>)
 }

@@ -1,5 +1,4 @@
 import { css } from '@emotion/css'
-import styles from '@styles/components/Separator.module.scss'
 
 type SeparatorProps = {
   type?: 'horizontal' | 'inline'
