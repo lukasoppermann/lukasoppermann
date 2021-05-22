@@ -12,7 +12,7 @@ const DarkModeToggle = () => {
   const {value: isDarkmode, toggle: toggleDarkmode} = useDarkMode()
 
   return (<>
-    <button type='button' onClick={toggleDarkmode} className={style}>
+    <button type='button' onClick={toggleDarkmode} className={`dark-mode-toggle ${style}`}>
       {isDarkmode ? '☀' : '☾'}
     </button>
   </>)

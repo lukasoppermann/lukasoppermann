@@ -26,6 +26,9 @@ const style = css`
       padding-left: 32px;
       align-items: center;
     }
+    .copyright {
+      color: var(--on-background__low-emphasis);
+    }
     a:hover {
       color: var(--on-background__high-emphasis);
       cursor: pointer;
@@ -42,6 +45,11 @@ const style = css`
     nav {
       grid-column: columns;
       justify-content: center;
+      a, span {
+        font-size: var(--font-size--default);
+        height: 48px;
+        padding: 0 16px;
+      }
     }
   }
 `

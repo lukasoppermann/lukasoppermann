@@ -1,27 +1,79 @@
 import { ActivatableLink } from '../ActivatableLink'
+import DarkModeToggle from './DarkModeToggle'
 import { css } from '@emotion/css'
+import { mq } from 'config/mediaQueries'
+
+type NavigationProps = {
+  closeMenu: any,
+  active?: boolean
+}
 
 const style = css`
-  & nav {
+  nav {
     display: flex;
     justify-content: flex-end;
+    a {
+      color: var(--on-background__high-emphasis);
+      font-size: var(--font-size--default);
+      font-weight: var(--font-weight--bold);
+      text-transform: uppercase;
+      letter-spacing: .2px;
+      padding: 8px 0 8px 24px;
+    }
   }
-  & nav > a {
-    color: var(--on-background__high-emphasis);
-    font-size: var(--font-size--default);
-    font-weight: var(--font-weight--bold);
-    text-transform: uppercase;
-    letter-spacing: .2px;
-    padding: 8px 0 8px 24px;
+  ${mq.isMobile} {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 0px;
+    width: 100vw;
+    overflow: hidden;
+    background: var(--background);
+    transition: height .75s ease .5s;
+    nav {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      a {
+        font-size: var(--font-size--headline);
+        opacity: 0;
+        transform: translate(0, -25%);
+        transition: opacity .75s ease .25s, transform .75s ease .25s;
+        height: 64px;
+        display: flex;
+        align-items: center;
+      }
+      .dark-mode-toggle {
+        position: absolute;
+        bottom: 16px;
+        right: 16px;
+        height: 64px;
+        width: 64px;
+        opacity: 0;
+        transform: translate(100%, 100%);
+        transition: opacity .75s ease 0s, transform .75s ease 0s;
+      }
+    }
+    &.is-active {
+      height: var(--mobile-menu-height, 100vh);
+      transition: height .75s ease 0s;
+      nav {
+        a, .dark-mode-toggle {
+          opacity: 1;
+          transform: translate(0, 0);
+          transition: opacity .75s ease .75s, transform .75s ease .75s;
+        }
+      }
+    }
   }
 `
 
-const Navigation = () => {
+const Navigation = ({closeMenu, active}: NavigationProps) => {
   return (
-    <menu className={style}>
+    <menu className={`Navigation ${style} ${active ? 'is-active' : ''}`}>
       <a className='Menu__icon' />
       <nav className='Menu__items'>
-        <ActivatableLink href='/'>
+        <ActivatableLink href='/' onClick={closeMenu}>
           <a>Index</a>
         </ActivatableLink>
         <a
@@ -29,10 +81,11 @@ const Navigation = () => {
           target='_blank'
           rel='noreferrer'
           className='Menu__link'
+          onClick={closeMenu}
         >
           <span className='Menu__link-text'>Resume</span>
         </a>
-        <ActivatableLink href='/blog'>
+        <ActivatableLink href='/blog' onClick={closeMenu}>
           <a>Writing</a>
         </ActivatableLink>
         <a
@@ -40,9 +93,11 @@ const Navigation = () => {
           className='Menu__link'
           target='_blank'
           rel='noreferrer'
+          onClick={closeMenu}
         >
           <span className='Menu__link-text'>Contact</span>
         </a>
+        <DarkModeToggle />
       </nav>
     </menu>
   )

@@ -5,11 +5,12 @@ import { useRouter } from 'next/router'
 import useDarkMode from 'use-dark-mode'
 import '@styles/globals.scss'
 
+
 function MyApp ({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter()
   // @ts-ignore
   const darkMode = useDarkMode(false)
-
+  
   return (
     <>
       <Header />

@@ -5,10 +5,13 @@
     "baseUrl": ".",
     "paths": {
       "@components": [
-        "components/"
+        "components"
       ],
       "@data/*": [
         "data/*"
+      ],
+      "@context/*": [
+        "context/*"
       ],
       "@lib/*": [
         "lib/*"
