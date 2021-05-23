@@ -1,7 +1,7 @@
 import { css } from '@emotion/css'
 import { Date } from 'components/Date'
 import { Headline } from 'components/Headline'
-import Arrow from '@svgs/arrow-right.svg'
+import { Icon } from 'components/Icon'
 import Link from 'next/link'
 import { Paragraph } from 'components/Paragraph'
 import { Separator } from 'components/Separator'
@@ -17,7 +17,9 @@ const style = css`
   h3 {
     margin-bottom: 8px;
   }
-  .svg-arrow {
+  .svg-icon {
+    position: absolute;
+    margin-top: 2px;
     margin-left: 8px;
     path {
       fill: var(--on-background__high-emphasis);
@@ -35,7 +37,7 @@ const PostPreview = ( {post}: PostPreviewProps ) => {
   return (
 
         <a target="_blank" className={style} href={`${post.slug}`}>
-          <Headline level="3">{post.title}<Arrow className="svg-arrow" /></Headline>
+          <Headline level="3">{post.title}<Icon type="arrowRight" /></Headline>
           <div className="post-details">
             <Date date={post.published} />
             <Separator type="inline"/>

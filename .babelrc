@@ -4,14 +4,6 @@
     ["inline-react-svg", {
         "svgo": {
           "plugins": [
-            {
-              "name": "collapseGroups",
-              "active": false
-            },
-            {
-              "name": "cleanupIDs",
-              "active": false
-            }
           ]
         }
       }

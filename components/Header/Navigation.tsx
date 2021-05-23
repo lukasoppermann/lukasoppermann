@@ -58,7 +58,12 @@ const style = css`
       height: var(--mobile-menu-height, 100vh);
       transition: height .75s ease 0s;
       nav {
-        a, .dark-mode-toggle {
+        a {
+          opacity: 1;
+          transform: translate(0, 0);
+          transition: opacity .75s ease .25s, transform .75s ease .25s;
+        }
+        .dark-mode-toggle {
           opacity: 1;
           transform: translate(0, 0);
           transition: opacity .75s ease .75s, transform .75s ease .75s;

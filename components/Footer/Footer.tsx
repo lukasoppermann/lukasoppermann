@@ -1,4 +1,4 @@
-import { Logo } from 'components/Logo'
+// import { Logo } from 'components/Logo'
 import { css } from '@emotion/css'
 import Link from 'next/link'
 
@@ -56,7 +56,7 @@ const style = css`
 
 const Footer = () =>{
   return (<footer className={`${style} Grid`}>
-    <Logo small />
+    {/* <Logo small /> */}
     <nav>
       <a href='https://dribbble.com/lukasoppermann' rel='noreferrer' target="_blank">Dribbble</a>
       <a href="https://www.linkedin.com/in/lukasoppermann" rel='noreferrer' target="_blank">LinkedIn</a>

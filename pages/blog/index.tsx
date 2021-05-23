@@ -1,20 +1,45 @@
 import { GetStaticProps } from 'next'
 import SVGThoughtsAndIdeas from '@svgs/thoughts-&-opinions.svg'
+import SVGThoughtsAndIdeasStacked from '@svgs/thoughts-&-opinions-stacked.svg'
 import { css } from '@emotion/css'
 import { DIR_BLOG } from 'config/directories'
 import { getAllMarkdown } from '@lib/getMarkdown'
 import { PostList } from 'components/Blog/PostList'
+import { mq } from 'config/mediaQueries'
 
 const style = css`
   padding-top: 120px;
-  & .PostList {
+  .PostList {
     grid-column: columns / span 6;
   }
-  & .svg-title {
-    grid-column: columns / span 12;
-    padding-bottom: 96px;
+  .svg-title {
     path {
       fill: var(--on-background__high-emphasis);
+    }
+    &.svg-title--default {
+      grid-column: columns / span 12;
+      padding-bottom: 96px;
+    }
+    &.svg-title--stacked {
+      display: none;
+      grid-column: columns;
+      padding-bottom: 56px;
+    }
+  }
+  ${mq.smallerTablet} {
+    padding-top: 80px;
+    .svg-title {
+      &.svg-title--default {
+        display: none;
+      }
+      &.svg-title--stacked {
+        display: block;
+      }
+    }
+  }
+  ${mq.smallerDesktop} {
+    .PostList {
+      grid-column: columns;
     }
   }
 `
@@ -22,7 +47,8 @@ const style = css`
 export default function Blog ({ posts }) {
   return (
     <main className={`${style} Grid`}>
-      <SVGThoughtsAndIdeas className="svg-title" />
+      <SVGThoughtsAndIdeas className="svg-title svg-title--default" />
+      <SVGThoughtsAndIdeasStacked className="svg-title svg-title--stacked" />
       <PostList posts={posts} />
     </main>
   )

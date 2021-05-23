@@ -4,8 +4,8 @@
     "checkJs": true,
     "baseUrl": ".",
     "paths": {
-      "@components": [
-        "components"
+      "components*": [
+        "components*"
       ],
       "@data/*": [
         "data/*"

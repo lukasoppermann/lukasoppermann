@@ -1,5 +1,6 @@
 import { Navigation } from './Navigation'
 import { Logo } from 'components/Logo'
+import { Icon } from 'components/Icon'
 import { css } from '@emotion/css'
 import { useState} from 'react'
 import { mq } from 'config/mediaQueries'
@@ -35,11 +36,16 @@ const style = css`
     }
     .mobile-menu-button {
       display: flex;
+      .svg-icon {
+        path {
+          fill: var(--on-background__high-emphasis);
+        }
+      }
     }
   }
 `
 
-const Header = () => {
+export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMobileMenu = () => setMenuOpen(false)
 
@@ -49,36 +55,11 @@ const Header = () => {
       <Navigation closeMenu={closeMobileMenu} active={menuOpen} />
       <div className="mobile-menu-button" onClick={() => setMenuOpen(!menuOpen)}>
         {menuOpen ? (
-          "X"
+          <Icon type="close" />
         ) : (
-          "="
+          <Icon type="menu" />
         )}
       </div>
     </header>
   )
 }
-
-const Header2 = () => {
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
-  return (
-    <div className="header">
-      <div className="logo-nav">
-        <ul className={click ? "nav-options active" : "nav-options"}>
-          <li className="option" onClick={closeMobileMenu}>
-            <a href="#">ABOUT</a>
-          </li>
-          <li className="option" onClick={closeMobileMenu}>
-            <a href="#">CONTACT</a>
-          </li>
-          <li className="option" onClick={closeMobileMenu}>
-            <a href="#">BLOG</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-};
-
-export { Header }
