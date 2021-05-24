@@ -1,18 +1,24 @@
 import ArrowRight from '@svgs/icon-arrow-right.svg'
 import Close from '@svgs/icon-close.svg'
 import Menu from '@svgs/icon-menu.svg'
+import lightMode from '@svgs/icon-light-mode.svg'
+import darkMode from '@svgs/icon-dark-mode.svg'
 import { css } from '@emotion/css'
 
 const iconTypes = {
   arrowRight: ArrowRight,
   close: Close,
-  menu: Menu
+  menu: Menu,
+  darkMode: darkMode,
+  lightMode: lightMode
 };
 
 type IconType = 
   'arrowRight' |
   'close' |
-  'menu'
+  'menu' |
+  'darkMode'|
+  'lightMode'
 
 const style = css`
   path {

@@ -1,19 +1,21 @@
+import { Icon } from 'components/Icon'
 import { css } from '@emotion/css'
+import React from 'react'
 import useDarkMode from 'use-dark-mode'
 
 const style = css`
-  color: var(--on-background__high-emphasis);
   background: transparent;
   border: none;
-  font-size: 20px; /* TODO: Remove */
+  path {
+    fill: var(--on-background__high-emphasis);
+  }
 `
 
 const DarkModeToggle = () => {
   const {value: isDarkmode, toggle: toggleDarkmode} = useDarkMode()
-
   return (<>
-    <button type='button' onClick={toggleDarkmode} className={`dark-mode-toggle ${style}`}>
-      {isDarkmode ? '☀' : '☾'}
+    <button type='button' onClick={toggleDarkmode} className={`dark-mode-toggle ${style}`} suppressHydrationWarning={true}>
+    { process.browser && <Icon type={isDarkmode ? 'darkMode' : 'lightMode'} /> }
     </button>
   </>)
 }

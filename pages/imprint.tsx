@@ -2,6 +2,8 @@ import { GetStaticProps } from 'next'
 import readMarkdownFile from '@lib/readMarkdownFile'
 import { css } from '@emotion/css'
 import SVGImprint from 'svgs/imprint.svg'
+import SVGImprintStacked from 'svgs/imprint-stacked.svg'
+import { mq } from 'config/mediaQueries'
 
 const style = css`
   padding-top: 120px;
@@ -12,6 +14,9 @@ const style = css`
     path {
       fill: var(--on-background__high-emphasis);
     }
+  }
+  .svg-imprint--stacked {
+    display: none;
   }
   .content {
     grid-column: full-bleed;
@@ -39,7 +44,9 @@ const style = css`
         margin-top: 0;
       }
     }
-    @media (max-width: 992px) {
+  }
+  ${mq.smallerDesktop} {
+    .content {
       .imprint__contact-details {
         grid-column: columns;
         grid-row: 1;
@@ -52,13 +59,21 @@ const style = css`
         }
       }
     }
+    .svg-imprint--default {
+      display: none;
+    }
+    .svg-imprint--stacked {
+      grid-column: columns;
+      display: block;
+    }
   }
 `
 
 export default function imprint ({ content }) {
   return (
       <main className={`${style} Grid`}>
-        <SVGImprint className="svg-title" />
+        <SVGImprint className="svg-title svg-imprint--default" />
+        <SVGImprintStacked className="svg-title svg-imprint--stacked" />
         <div className="content Grid" dangerouslySetInnerHTML={{ __html: content }} />
       </main>
   )

@@ -19,6 +19,9 @@ const style = css`
       text-transform: uppercase;
       letter-spacing: .2px;
       padding: 8px 0 8px 24px;
+      span {
+        transition: none;
+      }
     }
   }
   ${mq.isMobile} {
@@ -38,7 +41,7 @@ const style = css`
         font-size: var(--font-size--headline);
         opacity: 0;
         transform: translate(0, -25%);
-        transition: opacity .75s ease .25s, transform .75s ease .25s;
+        transition: opacity .75s ease .25s, transform .75s ease .25s, color .25s ease;
         height: 64px;
         display: flex;
         align-items: center;
@@ -61,7 +64,7 @@ const style = css`
         a {
           opacity: 1;
           transform: translate(0, 0);
-          transition: opacity .75s ease .25s, transform .75s ease .25s;
+          transition: opacity .75s ease .25s, transform .75s ease .25s, color .25s ease;
         }
         .dark-mode-toggle {
           opacity: 1;
@@ -78,8 +81,8 @@ const Navigation = ({closeMenu, active}: NavigationProps) => {
     <menu className={`Navigation ${style} ${active ? 'is-active' : ''}`}>
       <a className='Menu__icon' />
       <nav className='Menu__items'>
-        <ActivatableLink href='/' onClick={closeMenu}>
-          <a>Index</a>
+        <ActivatableLink href='/'>
+          <a onClick={closeMenu}>Index</a>
         </ActivatableLink>
         <a
           href='//images.ctfassets.net/5dfliyp93yzg/cjGKGKXUMxAaOVJg53FHI/f3d3c9a2a176335affec167154b6881c/resume_lukas_oppermann_01.4.pdf'
@@ -90,8 +93,8 @@ const Navigation = ({closeMenu, active}: NavigationProps) => {
         >
           <span className='Menu__link-text'>Resume</span>
         </a>
-        <ActivatableLink href='/blog' onClick={closeMenu}>
-          <a>Writing</a>
+        <ActivatableLink href='/blog'>
+          <a onClick={closeMenu}>Writing</a>
         </ActivatableLink>
         <a
           href='mailto:lukas@vea.re?subject=Hey 👋,%20what&apos;s%20up?&body=Great%20to%20hear%20from%20you,%20how%20can%20I%20help?'
