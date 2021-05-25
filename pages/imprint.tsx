@@ -11,6 +11,7 @@ const style = css`
   .svg-title {
     grid-column: columns / span 12;
     padding-bottom: 96px;
+    max-width: 100%;
     path {
       fill: var(--on-background__high-emphasis);
     }

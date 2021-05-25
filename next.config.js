@@ -1,5 +1,14 @@
 module.exports = {
   pageExtensions: ['ts', 'tsx'],
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/index',
+        permanent: true,
+      }
+    ]
+  },
   async rewrites () {
     return [
       {
