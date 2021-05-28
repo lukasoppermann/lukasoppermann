@@ -12,3 +12,61 @@
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }
+
+:root {
+  --easeInOutQuad: cubic-bezier(.455, .03, .515, .955);
+  --easeOutQuint: cubic-bezier(.23, 1, .32, 1);
+  --easeInOutQuint: cubic-bezier(.86, 0, .07, 1);
+  --easeInBounceOut: cubic-bezier(.175, .885, .32, 1.275);
+  // Animations
+  --animation-appear: .5s linear forwards 0s appear;
+}
+@keyframes appear {
+  0% { opacity: 0; }
+  99% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes blockReveal {
+  0% {
+    transform: scaleX(0);
+    transform-origin: var(--origin-start, left);
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: var(--origin-start, left);
+  }
+  60% {
+    transform: scaleX(1);
+    transform-origin: var(--origin-end, right);
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: var(--origin-end, right);
+  }
+}
+@keyframes blockFill {
+  0% {
+    transform: scaleX(0);
+    transform-origin: var(--origin-start, left);
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: var(--origin-end, var(--origin-start, left));
+  }
+}
+@keyframes fadeSlideIn {
+  0% {
+    transform: translate(var(--fadeSlideIn-translateX, 0%), var(--fadeSlideIn-translateY, 50%));
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+@keyframes strokeDashoffset {
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes fadeIn {
+  100% { opacity: 1; }
+}

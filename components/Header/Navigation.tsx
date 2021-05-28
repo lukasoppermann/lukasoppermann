@@ -23,6 +23,9 @@ const style = css`
         transition: none;
       }
     }
+    .dark-mode-toggle {
+      margin-left: 32px;
+    }
   }
   ${mq.isMobile} {
     position: absolute;
@@ -47,11 +50,12 @@ const style = css`
         align-items: center;
       }
       .dark-mode-toggle {
+        margin-left: 0px;
         position: absolute;
+        width: 64px;
+        height: 64px;
         bottom: 16px;
         right: 16px;
-        height: 64px;
-        width: 64px;
         opacity: 0;
         transform: translate(100%, 100%);
         transition: opacity .75s ease 0s, transform .75s ease 0s;
@@ -82,7 +86,7 @@ const Navigation = ({closeMenu, active}: NavigationProps) => {
       <a className='Menu__icon' />
       <nav className='Menu__items'>
         <ActivatableLink href='/'>
-          <a onClick={closeMenu}>Index</a>
+          <a onClick={closeMenu}>Home</a>
         </ActivatableLink>
         <a
           href='//images.ctfassets.net/5dfliyp93yzg/cjGKGKXUMxAaOVJg53FHI/f3d3c9a2a176335affec167154b6881c/resume_lukas_oppermann_01.4.pdf'

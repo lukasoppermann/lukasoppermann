@@ -6,7 +6,7 @@ body.light-mode, [lightmode] {
   --surface: #FDFEFF;
   --surface-variant: #F3F4F5;
   --surface-alternative: #030506;
-  --accent: #FFC800;
+  --accent: var(--yellow);
   // UI Colors
   --ui--low-contrast: #F3F4F5;
   --ui--fair-contrast: #E9EAEB;
@@ -16,8 +16,12 @@ body.light-mode, [lightmode] {
   --on-background__high-emphasis: rgba(var(--neutrals-1000-rgb), .88);
   --on-background__medium-emphasis: rgba(var(--neutrals-1000-rgb), .66);
   --on-background__low-emphasis: rgba(var(--neutrals-1000-rgb), .44);
-
-  // text colors
-  --text-on-dark__high_em: var(--neutrals-0);
-  --text-on-dark__med_em: var(--white-tint-60);
+  // on colors
+  --on-surface__high-emphasis: rgba(var(--neutrals-1000-rgb), .88);
+  --on-surface__medium-emphasis: rgba(var(--neutrals-1000-rgb), .66);
+  --on-surface__low-emphasis: rgba(var(--neutrals-1000-rgb), .44);
+  /** ----------------
+  / Custom component tokens
+  */
+  --intro__background: #f6f5f3;
 }

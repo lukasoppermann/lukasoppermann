@@ -6,6 +6,8 @@ import useDarkMode from 'use-dark-mode'
 const style = css`
   background: transparent;
   border: none;
+  display: flex;
+  align-items: center;
   path {
     fill: var(--on-background__high-emphasis);
   }

@@ -24,5 +24,9 @@ export const mq = {
   // smaller
   smallerTablet: `@media (max-width: ${sizes.tablet.min})`,
   smallerDesktop: `@media (max-width: ${sizes.desktop.min})`,
-  smallerLarge: `@media (max-width: ${sizes.large.min})`
+  smallerLarge: `@media (max-width: ${sizes.large.min})`,
+  // bigger
+  biggerMobile: `@media (min-width: ${sizes.tablet.min})`,
+  biggerTablet: `@media (min-width: ${sizes.desktop.min})`,
+  biggerDesktop: `@media (min-width: ${sizes.large.min})`
 }

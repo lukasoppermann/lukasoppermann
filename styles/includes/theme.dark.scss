@@ -6,7 +6,7 @@ body.dark-mode, [darkmode] {
   --surface: #0D0F11;
   --surface-variant: #141617;
   --surface-alternative: #FDFEFF;
-  --accent: #FFC800;
+  --accent: var(--yellow);
   // UI Colors
   --ui--low-contrast: #141617;
   --ui--fair-contrast: #1E2021;
@@ -16,11 +16,12 @@ body.dark-mode, [darkmode] {
   --on-background__high-emphasis: rgba(var(--neutrals-0-rgb), .85);
   --on-background__medium-emphasis: rgba(var(--neutrals-0-rgb), .60);
   --on-background__low-emphasis: rgba(var(--neutrals-0-rgb), .50);
-
-  --on-background__accent: var(--blue);
-  
-  // text colors
-  --text-on-dark__high_em: var(--neutrals-0);
-  --text-on-dark__med_em: var(--white-tint-60);
-
+  // on colors
+  --on-surface__high-emphasis: rgba(var(--neutrals-0-rgb), .85);
+  --on-surface__medium-emphasis: rgba(var(--neutrals-0-rgb), .60);
+  --on-surface__low-emphasis: rgba(var(--neutrals-0-rgb), .50);
+  /** ----------------
+  / Custom component tokens
+  */
+  --intro__background: var(--surface);
 }
