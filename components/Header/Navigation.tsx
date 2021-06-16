@@ -27,7 +27,7 @@ const style = css`
       margin-left: 32px;
     }
   }
-  ${mq.isMobile} {
+  ${mq.is.mobile} {
     position: absolute;
     left: 0;
     top: 0;

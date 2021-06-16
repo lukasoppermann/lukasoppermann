@@ -17,16 +17,17 @@ const sizes = {
 }
 
 export const mq = {
-  isMobile: `@media (max-width: ${sizes.mobile.max})`,
-  isTablet: `@media (min-width: ${sizes.tablet.min}) and (max-width: ${sizes.tablet.max})`,
-  isDesktop: `@media (min-width: ${sizes.desktop.min}) and (max-width: ${sizes.desktop.max})`,
-  isLarge: `@media (min-width: ${sizes.large.min})`,
-  // smaller
-  smallerTablet: `@media (max-width: ${sizes.tablet.min})`,
-  smallerDesktop: `@media (max-width: ${sizes.desktop.min})`,
-  smallerLarge: `@media (max-width: ${sizes.large.min})`,
-  // bigger
-  biggerMobile: `@media (min-width: ${sizes.tablet.min})`,
-  biggerTablet: `@media (min-width: ${sizes.desktop.min})`,
-  biggerDesktop: `@media (min-width: ${sizes.large.min})`
+  // is
+  is: {
+    mobile: `@media (max-width: ${sizes.mobile.max})`,
+    tablet: `@media (min-width: ${sizes.tablet.min}) and (max-width: ${sizes.tablet.max})`,
+    desktop: `@media (min-width: ${sizes.desktop.min}) and (max-width: ${sizes.desktop.max})`,
+    large: `@media (min-width: ${sizes.large.min})`,
+  },
+  // atLeast
+  atLeast: {
+    tablet: `@media (min-width: ${sizes.tablet.min})`,
+    desktop: `@media (min-width: ${sizes.desktop.min})`,
+    large: `@media (min-width: ${sizes.large.min})`,
+  }
 }

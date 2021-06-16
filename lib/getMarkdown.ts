@@ -1,6 +1,7 @@
 import fs from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
+import { PostPreviewType } from 'types/PostPreviewType'
 // import { parseMarkdown } from '@lib/parseMarkdown'
 
 export const getMarkdownBySlug = (slug, directory) => {

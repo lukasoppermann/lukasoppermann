@@ -1,5 +1,5 @@
 import styles from '@styles/components/Footer.sociallinks.module.scss'
-import { Separator } from 'components/Separator'
+import { Separator } from '@components/Separator'
 
 const SocialLinks = () => {
   return (

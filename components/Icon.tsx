@@ -21,6 +21,7 @@ type IconType =
   'lightMode'
 
 const style = css`
+  fill: currentColor;
   path {
     fill: inherit;
   }
@@ -34,7 +35,7 @@ const Icon = ({type}: IconProps) => {
   // with props
   let Icon = iconTypes[type]
   // return icon
-  return <Icon className={`svg-icon`} />
+  return <Icon className={`${style} svg-icon`} />
 }
 
 export { Icon }

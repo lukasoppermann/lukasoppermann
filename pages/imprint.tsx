@@ -46,7 +46,7 @@ const style = css`
       }
     }
   }
-  ${mq.smallerDesktop} {
+  ${mq.upTo.tablet} {
     .content {
       .imprint__contact-details {
         grid-column: columns;

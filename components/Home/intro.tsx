@@ -28,7 +28,7 @@ const style = css`
       animation: 1.25s var(--easeOutQuint) 1.5s forwards fadeSlideIn;
       grid-row: 4;
     }
-    ${mq.biggerMobile} {
+    ${mq.atLeast.tablet} {
       grid-column-end: span 4;
       &:nth-child(1) {
         grid-row: 1;
@@ -43,7 +43,7 @@ const style = css`
         grid-column-start: column 9;
       }
     }
-    ${mq.biggerTablet} {
+    ${mq.atLeast.desktop} {
       grid-column-end: span 4;
       &:nth-child(2) {
         grid-column-start: column 5;
@@ -52,7 +52,7 @@ const style = css`
         grid-column-start: column 9;
       }
     }
-    ${mq.biggerDesktop} {
+    ${mq.atLeast.large} {
       grid-column-end: span 3;
       &:nth-child(2) {
         grid-column-start: column 4;
@@ -64,17 +64,17 @@ const style = css`
     h5 {
       margin-top: 24px;
       color: var(--on-background__high-emphasis);
-      ${mq.biggerTablet} {
+      ${mq.atLeast.desktop} {
         margin-top: 40px;
       }
-      /* @include font(mono, bold); */
-      /* @include type-scale(sm); */
+      /* // @include font(mono, bold); */
+      /* // @include type-scale(sm); */
       text-transform: uppercase;
     }
     p {
       margin-top: 8px;
-      /* @include font(sans); */
-      /* @include type-scale(sm); */
+      /* // @include font(sans); */
+      /* // @include type-scale(sm); */
       color: var(--on-background__low-emphasis);;
     }
   }
@@ -121,14 +121,14 @@ const style = css`
       background-color: var(--accent);
       height: 8px;
     }
-    ${mq.biggerMobile} {
+    ${mq.atLeast.tablet} {
       &::before {
         display: none;
       }
       grid-row: 4;
       margin-top: 64px;
     }
-    ${mq.biggerTablet} {
+    ${mq.atLeast.desktop} {
       grid-row: 2;
       grid-column: columns / span 9;
       margin-top: 96px;
@@ -166,11 +166,11 @@ const style = css`
       background-color: rgba(var(--black-rgba-15));
       top: 0;
     }
-    ${mq.biggerMobile} {
+    ${mq.atLeast.tablet} {
       max-width: 360px;
       font-size: 2.4rem;
     }
-    ${mq.biggerTablet} {
+    ${mq.atLeast.desktop} {
       &::before {
         width: 112px;
         top: -8px;
@@ -182,7 +182,7 @@ const style = css`
       margin-bottom: 32px;
       margin-top: 32px;
     }
-    ${mq.biggerDesktop} {
+    ${mq.atLeast.large} {
       grid-row: 3;
       grid-column: columns / span 4;
     }
@@ -202,16 +202,16 @@ const style = css`
     line-height: 130%;
     grid-column: columns;
     grid-row: 6;
-    ${mq.biggerMobile} {
+    ${mq.atLeast.tablet} {
       font-size: 2.4rem;
     }
-    ${mq.biggerTablet} {
+    ${mq.atLeast.desktop} {
       grid-column: column 5 / span 4;
       grid-row: 5;
       margin-bottom: 32px;
       margin-top: 32px;
     }
-    ${mq.biggerDesktop} {
+    ${mq.atLeast.large} {
       grid-row: 3;
       grid-column: column 5 / span 4;
     }

@@ -1,11 +1,12 @@
 import { css } from '@emotion/css'
-import { Date } from 'components/Date'
-import { Headline } from 'components/Headline'
-import { Icon } from 'components/Icon'
+import { DateTime } from '@components/DateTime'
+import { Headline } from '@components/Headline'
+import { Icon } from '@components/Icon'
 import Link from 'next/link'
-import { Paragraph } from 'components/Paragraph'
-import { Separator } from 'components/Separator'
-import { Category } from 'components/Blog/Category'
+import { Paragraph } from '@components/Paragraph'
+import { Separator } from '@components/Separator'
+import { Category } from '@components/Blog/Category'
+import { PostPreviewType } from 'types/PostPreviewType'
 
 type PostPreviewProps = {
   post: PostPreviewType
@@ -39,7 +40,7 @@ const PostPreview = ( {post}: PostPreviewProps ) => {
         <a target="_blank" className={style} href={`${post.slug}`}>
           <Headline level="3">{post.title}<Icon type="arrowRight" /></Headline>
           <div className="post-details">
-            <Date date={post.published} />
+            <DateTime from={post.published} />
             <Separator type="inline"/>
             <Category type={post.category}/>
           </div>

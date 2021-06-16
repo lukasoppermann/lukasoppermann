@@ -1,4 +1,4 @@
-import { Icon } from 'components/Icon'
+import { Icon } from '@components/Icon'
 import { css } from '@emotion/css'
 import React from 'react'
 import useDarkMode from 'use-dark-mode'

@@ -8,7 +8,11 @@ type ParagraphProps = {
 }
 
 const style = css`
-  color: var(--on-background__low-emphasis);
+  color: var(--on-background__medium-emphasis);
+  margin-bottom: 8px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 `
 
 const Paragraph = ({children, type = 'default'}: ParagraphProps) => {

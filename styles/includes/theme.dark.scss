@@ -13,13 +13,13 @@ body.dark-mode, [darkmode] {
   --ui--medium-contrast: #323435;
   --ui--high-contrast: #464849;
   // on colors
-  --on-background__high-emphasis: rgba(var(--neutrals-0-rgb), .85);
-  --on-background__medium-emphasis: rgba(var(--neutrals-0-rgb), .60);
-  --on-background__low-emphasis: rgba(var(--neutrals-0-rgb), .50);
+  --on-background__high-emphasis: rgba(var(--neutrals-0-rgb), .80);
+  --on-background__medium-emphasis: rgba(var(--neutrals-0-rgb), .55);
+  --on-background__low-emphasis: rgba(var(--neutrals-0-rgb), .47);
   // on colors
-  --on-surface__high-emphasis: rgba(var(--neutrals-0-rgb), .85);
-  --on-surface__medium-emphasis: rgba(var(--neutrals-0-rgb), .60);
-  --on-surface__low-emphasis: rgba(var(--neutrals-0-rgb), .50);
+  --on-surface__high-emphasis: rgba(var(--neutrals-0-rgb), .80);
+  --on-surface__medium-emphasis: rgba(var(--neutrals-0-rgb), .55);
+  --on-surface__low-emphasis: rgba(var(--neutrals-0-rgb), .47);
   /** ----------------
   / Custom component tokens
   */

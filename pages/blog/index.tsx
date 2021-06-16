@@ -4,13 +4,13 @@ import SVGThoughtsAndIdeasStacked from '@svgs/thoughts-&-opinions-stacked.svg'
 import { css } from '@emotion/css'
 import { DIR_BLOG } from 'config/directories'
 import { getAllMarkdown } from '@lib/getMarkdown'
-import { PostList } from 'components/Blog/PostList'
+import { PostList } from '@components/Blog/PostList'
 import { mq } from 'config/mediaQueries'
 
 const style = css`
   padding-top: 120px;
   .PostList {
-    grid-column: columns / span 6;
+    grid-column: columns;
   }
   .svg-title {
     max-width: 100%;
@@ -27,7 +27,7 @@ const style = css`
       padding-bottom: 56px;
     }
   }
-  ${mq.smallerTablet} {
+  ${mq.is.mobile} {
     padding-top: 80px;
     .svg-title {
       &.svg-title--default {
@@ -38,9 +38,9 @@ const style = css`
       }
     }
   }
-  ${mq.smallerDesktop} {
+  ${mq.atLeast.desktop} {
     .PostList {
-      grid-column: columns;
+      grid-column: columns / span 6;
     }
   }
 `

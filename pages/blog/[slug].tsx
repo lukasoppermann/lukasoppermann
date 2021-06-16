@@ -1,7 +1,7 @@
 // import { DIR_BLOG } from 'config/directories'
 // import { getAllMarkdown, getMarkdownBySlug } from '@lib/getMarkdown'
 // import { GetStaticPaths, GetStaticProps } from 'next'
-// import Markdown from 'components/Markdown'
+// import Markdown from '@components/Markdown'
 
 const Post = ({ content, meta }) => {
   

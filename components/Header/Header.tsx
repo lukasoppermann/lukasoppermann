@@ -1,6 +1,6 @@
 import { Navigation } from './Navigation'
-import { Logo } from 'components/Logo'
-import { Icon } from 'components/Icon'
+import { Logo } from '@components/Logo'
+import { Icon } from '@components/Icon'
 import { css } from '@emotion/css'
 import { useState} from 'react'
 import { useWindowScroll, useThrottledFn } from 'beautiful-react-hooks'; 
@@ -40,7 +40,7 @@ const style = css`
     justify-content: center;
     align-items: center;
   }
-  ${mq.isMobile} {
+  ${mq.is.mobile} {
     .Navigation {
       top: var(--header-height) !important;
     }
@@ -80,7 +80,7 @@ export const Header = () => {
     <header className={`${style} Grid ${isScrolled ? 'is-scrolled' : ''}`}>
       <Logo homepageLink />
       <Navigation closeMenu={closeMobileMenu} active={menuOpen} />
-      <div className="mobile-menu-button" onClick={() => setMenuOpen(!menuOpen)}>
+      <div className="mobile-menu-button" onClick={() => setMenuOpen(menuOpen => !menuOpen)}>
         {menuOpen ? (
           <Icon type="close" />
         ) : (

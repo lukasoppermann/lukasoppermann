@@ -1,6 +1,6 @@
 import { Logo } from '../Logo'
 import styles from '@styles/components/Footer.navigation.module.scss'
-import { Separator } from 'components/Separator'
+import { Separator } from '@components/Separator'
 import Link from 'next/link'
 
 const Navigation = () => {
