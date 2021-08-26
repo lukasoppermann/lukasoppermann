@@ -13,7 +13,7 @@ import smartypants from '@silvenon/remark-smartypants'
 import a11yEmoji from '@fec/remark-a11y-emoji'
 import raw from 'rehype-raw'
 
-const Markdown = props => {
+const Markdown = (props) => {
   return (
     <Remark
       remarkPlugins={[
@@ -42,4 +42,4 @@ const Markdown = props => {
   )
 }
 
-export default Markdown
+export { Markdown }

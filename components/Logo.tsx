@@ -23,7 +23,7 @@ const Logo = ({ homepageLink, small, ...props }: LogoProps) => {
   if (homepageLink) {
     return (
       <Link href='/'>
-        <a className={`${style} ${small ? 'is-small' : ''} logo`} href='/' aria-label='Go to homepage' {...props}>
+        <a className={`${style} ${small ? 'is-small' : ''} logo`} aria-label='Go to homepage' {...props}>
           <SVGWordmark />
         </a>
       </Link>

@@ -37,7 +37,7 @@ const style = css`
 const PostPreview = ( {post}: PostPreviewProps ) => {
   return (
 
-        <a target="_blank" className={style} href={`${post.slug}`}>
+        <a target="_blank" rel="noreferrer" className={style} href={`${post.slug}`}>
           <Headline level="3">{post.title}<Icon type="arrowRight" /></Headline>
           <div className="post-details">
             <DateTime from={post.published} />

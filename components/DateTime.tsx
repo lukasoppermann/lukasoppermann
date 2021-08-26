@@ -1,5 +1,9 @@
 import { css } from '@emotion/css'
-import { DateString, DD, MM, YYYY } from '@types/Date'
+
+type DateString = string
+type DD = string
+type MM = string
+type YYYY = string
 
 type DateProps = {
   from: DateString,
