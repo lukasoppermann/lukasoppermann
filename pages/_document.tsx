@@ -14,7 +14,6 @@ class MyDocument extends Document {
           <link href='https://fonts.googleapis.com/css?family=Montserrat:700|Noto+Serif:400,400i,400b|Source+Sans+Pro:400,600|Source+Code+Pro:700&display=swap' rel='stylesheet' />
         </Head>
         <body>
-          <script src='noflash.js' />
           <Main />
           <NextScript />
         </body>
