@@ -1,9 +1,23 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-
+import { renderStatic } from '@lib/renderStatic'
+import * as React from 'react'
 class MyDocument extends Document {
   static async getInitialProps (ctx) {
+    const page = await ctx.renderPage()
+    const { css, ids } = await renderStatic(page.html)
     const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
+    return { 
+      ...initialProps,
+      styles: (
+        <React.Fragment>
+          {initialProps.styles}
+          <style
+            data-emotion={`css ${ids.join(' ')}`}
+            dangerouslySetInnerHTML={{ __html: css }}
+          />
+        </React.Fragment>
+      ),
+    }
   }
 
   
