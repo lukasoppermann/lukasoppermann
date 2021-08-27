@@ -9,8 +9,8 @@ const style = css`
   padding-top: 120px;
   color: var(--on-background__high-emphasis);
   .svg-title {
-    grid-column: columns / span 12;
-    padding-bottom: 96px;
+    grid-column: columns;
+    padding-bottom: 64px;
     max-width: 100%;
     path {
       fill: var(--on-background__high-emphasis);
@@ -35,29 +35,29 @@ const style = css`
       margin-bottom: 16px;
     }
     .imprint__contact-details {
-      grid-column: column 8 / span 6;
+      grid-column: columns;
       grid-row: 1;
     }
     .imprint__main-content {
-      grid-column: columns / span 6;
-      grid-row: 1;
+      grid-column: columns;
+        grid-row: 2;
       & :first-child {
         margin-top: 0;
       }
     }
   }
-  ${mq.is.tablet} {
+  ${mq.atLeast.tablet} {
+    .svg-title {
+      grid-column: columns / span 12;
+    }
     .content {
       .imprint__contact-details {
-        grid-column: columns;
+        grid-column: column 8 / span 6;
         grid-row: 1;
       }
       .imprint__main-content {
-        grid-column: columns;
-        grid-row: 2;
-        & :first-child {
-          margin-top: 0;
-        }
+        grid-column: columns / span 6;
+        grid-row: 1;
       }
     }
     .svg-imprint--default {
