@@ -15,9 +15,13 @@ const style = css`
 `
 
 const DarkModeToggle = () => {
-  
+  const [mounted, setMounted] = useState(false);
   const {value: isDarkmode, toggle: toggleDarkmode} = useDarkMode()
-  if (typeof window === 'undefined') return null;
+  // When mounted on client, now we can show the UI
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (<>
     <button type='button' onClick={toggleDarkmode} className={`dark-mode-toggle ${style}`}>
       <Icon type={isDarkmode ? 'darkMode' : 'lightMode'} />
