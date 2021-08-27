@@ -1,8 +1,8 @@
 import { css } from '@emotion/css'
-import Intro from '@components/Home/Intro'
+import { Project } from '@components/Home/Project'
 import Resume from '@components/Home/Resume'
 import Clients from '@components/Home/Clients'
-import { Project } from '@components/Home/Project'
+import Intro from '@components/Home/Intro'
 
 const style = css`
   
