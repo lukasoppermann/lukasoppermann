@@ -16,14 +16,20 @@ const style = css`
 
 const DarkModeToggle = () => {
   const [mounted, setMounted] = useState(false);
-  const {value: isDarkmode, toggle: toggleDarkmode} = useDarkMode()
+  let {value: isDarkmode, toggle: toggleDarkmode} = useDarkMode(false, {
+    storageKey: null
+  })
   // When mounted on client, now we can show the UI
-  useEffect(() => setMounted(true), []);
+  useEffect(() => { 
+    setMounted(true)
+    console.log(isDarkmode)
+  }, []);
 
   if (!mounted) return null;
 
   return (<>
-    <button type='button' onClick={toggleDarkmode} className={`dark-mode-toggle ${style}`}>
+    {console.log(isDarkmode)}
+    <button type='button' onClick={toggleDarkmode} className={`dark-mode-toggle ${style}`} aria-label={isDarkmode ? 'toggle light mode' : 'toggle dark mode'}>
       <Icon type={isDarkmode ? 'darkMode' : 'lightMode'} />
     </button>
   </>)
