@@ -15,49 +15,51 @@ const style = css`
     position: relative;
     z-index: 2;
     grid-column: columns;
+    grid-row: 1;
     max-width: 360px;
-    &:nth-child(1) {
+    padding-top: 16px;
+    &.Header--intro__info--1 {
       animation: 1.25s var(--easeOutQuint) 1s forwards fadeSlideIn;
       grid-row: 2;
     }
-    &:nth-child(2) {
+    &.Header--intro__info--2 {
       animation: 1.25s var(--easeOutQuint) 1.25s forwards fadeSlideIn;
       grid-row: 3;
     }
-    &:nth-child(3) {
+    &.Header--intro__info--3 {
       animation: 1.25s var(--easeOutQuint) 1.5s forwards fadeSlideIn;
       grid-row: 4;
     }
     ${mq.atLeast.tablet} {
       grid-column-end: span 4;
-      &:nth-child(1) {
+      &.Header--intro__info--1 {
         grid-row: 1;
         grid-column-start: columns;
       }
-      &:nth-child(2) {
+      &.Header--intro__info--2 {
         grid-row: 1;
         grid-column-start: column 5;
       }
-      &:nth-child(3) {
+      &.Header--intro__info--3 {
         grid-row: 1;
         grid-column-start: column 9;
       }
     }
     ${mq.atLeast.desktop} {
       grid-column-end: span 4;
-      &:nth-child(2) {
+      &.Header--intro__info--2 {
         grid-column-start: column 5;
       }
-      &:nth-child(3) {
+      &.Header--intro__info--3 {
         grid-column-start: column 9;
       }
     }
     ${mq.atLeast.large} {
       grid-column-end: span 3;
-      &:nth-child(2) {
+      &.Header--intro__info--2 {
         grid-column-start: column 4;
       }
-      &:nth-child(3) {
+      &.Header--intro__info--3 {
         grid-column-start: column 7;
       }
     }
@@ -99,6 +101,7 @@ const style = css`
     Headline (svg)
   ==================================== */
   .Header--intro__headline {
+    order: 2;
     --fadeSlideIn-translateY: 0%;
     --fadeSlideIn-translateX: 5%;
     opacity: 0;
@@ -222,26 +225,26 @@ export default function Intro () {
 
   return (
     <section className={`${style} Grid`}>
-      <div className="Header--intro__info">
-        <h5>Design</h5>
+      <h1 className="Header--intro__roles">
+        Design Lead UI / UX &<br />
+        Creative Direction
+      </h1>
+      <h2 className="Header--intro__slogan">Designing experiences with a focus on usability</h2>
+      <div className="Header--intro__info Header--intro__info--1">
+        <h3>Design</h3>
         <p>— a toolkit of methods to explore and address user needs & problems.</p>
       </div>
-      <div className="Header--intro__info">
-        <h5>Technology</h5>
+      <div className="Header--intro__info Header--intro__info--2">
+        <h3>Technology</h3>
         <p>— the constraints but also the material from which to build an exciting solution.</p>
       </div>
-      <div className="Header--intro__info">
-        <h5>Product Thinking</h5>
+      <div className="Header--intro__info Header--intro__info--3">
+        <h3>Product Thinking</h3>
         <p>— my approach of building products based on user needs & measured impact.</p>
       </div>
       <figure className="Header--intro__headline">
         <SolvingProblemsSvg />
       </figure>
-      <h2 className="Header--intro__slogan">Designing experiences with a focus on usability</h2>
-      <h1 className="Header--intro__roles">
-        Design Lead UI / UX &<br />
-        Creative Direction
-      </h1>
       <div className="Header__background"></div>
     </section>
   )

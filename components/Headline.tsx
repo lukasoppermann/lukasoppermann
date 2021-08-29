@@ -5,10 +5,11 @@ type HeadlineProps = {
   level?: '1' | '2' | '3' | '4' | '5' | '6',
   style?: '1' | '2' | '3' | '4' | '5' | '6' | 'none',
   center?: boolean,
-  margin?: 'none'
+  margin?: 'none',
+  className?: string
 }
 
-type Headline = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+type Headline = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
 
 const headlineStyle = css`
   display: block;
@@ -34,6 +35,7 @@ const headlineStyle = css`
   }
   &.h6 {
     /* @include font(mono, bold); */
+    font-weight: var(--font-weight--bold);
     color: var(--on-background__medium-emphasis);
     font-size: var(--font-size--caption);
     margin-bottom: 8px;
@@ -46,11 +48,11 @@ const headlineStyle = css`
   }
 `
 
-const Headline = ({children, level, style, center, margin}: HeadlineProps) => {
-  const Headline: Headline  = `h${level}` as Headline
+const Headline = ({children, level, style, center, margin, className}: HeadlineProps) => {
+  const Headline: Headline  = level ? `h${level}` : 'span' as Headline
 
   return (
-    <Headline className={`Headline ${headlineStyle} ${!style ? `h${level}` : `h${style}`} ${center ? 'center' : ''} ${margin === 'none' ? 'margin-none' : ''}`}>
+    <Headline className={`Headline ${headlineStyle} ${!style ? `h${level}` : `h${style}`} ${center ? 'center' : ''} ${margin === 'none' ? 'margin-none' : ''} ${className ? `${className}` : ''}`}>
       {children}
     </Headline>
   )

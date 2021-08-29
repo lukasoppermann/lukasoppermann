@@ -78,7 +78,7 @@ const style = css`
     * {
       order: 0;
     }
-    h6 {
+    .title--resume {
       display: none;
       ${mq.atLeast.tablet} {
         position: absolute;
@@ -113,7 +113,7 @@ export default function Intro () {
         <Paragraph>I love solving problems by combining technology with the aesthetics &amp; human-centered psychology that is UI/UX design.</Paragraph>
       </div>
       <div>
-        <Headline level="6" >Resumé / recent</Headline>
+        <Headline className="title--resume" style="6">Resumé / recent</Headline>
         <Headline level="4" margin="none">veare</Headline>
         <Headline level="5"><DateTime from="2005" to="2017" /></Headline>
         <Paragraph>Building products for startups, agencies &amp; businesses focusing on product thinking to merge user experience &amp; business needs.</Paragraph>

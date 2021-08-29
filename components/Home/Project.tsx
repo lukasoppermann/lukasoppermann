@@ -1,3 +1,4 @@
+import { Headline } from '@components/Headline'
 import { css } from '@emotion/css'
 import { ProjectDetails } from 'types/Project'
 
@@ -29,7 +30,7 @@ const Project = ({project}: ComponentProps) => {
           <h2 className="Project-card__title">{project.title}</h2>
         </div>
         <div className="Project-excerpt__responsibilities">
-          <h6>Responsibilities</h6>
+          <Headline style="6">Responsibilities</Headline>
           <ul>
             {/* ${repeat(project.responsibilities.slice(0, Math.ceil(project.responsibilities.length / 2)), item => html`<li>${item}</li>`)} */}
           </ul>
@@ -45,12 +46,12 @@ const Project = ({project}: ComponentProps) => {
       </div>
       <aside className="Project-excerpt__data">
         <dl className="Project-excerpt__time">
-          <dt><h6>Year</h6></dt>
+          <dt><Headline style="6">Year</Headline></dt>
           <dd>
             {/* <time datetime="${project.years.start}">${project.years.start}</time>${ */}
               {/* (project.years.start !== project.years.end) ? html` – <time datetime="${project.years.end}">${project.years.end}</time>` : ''} */}
           </dd>
-          <dt><h6>Duration</h6></dt>
+          <dt><Headline style="6">Duration</Headline></dt>
           <dd><time dateTime="${project.duration.totalWeeks * 4}W">
             {/* ${(project.duration.years > 0) ? html`${project.duration.years} yrs` : ''} */}
             {/* ${(project.duration.month > 0) ? html`${project.duration.month} mos` : ''} */}
