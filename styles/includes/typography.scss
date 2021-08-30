@@ -1,4 +1,3 @@
-@import '../mixins/_devicesizes.scss';
 :root {
   // font sizes
   --font-size--caption: 1.3rem;
@@ -81,10 +80,6 @@
   // body small
   --typestyle__h6--size: var(--ts-size-sm);
   --typestyle__h6--lineheight: calc(var(--ts-size-sm) * var(--ts-size-sm));
-  @include at_least(desktop) {
-    --typestyle__h6--size: var(--ts-size-xs);
-    --typestyle__h6--lineheight: calc(var(--ts-size-xs) * var(--ts-size-xs));
-  }
   --typestyle__h6--family: var(--font-mono);
   --typestyle__h6--style: var(--font-mono-style-normal);
   --typestyle__h6--weight: var(--font-mono-weight-bold);
