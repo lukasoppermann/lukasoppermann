@@ -29,6 +29,7 @@ const clients = [
 const style = css`
   .Headline {
     grid-column: columns;
+    margin-top: 96px;
   }
   .svg-client-logo {
     grid-column-end: span 4;
@@ -76,7 +77,7 @@ const style = css`
   }
 `
 
-export default function Clients () {
+export default function Clients() {
 
   return (
     <section className={`${style} Grid`}>

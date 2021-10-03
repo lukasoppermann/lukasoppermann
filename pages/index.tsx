@@ -4,17 +4,28 @@ import Resume from '@components/Home/Resume'
 import Clients from '@components/Home/Clients'
 import Intro from '@components/Home/Intro'
 import Head from 'next/head'
+import { DIR_PROJECTS } from 'config/directories'
+import { GetStaticProps } from 'next'
+import { getMarkdownFile, markdownFile } from '@lib/getMarkdownFile'
+import { markdownToReact } from '@lib/markdownToHtml'
 
 const style = css`
-  
+  .lab1886 {
+    --project-color-tint: var(--lab1886-project-color);
+    --image-offset: -20px;
+  }
+  .copra {
+    --project-color-tint: var(--copra-project-color);
+  }
+  .bosch {
+    --project-color-tint: var(--bosch-project-color);
+  }
+  .figma {
+    --project-color-tint: var(--design-tokens-project-color);
+  }
 `
 
-const demoProject = {
-  client: 'LAB1886',
-  title: 'Design lead at Daimler Incubator'
-}
-
-export default function Home () {
+export default function Home({ projects }) {
   return (
     <main className={`${style}`}>
       <Head>
@@ -23,8 +34,18 @@ export default function Home () {
       </Head>
       <Intro />
       <Resume />
-      <Project project={demoProject} />
+      {projects.map(project => <Project key={project.meta.title} project={{ ...project.meta, ...{ content: markdownToReact(project.content)}}} />)}
       <Clients />
     </main>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const projects: markdownFile[] = await getMarkdownFile(DIR_PROJECTS)
+  
+  return {
+    props: {
+      projects: projects
+    }
+  }
 }

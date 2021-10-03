@@ -13,6 +13,8 @@ import smartypants from '@silvenon/remark-smartypants'
 import toc from 'remark-toc'
 import unwrapImages from 'remark-unwrap-images'
 import mdx from 'remark-mdx'
+import remarkRehype from 'remark-rehype'
+import rehypeStringify from 'rehype-stringify'
 // import remarkAbbr from 'remark-abbr'
 
 export const parseMarkdown = (markdown: string) => {
@@ -31,8 +33,9 @@ export const parseMarkdown = (markdown: string) => {
     .use(smartypants, { backticks: false })
     .use(a11yEmoji)
     .use(footnotes, { inlineNotes: true })
-    .use(html)
-    .processSync(markdown).toString()
+    .use(remarkRehype)
+    .use(rehypeStringify)
+    .processSync(markdown)
   // return results in object
   return result
 }

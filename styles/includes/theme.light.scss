@@ -1,27 +1,38 @@
 @import './core.colors.scss';
 
-body.light-mode, [lightmode] {
+body.light-mode,
+[lightmode] {
   // background colors
-  --background: #FDFEFF;
-  --surface: #FDFEFF;
-  --surface-variant: #F3F4F5;
+  --background: #fdfeff;
+  --surface: #fdfeff;
+  --surface-variant: #f3f4f5;
   --surface-alternative: #030506;
   --accent: var(--yellow);
   // UI Colors
-  --ui--low-contrast: #F3F4F5;
-  --ui--fair-contrast: #E9EAEB;
-  --ui--medium-contrast: #D5D6D7;
-  --ui--high-contrast: #C1C2C3;  
+  --ui--low-contrast: #f3f4f5;
+  --ui--fair-contrast: #e9eaeb;
+  --ui--medium-contrast: #d5d6d7;
+  --ui--high-contrast: #c1c2c3;
   // on colors
-  --on-background__high-emphasis: rgba(var(--neutrals-1000-rgb), .88);
-  --on-background__medium-emphasis: rgba(var(--neutrals-1000-rgb), .66);
-  --on-background__low-emphasis: rgba(var(--neutrals-1000-rgb), .44);
+  --on-background__highest-emphasis: rgba(var(--neutrals-1000-rgb), 1);
+  --on-background__high-emphasis: rgba(var(--neutrals-1000-rgb), 0.88);
+  --on-background__medium-emphasis: rgba(var(--neutrals-1000-rgb), 0.66);
+  --on-background__low-emphasis: rgba(var(--neutrals-1000-rgb), 0.44);
   // on colors
-  --on-surface__high-emphasis: rgba(var(--neutrals-1000-rgb), .88);
-  --on-surface__medium-emphasis: rgba(var(--neutrals-1000-rgb), .66);
-  --on-surface__low-emphasis: rgba(var(--neutrals-1000-rgb), .44);
+  --on-surface__high-emphasis: rgba(var(--neutrals-1000-rgb), 0.88);
+  --on-surface__medium-emphasis: rgba(var(--neutrals-1000-rgb), 0.66);
+  --on-surface__low-emphasis: rgba(var(--neutrals-1000-rgb), 0.44);
+  // on suface alternative
+  --on-surface-alternative__high-emphasis: rgba(var(--neutrals-0-rgb), 0.88);
+  --on-surface-alternative__medium-emphasis: rgba(var(--neutrals-0-rgb), 0.66);
+  --on-surface-alternative__low-emphasis: rgba(var(--neutrals-0-rgb), 0.44);
+
   /** ----------------
   / Custom component tokens
   */
   --intro__background: #f6f5f3;
+  --project-default-tint: #c2e8e3;
+  --lab1886-project-color: #ebe5d2;
+  --copra-project-color: #f1dada;
+  --design-tokens-project-color: #fccf2b;
 }

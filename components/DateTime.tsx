@@ -1,21 +1,18 @@
 import { css } from '@emotion/css'
 
 type DateString = string
-type DD = string
-type MM = string
-type YYYY = string
 
 type DateProps = {
   from: DateString,
   to?: DateString,
-  format?: string
+  format?: string,
+  duration?: boolean
 }
 
 type dateObject = {
-  array?: any[],
-  year?: YYYY,
-  month?: MM,
-  day?: DD
+  year?: number,
+  month?: number,
+  day?: number
 }
 
 const style = css`
@@ -39,49 +36,89 @@ const style = css`
 
 const formatDate = (date: dateObject, formatString: string = 'DD.MM.YYYY') => {
   return formatString
-    .replace('DD', date.day)
-    .replace('MM', date.month)
-    .replace('YYYY', date.year)
+    .replace('DD', `${date.day}`)
+    .replace('MM', `${date.month}`)
+    .replace('YYYY', `${date.year}`)
     .replace(/^[^0-9]+/g, '')
 }
 
-const DateTime = ({ from, to }: DateProps) => {
-  let fromDate: dateObject = {
-    array: from?.split('.').reverse(),
-    year: undefined,
-    month: undefined,
-    day: undefined
-  }
-  let toDate: dateObject = {
-    array: to?.split('.').reverse(),
-    year: undefined,
-    month: undefined,
-    day: undefined
-  }
-  
+const calcDuration = (from: dateObject, to: dateObject) => {
+  const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+  const start = new Date(from.year, from.month, from.day)
+  const end = new Date(to.year, to.month, to.day)
 
-  if (fromDate.array !== undefined) {
-    [fromDate.year, fromDate.month, fromDate.day] = fromDate.array
+
+  const diffDays = Math.floor((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())) / oneDay)
+
+  let diffString = `P${diffDays}D`
+  let formattedDuration = `${diffDays} days`
+
+  if (diffDays > 365) {
+    const year = Math.floor(diffDays / 365)
+    const month = Math.floor((diffDays % 365) / 30)
+    diffString = `P${year}Y${month}M`
+    formattedDuration = `${year} ${year > 1 ? 'yrs' : 'yr'} ${month > 0 ? month + ' mth' : ''} `
   }
-  if (toDate.array !== undefined) {
-    [toDate.year, toDate.month, toDate.day] = toDate.array
+  else if (diffDays > 31) {
+    const month = Math.floor(diffDays / 30)
+    const weeks = Math.floor((diffDays % 30) / 7)
+    diffString = `P${month}M${weeks}W`
+    formattedDuration = `${month} month`
   }
-  
-  if (isNaN(Date.parse(to))) {
+  else if (diffDays > 7) {
+    const weeks = Math.floor(diffDays / 7)
+    const days = Math.floor(diffDays % 7)
+    diffString = `P${weeks}W${days}D`
+    formattedDuration = `${weeks} ${weeks > 1 ? 'weeks' : 'week'}`
+  }
+
+  return {
+    days: diffDays,
+    string: diffString,
+    formatted: formattedDuration
+  }
+}
+
+const prepareDates = (from: string, to: string) => {
+  const fromDateArray = from.split('.').reverse().map(item => item === undefined ? undefined : parseInt(item))
+  const toDateArray = to.split('.').reverse().map(item => item === undefined ? undefined : parseInt(item))
+
+
+  const fromDate: dateObject = {
+    year: fromDateArray[0],
+    month: fromDateArray[1],
+    day: fromDateArray[2]
+  }
+  const toDate: dateObject = {
+    year: toDateArray[0],
+    month: toDateArray[1],
+    day: toDateArray[2]
+  }
+
+
+  return {
+    from: fromDate,
+    to: toDate,
+    duration: calcDuration(fromDate, toDate),
+    isRange: toDate.year && to !== from
+  }
+}
+
+const DateTime = ({ from, to, format = 'DD.MM.YYYY', duration = false }: DateProps) => {
+  const dateObject = prepareDates(from, to)
+
+  if (duration !== false) {
     return (
-      <span className={`${style} dateTime`}>
-        <time dateTime={fromDate.array.join('-')}>{formatDate(fromDate)}</time>
+      <span className={`${style} is-duration dateTime`}>
+        <time dateTime={dateObject.duration.string}>{dateObject.duration.formatted}</time>
       </span>
     )
   }
-  // range
-  // const toDate = to.split('.').reverse()
-  // const [toYear, toMonth, toDay] = toDate
 
   return (
-    <span className={`${style} is-range dateTime`}>
-      <time dateTime={fromDate.array.join('-')}>{formatDate(fromDate)}</time>
-      <time dateTime={toDate.array.join('-')}>{formatDate(toDate)}</time>
+    <span className={`${style} ${dateObject.isRange ? 'is-range' : ''} dateTime`}>
+      <time dateTime={Object.values(dateObject.from).join('-')}>{formatDate(dateObject.from, format)}</time>
+      {dateObject.isRange && <time dateTime={Object.values(dateObject.to).join('-')}>{formatDate(dateObject.to, format)}</time>}
     </span>
   )
 }

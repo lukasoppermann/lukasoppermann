@@ -127,7 +127,7 @@ export default function Intro () {
         <Headline level="4" margin="none">Daimler innovation lab</Headline>
         <Headline level="5"><DateTime from="2017" to="2020" /></Headline>
         <Paragraph>Building out major innovation topics for the future of mobility for Daimler AG. Helping the design team grow &amp; develop.</Paragraph>
-        <Link href="https://drive.google.com/file/d/10K9F9o0hokq4iPAbF5mseKJn_yflt19k/view" rel="noopener noreferrer nofollow" target="_blank">Download resumé (PDF)</Link>
+        <Link href="https://drive.google.com/file/d/10K9F9o0hokq4iPAbF5mseKJn_yflt19k/view" rel="noopener noreferrer nofollow" target="_blank" icon={true}>Download resumé (PDF)</Link>
       </div>
     </section>
   )

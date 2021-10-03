@@ -15,10 +15,10 @@ const style = css`
   }
 `
 
-const PostList = ( {posts}: PostListProps ) => {
+const PostList = ({ posts }: PostListProps) => {
   return (
     <ol className={`${style} PostList`}>
-      {posts.map((post: PostPreviewType) => <li key={post.slug}><PostPreview post={post} /></li>)}
+      {posts.map((post: PostPreviewType) => <li key={post.url}><PostPreview post={post} /></li>)}
     </ol>
   )
 }

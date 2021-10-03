@@ -2,7 +2,6 @@ import { css } from '@emotion/css'
 import { DateTime } from '@components/DateTime'
 import { Headline } from '@components/Headline'
 import { Icon } from '@components/Icon'
-import Link from 'next/link'
 import { Paragraph } from '@components/Paragraph'
 import { Separator } from '@components/Separator'
 import { Category } from '@components/Blog/Category'
@@ -36,7 +35,6 @@ const style = css`
 
 const PostPreview = ( {post}: PostPreviewProps ) => {
   return (
-
         <a target="_blank" rel="noreferrer" className={style} href={`${post.slug}`}>
           <Headline level="3">{post.title}<Icon type="arrowRight" /></Headline>
           <div className="post-details">
@@ -46,7 +44,6 @@ const PostPreview = ( {post}: PostPreviewProps ) => {
           </div>
           <Paragraph>{post.excerpt}</Paragraph>
         </a>
-
   )
 }
 
