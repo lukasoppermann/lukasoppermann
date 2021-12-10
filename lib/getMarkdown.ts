@@ -21,6 +21,7 @@ export const getMarkdownBySlug = (slug, directory) => {
 export const getAllMarkdown = (directory): PostPreviewType[] => {
   // get oath to directory
   const itemDirectory = join(process.cwd(), directory)
+  console.log(itemDirectory)
   // get slugs & metadata for all files
   return fs.readdirSync(itemDirectory).map((itemSlug): PostPreviewType => {
     const { filename, meta } = getMarkdownBySlug(itemSlug, directory)

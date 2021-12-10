@@ -57,7 +57,9 @@ type LinkProps = {
   children: any,
   href: string,
   type?: 'link' | 'button',
-  icon?: false | true | string
+  icon?: false | true | string,
+  rel?: string,
+  target?: string
 }
 
 const Link = ({ children, href, type = 'link', icon = false, ...props }: LinkProps) => {

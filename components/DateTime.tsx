@@ -43,6 +43,11 @@ const formatDate = (date: dateObject, formatString: string = 'DD.MM.YYYY') => {
 }
 
 const calcDuration = (from: dateObject, to: dateObject) => {
+  // guard
+  if (from === undefined || to === undefined) {
+    return null
+  }
+
   const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
   const start = new Date(from.year, from.month, from.day)
   const end = new Date(to.year, to.month, to.day)
@@ -80,33 +85,37 @@ const calcDuration = (from: dateObject, to: dateObject) => {
 }
 
 const prepareDates = (from: string, to: string) => {
-  const fromDateArray = from.split('.').reverse().map(item => item === undefined ? undefined : parseInt(item))
-  const toDateArray = to.split('.').reverse().map(item => item === undefined ? undefined : parseInt(item))
+  // init variables
+  let fromDate: dateObject = undefined, toDate: dateObject = undefined
 
-
-  const fromDate: dateObject = {
-    year: fromDateArray[0],
-    month: fromDateArray[1],
-    day: fromDateArray[2]
+  if (from !== undefined) {
+    const fromDateArray = from.split('.').reverse().map(item => item === undefined ? undefined : parseInt(item))
+    fromDate = {
+      year: fromDateArray[0],
+      month: fromDateArray[1],
+      day: fromDateArray[2]
+    }
   }
-  const toDate: dateObject = {
-    year: toDateArray[0],
-    month: toDateArray[1],
-    day: toDateArray[2]
+  if (to !== undefined) {
+    let toDateArray = to.split('.').reverse().map(item => item === undefined ? undefined : parseInt(item))
+    toDate = {
+      year: toDateArray[0],
+      month: toDateArray[1],
+      day: toDateArray[2]
+    }
   }
-
 
   return {
     from: fromDate,
     to: toDate,
     duration: calcDuration(fromDate, toDate),
-    isRange: toDate.year && to !== from
+    isRange: toDate?.year && to !== from
   }
 }
 
 const DateTime = ({ from, to, format = 'DD.MM.YYYY', duration = false }: DateProps) => {
   const dateObject = prepareDates(from, to)
-
+  // return a duration
   if (duration !== false) {
     return (
       <span className={`${style} is-duration dateTime`}>
@@ -114,7 +123,7 @@ const DateTime = ({ from, to, format = 'DD.MM.YYYY', duration = false }: DatePro
       </span>
     )
   }
-
+  // return single date
   return (
     <span className={`${style} ${dateObject.isRange ? 'is-range' : ''} dateTime`}>
       <time dateTime={Object.values(dateObject.from).join('-')}>{formatDate(dateObject.from, format)}</time>
