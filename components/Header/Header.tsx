@@ -74,7 +74,7 @@ export const Header = () => {
     //   direction: window.scrollY > scrollDirection.y ? 'down' : 'up',
     //   y: window.scrollY
     // })
-  }))
+  }, 100, null, []))
 
   return (
     <header className={`${style} Grid ${isScrolled ? 'is-scrolled' : ''}`}>
