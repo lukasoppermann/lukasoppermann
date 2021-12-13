@@ -19,11 +19,11 @@ const style = css`
     grid-row: 1;
   }
   .Picture {
+    grid-row: 1;
+    grid-column: columns;
     z-index: 0;
     background-color: var(--project-color-tint, var(--project-default-tint)); // for testing only
     overflow: visible;
-    grid-row: 1;
-    grid-column: columns;
     ${mq.atLeast.desktop} {
       grid-column: column 3 / column -1;
       grid-row: 1 / 3;
@@ -36,7 +36,7 @@ const style = css`
   .Project-excerpt__title {
     z-index: 100;
     margin-top: 32px;
-    grid-row: 2;
+    grid-row: 3;
     grid-column: columns;
     color: var(--on-background__highest-emphasis);
     ${mq.atLeast.desktop} {
@@ -57,167 +57,179 @@ const style = css`
       }
     }
   }
-    // ====================================
-    // Responsibilities
-      .Project-excerpt__responsibilities {
-      --list-indicator-color: var(--project-card--list-indicator-color, var(--on-surface-alternative__low-emphasis));
-      z-index: 50;
+  // ====================================
+  // Responsibilities
+  .Project-excerpt__responsibilities {
+    --list-indicator-color: var(--project-card--list-indicator-color, var(--on-surface-alternative__low-emphasis));
+    grid-row: 2;
+    grid-column: columns;
+    z-index: 50;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: var(--project-card--background, var(--surface-alternative));
+    color: var(--project-card--text-high-emphasis, var(--on-surface-alternative__high-emphasis));
+    padding: var(--column-gap);
+    margin: 24px 0 32px calc(-0.5 * var(--column-gap));
+    width: calc(100% + var(--column-gap));
+    ${mq.atLeast.tablet} {
+      margin: 24px 0 32px;
+      width: 100%;
+    }
+    ${mq.atLeast.desktop} {
+      align-self: start;
+      flex-direction: column;
+      justify-content: stretch;
+      margin-left: 0;
+      grid-row: 2;
+      grid-column: column 1 / span 4;
+    }
+    ${mq.atLeast.large} {
+      margin-left: calc(-1 * var(--column-gap));
+      grid-column: column 1 / span 3;
+    }
+    .h6 {
+      width: 100%;
+      margin: 0;
+      margin-bottom: 8px;
+      color: var(--project-card--text-low-emphasis, --on-surface-alternative__low-emphasis);
+      &:not(:first-child) {
+        margin-top: 24px;
+      }
+    }
+    .List {
+      width: 100%;
+      ${mq.atLeast.tablet} {
+        width: calc((100% - var(--column-gap)) / 2);
+      }
+      ${mq.atLeast.desktop} {
+        width: 100%;
+      }
+    }
+  }
+  // ====================================
+  // Details
+  /* .Project-excerpt__details {
+    grid-row: 2;
+    grid-column: full-bleed; */
+    // challenge & solution
+    .Project-excerpt__approach {
+      grid-row: 4;
+      grid-column: columns;
+      ${mq.atLeast.desktop} {
+        grid-column: column 6 / span 7;
+        p {
+          padding-left: 8px;
+        }
+      }
+      ${mq.atLeast.large} {
+        grid-column: column 7 / span 6;
+      }
+    }
+  /* } */
+  // ====================================
+  .Project-excerpt__approach,
+  .Project-excerpt__time {
+    .h5,
+    .h6 {
+      margin: 0;
+      margin-top: 24px;
+    }
+    :not(li) > p {
+      margin-top: 8px;
+    }
+  }
+  // ====================================
+  // Data
+  .Project-excerpt__data {
+    grid-row: 5;
+    border-bottom: 1px solid var(--ui--fair-contrast);
+    margin: size(5) 0;
+    display: flex;
+    flex-direction: column;
+    grid-column: columns;
+    ${mq.atLeast.tablet} {
+      justify-content: space-between;
+      flex-direction: row;
+    }
+    ${mq.atLeast.desktop} {
+      border-bottom: 0;
+      margin-top: size(2);
+      grid-row: 3;
+      grid-column: column 3 / span 3;
+      flex-direction: column;
+      justify-content: stretch;
+    }
+    ${mq.atLeast.large} {
+      grid-column: column 3 / span 4;
+    }
+    .Project-excerpt__time {
       display: flex;
+      align-items: stretch;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-between;
-      background: var(--project-card--background, var(--surface-alternative));
-      color: var(--project-card--text-high-emphasis, var(--on-surface-alternative__high-emphasis));
-      padding: var(--column-gap);
-      grid-row: 3;
-      grid-column: columns;
-      margin: 24px 0 32px calc(-0.5 * var(--column-gap));
-      width: calc(100% + var(--column-gap));
-      ${mq.atLeast.tablet} {
-        margin: 24px 0 32px calc(-1 * var(--column-gap));
-        width: calc(100% + var(--column-gap) * 2);
-      }
+      margin: 0;
+      margin-bottom: 32px;
       ${mq.atLeast.desktop} {
-        align-self: start;
-        flex-direction: column;
         justify-content: stretch;
-        margin-left: 0;
-        grid-row: 2;
-        grid-column: column 1 / span 4;
       }
-      ${mq.atLeast.large} {
-        margin-left: calc(-1 * var(--column-gap));
-        grid-column: column 2 / span 3;
-      }
-      .h6 {
-        width: 100%;
-        margin: 0;
-        margin-bottom: 8px;
-        color: var(--project-card--text-low-emphasis, --on-surface-alternative__low-emphasis);
-        &:not(:first-child) {
-          margin-top: 24px;
+      dd,
+      dt {
+        display: block;
+        width: calc(((100% - var(--column-gap)) / 2));
+        &:nth-child(1n) {
+          order: 1;
         }
-      }
-      .List {
-        width: 100%;
+        &:nth-child(2n) {
+          order: 3;
+        }
+        &:nth-child(3n) {
+          order: 2;
+        }
+        &:nth-child(4n) {
+          order: 4;
+        }
+        &:first-of-type {
+          padding-left: 8px;
+        }
         ${mq.atLeast.tablet} {
-          width: calc((100% - var(--column-gap)) / 2);
+          &:first-of-type {
+            padding-left: 0;
+          }
         }
-        ${mq.atLeast.desktop} {
+        ${mq.is.desktop} {
           width: 100%;
-        }
-      }
-    }
-  // ====================================
-    // Details
-    .Project-excerpt__details {
-      grid-row: 2;
-      grid-column: full-bleed;
-      // challenge & solution
-      .Project-excerpt__approach {
-        grid-row: 1;
-        grid-column: columns;
-        ${mq.atLeast.desktop} {
-          grid-column: column 6 / span 7;
-          p {
-            padding-left: 8px;
+          &:nth-child(1n) {
+            order: 1;
+          }
+          &:nth-child(2n) {
+            order: 1;
           }
         }
         ${mq.atLeast.large} {
-          grid-column: column 7 / span 6;
-        }
-      }
-    }
-        // ====================================
-    .Project-excerpt__approach,
-    .Project-excerpt__time {
-      .h5,
-      .h6 {
-        margin: 0;
-        margin-top: 24px;
-      }
-      :not(li) > p {
-        margin-top: 8px;
-      }
-    }
-    // ====================================
-    // Data
-    .Project-excerpt__data {
-      border-bottom: 1px solid var(--ui--fair-contrast);
-      margin: size(5) 0;
-      display: flex;
-      flex-direction: column;
-      grid-column: columns;
-      ${mq.atLeast.tablet} {
-        justify-content: space-between;
-        flex-direction: row;
-      }
-      ${mq.atLeast.desktop} {
-        border-bottom: 0;
-        margin-top: size(2);
-        grid-row: 2;
-        grid-column: column 3 / span 3;
-        flex-direction: column;
-        justify-content: stretch;
-      }
-      ${mq.atLeast.large} {
-        grid-column: column 3 / span 4;
-      }
-      .Project-excerpt__time {
-        display: flex;
-        align-items: stretch;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin: 0;
-        margin-bottom: 32px;
-        ${mq.atLeast.desktop} {
-          flex-direction: column;
-          justify-content: stretch;
-        }
-        dd,
-        dt {
-          display: block;
-          order: 2;
           width: calc(((100% - var(--column-gap)) / 2));
-          &:first-of-type {
-            padding-left: 8px;
-          }
-          ${mq.atLeast.tablet} {
-            &:first-of-type {
-              padding-left: 0;
-            }
-          }
-          ${mq.atLeast.desktop} {
-            width: 100%;
-            &:first-of-type {
-              order: 1;
-            }
-          }
-          ${mq.atLeast.large} {
-            width: calc(((100% - var(--column-gap)) / 2));
-            order: 2;
-          }
-        }
-        dt {
-          order: 1;
-          h6 {
-            color: var(--on-background__medium-emphasis);
-          }
-        }
-        dd {
-          margin-left: 0;
-          font: var(--typestyle__body--bold);
-          color: var(--on-background__high-emphasis);
         }
       }
-      .link {
-        align-self: center;
-        ${mq.atLeast.desktop} {
-          align-self: flex-start;
+      dt {
+        h6 {
+          color: var(--on-background__medium-emphasis);
         }
+      }
+      dd {
+        margin-left: 0;
+        font: var(--typestyle__body--bold);
+        color: var(--on-background__high-emphasis);
       }
     }
+    .link {
+      align-self: center;
+      ${mq.atLeast.desktop} {
+        align-self: flex-start;
+      }
+    }
+  }
 `
 
 type ComponentProps = {
@@ -227,7 +239,51 @@ type ComponentProps = {
 const Project = ({ project }: ComponentProps) => {
   return (
     <section className={`Project-excerpt Project-card Project-card__link Grid ${project.class} ${style}`}>
-      <div className="Project-excerpt__info Grid">
+      {/* <div className="Project-excerpt__info Grid"> */}
+        <div className="Picture">
+          <Image
+            alt={project.picture.alt}
+            src={project.picture.url}
+            layout="responsive"
+            width={project.picture.width}
+            height={project.picture.height}
+          />
+        </div>
+        <div className="Project-excerpt__title">
+          <h4 className="Project-card__client">{project.client}</h4>
+          <h2 className="Project-card__title">{project.title}</h2>
+        </div>
+        <div className="Project-excerpt__responsibilities">
+          <Headline style="6">Responsibilities</Headline>
+          <List items={project.responsibilities.slice(0, Math.ceil(project.responsibilities.length / 2))}></List>
+          <List items={project.responsibilities.slice(Math.ceil(project.responsibilities.length / 2))}></List>
+        </div>
+      {/* </div> */}
+      {/* <div className="Project-excerpt__details Grid"> */}
+        <div className="Project-excerpt__approach">
+          {project.content}
+        </div>
+      {/* </div> */}
+      <aside className="Project-excerpt__data">
+        <dl className="Project-excerpt__time">
+          <dt><Headline style="6">Year</Headline></dt>
+          <dd>
+            <DateTime format="YYYY" from={project.startDate} to={project.endDate} />
+          </dd>
+          <dt><Headline style="6">Duration</Headline></dt>
+          <dd>
+            <DateTime duration from={project.startDate} to={project.endDate} />
+          </dd>
+        </dl>
+        {project.url && <Link href={project.url} type="button" icon={true}>Open</Link>}
+      </aside>
+    </section>
+  )
+}
+
+export { Project }
+
+{/* <div className="Project-excerpt__info Grid">
         <div className="Picture">
           <Image
             alt={project.picture.alt}
@@ -249,14 +305,7 @@ const Project = ({ project }: ComponentProps) => {
       </div>
       <div className="Project-excerpt__details Grid">
         <div className="Project-excerpt__approach">
-          {/* {console.log('markdownToReact result:', project.content.props.children)} */}
-          {/* {markdownToReact(project.content)} */}
           {project.content}
-          {/* {project.approach.map(item => Object.entries(item)[0]).map(([title, body]) => <Fragment key={title}>
-              <Headline level="6">{title}</Headline>
-              <Paragraph>{body}</Paragraph>
-            </Fragment>
-          )} */}
         </div>
       </div>
       <aside className="Project-excerpt__data">
@@ -271,9 +320,4 @@ const Project = ({ project }: ComponentProps) => {
           </dd>
         </dl>
         {project.url && <Link href={project.url} type="button" icon={true}>Open</Link>}
-      </aside>
-    </section>
-  )
-}
-
-export { Project }
+      </aside> */}
