@@ -38,7 +38,6 @@ const style = css`
     transform: translateY(-2px);
     transition: box-shadow .35s ease, transform .35s ease;
     box-sizing: border-box;
-    width: 100%;
     text-align: right;
     ${mq.atLeast.tablet} {
       width: -moz-fit-content;

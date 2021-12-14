@@ -33,6 +33,7 @@ export function markdownToReact(markdown) {
     // @ts-ignore
     .use(rehype2react, {
       createElement: React.createElement,
+      Fragment: React.Fragment,
       components: {
         p: Paragraph,
         'h5': ({children}) => <Headline level="5"> { children } </Headline>,

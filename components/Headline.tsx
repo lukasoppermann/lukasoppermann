@@ -1,4 +1,5 @@
 import { css } from '@emotion/css'
+import { mq } from 'config/mediaQueries'
 
 type HeadlineProps = {
   children: any
@@ -19,7 +20,11 @@ const headlineStyle = css`
     margin-bottom: 40px;
   }
   &.h2 {
-    margin-bottom: 32px;
+    font: var(--typestyle__h2);
+    margin-bottom: 24px;
+    ${mq.atLeast.desktop} {
+      margin-bottom: 32px;
+    }
   }
   &.h3 {
     font-size: var(--font-size--headline);

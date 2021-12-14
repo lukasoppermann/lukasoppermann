@@ -11,8 +11,8 @@ const style = css`
   --image-offset: -20px;
   padding-top: var(--image-offset, 0);
   grid-column: full-bleed;
-  :not(:first-child) {
-    margin-top: 96px;
+  &:not(:first-child) {
+    margin-top: 40px;
   }
   .Project-excerpt__info {
     grid-column: full-bleed;
@@ -20,15 +20,15 @@ const style = css`
   }
   .Picture {
     grid-row: 1;
-    grid-column: columns;
+    grid-column: full-bleed;
     z-index: 0;
     background-color: var(--project-color-tint, var(--project-default-tint)); // for testing only
     overflow: visible;
+    padding-top: var(--image-offset, 0);
     ${mq.atLeast.desktop} {
       grid-column: column 3 / column -1;
       grid-row: 1 / 3;
     }
-    padding-top: var(--image-offset, 0);
     img {
       margin-top: var(--image-offset, 0);
     }
@@ -47,15 +47,6 @@ const style = css`
     .Project-card__client {
       margin-top: 0;
     }
-    .Project-card__title {
-      margin-top: 8px;
-      font-size: var(--ts-size-xxl);
-      line-height: var(--ts-line-height-xxl);
-      ${mq.atLeast.large} {
-        font-size: var(--ts-size-hg);
-        line-height: var(--ts-line-height-hg);
-      }
-    }
   }
   // ====================================
   // Responsibilities
@@ -71,7 +62,7 @@ const style = css`
     background: var(--project-card--background, var(--surface-alternative));
     color: var(--project-card--text-high-emphasis, var(--on-surface-alternative__high-emphasis));
     padding: var(--column-gap);
-    margin: 24px 0 32px calc(-0.5 * var(--column-gap));
+    margin: 0 0 32px calc(-0.5 * var(--column-gap));
     width: calc(100% + var(--column-gap));
     ${mq.atLeast.tablet} {
       margin: 24px 0 32px;
@@ -94,7 +85,7 @@ const style = css`
       margin: 0;
       margin-bottom: 8px;
       color: var(--project-card--text-low-emphasis, --on-surface-alternative__low-emphasis);
-      &:not(:first-child) {
+      &:not(::first-child) {
         margin-top: 24px;
       }
     }
@@ -134,7 +125,9 @@ const style = css`
     .h5,
     .h6 {
       margin: 0;
-      margin-top: 24px;
+      &:not(:first-child) {
+        margin-top: 24px;
+      }
     }
     :not(li) > p {
       margin-top: 8px;
@@ -145,7 +138,8 @@ const style = css`
   .Project-excerpt__data {
     grid-row: 5;
     border-bottom: 1px solid var(--ui--fair-contrast);
-    margin: size(5) 0;
+    margin: 40px 0 0;
+    padding-bottom: 32px;
     display: flex;
     flex-direction: column;
     grid-column: columns;
@@ -155,7 +149,7 @@ const style = css`
     }
     ${mq.atLeast.desktop} {
       border-bottom: 0;
-      margin-top: size(2);
+      margin-top: 16px;
       grid-row: 3;
       grid-column: column 3 / span 3;
       flex-direction: column;
@@ -191,15 +185,10 @@ const style = css`
         &:nth-child(4n) {
           order: 4;
         }
-        &:first-of-type {
-          padding-left: 8px;
-        }
-        ${mq.atLeast.tablet} {
-          &:first-of-type {
-            padding-left: 0;
-          }
-        }
         ${mq.is.desktop} {
+          &:first-of-type {
+            padding-left: 8px;
+          }
           width: 100%;
           &:nth-child(1n) {
             order: 1;
@@ -224,10 +213,9 @@ const style = css`
       }
     }
     .link {
-      align-self: center;
-      ${mq.atLeast.desktop} {
-        align-self: flex-start;
-      }
+      align-self: flex-start;
+      justify-content: space-between;
+      min-width: 120px;
     }
   }
 `
@@ -251,7 +239,7 @@ const Project = ({ project }: ComponentProps) => {
         </div>
         <div className="Project-excerpt__title">
           <h4 className="Project-card__client">{project.client}</h4>
-          <h2 className="Project-card__title">{project.title}</h2>
+          <Headline level="2" className="Project-card__title">{project.title}</Headline>
         </div>
         <div className="Project-excerpt__responsibilities">
           <Headline style="6">Responsibilities</Headline>

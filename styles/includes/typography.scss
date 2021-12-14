@@ -82,4 +82,12 @@
   --typestyle__button: var(--font-sans-style-normal) var(--font-sans-weight-regular) var(--ts-size-md) / var(--ts-line-height-md) var(--font-sans);
   // h6
   --typestyle__h6: var(--font-mono-style-normal) var(--font-mono-weight-bold) var(--ts-size-sm) / var(--ts-line-height-sm) var(--font-mono);
+  // h2
+  --typestyle__h2: var(--font-sans-style-normal) var(--font-sans-weight-bold) var(--ts-size-xxl) / var(--ts-line-height-xxl) var(--font-sans);
+  // DESKTOP
+  @media (min-width: 1024px) {
+    --typestyle__h2: var(--font-sans-style-normal) var(--font-sans-weight-bold)
+  var(--ts-size-hg) / var(--ts-line-height-hg) var(--font-sans);
+
+  }
 }
