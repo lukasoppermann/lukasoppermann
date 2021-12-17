@@ -83,7 +83,6 @@ const style = css`
 const Navigation = ({closeMenu, active}: NavigationProps) => {
   return (
     <menu className={`Navigation ${style} ${active ? 'is-active' : ''}`}>
-      <a className='Menu__icon' />
       <nav className='Menu__items' suppressHydrationWarning={true}>
         <ActivatableLink href='/'>
           <a onClick={closeMenu}>Home</a>

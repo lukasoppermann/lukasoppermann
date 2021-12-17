@@ -31,6 +31,7 @@ export default function Home({ projects }) {
       <Head>
         <title>Home | Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist</title>
         <meta property="og:title" content="Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist — vea.re" key="title" />
+        <meta name="description" content="Lukas Oppermann is a design lead and creative director from berlin, germany. He loves creating experiences with a focus on usability."></meta>
       </Head>
       <Intro />
       <Resume />
