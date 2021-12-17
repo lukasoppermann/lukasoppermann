@@ -3,7 +3,7 @@ import { DateString } from './Date';
 
 type PostPreviewType = {
   filename: string,
-  slug: string,
+  url: string,
   title: string,
   published: DateString,
   category: Category,

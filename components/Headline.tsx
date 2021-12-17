@@ -1,4 +1,5 @@
 import { css } from '@emotion/css'
+import { mq } from 'config/mediaQueries'
 
 type HeadlineProps = {
   children: any
@@ -9,7 +10,7 @@ type HeadlineProps = {
   className?: string
 }
 
-type Headline = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
+type HeadlineType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
 
 const headlineStyle = css`
   display: block;
@@ -19,7 +20,11 @@ const headlineStyle = css`
     margin-bottom: 40px;
   }
   &.h2 {
-    margin-bottom: 32px;
+    font: var(--typestyle__h2);
+    margin-bottom: 24px;
+    ${mq.atLeast.desktop} {
+      margin-bottom: 32px;
+    }
   }
   &.h3 {
     font-size: var(--font-size--headline);
@@ -34,10 +39,9 @@ const headlineStyle = css`
     /* @include font(mono, bold); */
   }
   &.h6 {
-    /* @include font(mono, bold); */
-    font-weight: var(--font-weight--bold);
+    font: var(--typestyle__h6);
+    text-transform: uppercase;
     color: var(--on-background__medium-emphasis);
-    font-size: var(--font-size--caption);
     margin-bottom: 8px;
   }
   &.center {
@@ -49,7 +53,7 @@ const headlineStyle = css`
 `
 
 const Headline = ({children, level, style, center, margin, className}: HeadlineProps) => {
-  const Headline: Headline  = level ? `h${level}` : 'span' as Headline
+  const Headline: HeadlineType = level ? `h${level}` : 'span' as HeadlineType
 
   return (
     <Headline className={`Headline ${headlineStyle} ${!style ? `h${level}` : `h${style}`} ${center ? 'center' : ''} ${margin === 'none' ? 'margin-none' : ''} ${className ? `${className}` : ''}`}>

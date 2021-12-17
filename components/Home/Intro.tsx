@@ -201,7 +201,7 @@ const style = css`
     max-width: 100%;
     font-weight: var(--font-weight--regular);
     font-size: 2rem;
-    color: rgb(var(--black-rgb));
+    color: var(--on-surface__high-emphasis);
     line-height: 130%;
     grid-column: columns;
     grid-row: 6;

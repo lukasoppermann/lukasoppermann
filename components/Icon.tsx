@@ -13,7 +13,7 @@ const iconTypes = {
   lightMode: lightMode
 };
 
-type IconType = 
+export type IconType = 
   'arrowRight' |
   'close' |
   'menu' |

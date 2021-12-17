@@ -26,7 +26,7 @@ export const getAllMarkdown = (directory): PostPreviewType[] => {
     const { filename, meta } = getMarkdownBySlug(itemSlug, directory)
     return {
       filename: filename,
-      slug: meta.slug,
+      url: meta.url,
       title: meta.title,
       published: meta.published,
       excerpt: meta.excerpt,

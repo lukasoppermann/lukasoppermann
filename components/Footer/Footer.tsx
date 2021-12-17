@@ -5,17 +5,13 @@ import Link from 'next/link'
 const style = css`
   margin-top: 64px;
   align-items: center;
-  align-self: flex-end;
-  .logo {
-    grid-row: 1;
-    grid-column: columns / span 2;
-  }
+  align-self: center;
   nav {
     height: 100%;
     grid-row: 1;
-    grid-column: column 3 / span 10;
+    grid-column: columns;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     flex-wrap: wrap;
     a, span {
       display: inline-block;
@@ -56,7 +52,6 @@ const style = css`
 
 const Footer = () =>{
   return (<footer className={`${style} Grid`}>
-    {/* <Logo small /> */}
     <nav>
       <a href='https://dribbble.com/lukasoppermann' rel='noreferrer' target="_blank">Dribbble</a>
       <a href="https://www.linkedin.com/in/lukasoppermann" rel='noreferrer' target="_blank">LinkedIn</a>

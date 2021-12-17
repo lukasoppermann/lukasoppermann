@@ -14,7 +14,7 @@ const style = css`
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 900;
   background: var(--background);
   &.is-scrolled {
     box-shadow: 1px 0 15px rgba(0,0,0,.02);
