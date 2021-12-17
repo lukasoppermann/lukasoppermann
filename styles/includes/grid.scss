@@ -1,7 +1,7 @@
 /* ====================================
     GRID
 ==================================== */
-.Grid {
+:root {
   --grid-column-gap: 12px;
   --grid-margin: 12px;
   --grid-columns: 6;
@@ -27,6 +27,8 @@
     --grid-column-width: minmax(auto, 74px);
     --grid-margin: auto;
   }
+}
+.Grid {
   // grid
   display: grid;
   grid-row-gap: 0;

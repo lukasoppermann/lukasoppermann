@@ -13,6 +13,9 @@ const style = css`
   grid-column: full-bleed;
   &:not(:first-child) {
     margin-top: 40px;
+    ${mq.atLeast.tablet} {
+      margin-top: 64px;
+    }
   }
   .Project-excerpt__info {
     grid-column: full-bleed;
@@ -25,8 +28,12 @@ const style = css`
     background-color: var(--project-color-tint, var(--project-default-tint)); // for testing only
     overflow: visible;
     padding-top: var(--image-offset, 0);
+    ${mq.atLeast.tablet} {
+      grid-column: columns;
+      grid-row: 1;
+    }
     ${mq.atLeast.desktop} {
-      grid-column: column 3 / column -1;
+      grid-column: column 4 / column -1;
       grid-row: 1 / 3;
     }
     img {
@@ -75,10 +82,13 @@ const style = css`
       margin-left: 0;
       grid-row: 2;
       grid-column: column 1 / span 4;
+      padding: 32px;
     }
     ${mq.atLeast.large} {
+      padding: var(--column-gap);
       margin-left: calc(-1 * var(--column-gap));
       grid-column: column 1 / span 3;
+      width: calc(100% + var(--column-gap));
     }
     .h6 {
       width: 100%;
@@ -101,24 +111,22 @@ const style = css`
   }
   // ====================================
   // Details
-  /* .Project-excerpt__details {
-    grid-row: 2;
-    grid-column: full-bleed; */
-    // challenge & solution
-    .Project-excerpt__approach {
-      grid-row: 4;
-      grid-column: columns;
-      ${mq.atLeast.desktop} {
-        grid-column: column 6 / span 7;
-        p {
-          padding-left: 8px;
-        }
-      }
-      ${mq.atLeast.large} {
-        grid-column: column 7 / span 6;
+  // challenge & solution
+  .Project-excerpt__approach {
+    grid-row: 4;
+    grid-column: columns;
+    ${mq.atLeast.desktop} {
+      margin-top: 32px;
+      grid-row: 3;
+      grid-column: column 6 / span 7;
+      p {
+        padding-left: 8px;
       }
     }
-  /* } */
+    ${mq.atLeast.large} {
+      grid-column: column 7 / span 6;
+    }
+  }
   // ====================================
   .Project-excerpt__approach,
   .Project-excerpt__time {
@@ -138,7 +146,8 @@ const style = css`
   .Project-excerpt__data {
     grid-row: 5;
     border-bottom: 1px solid var(--ui--fair-contrast);
-    margin: 40px 0 0;
+    margin: 0;
+    margin-top: 40px;
     padding-bottom: 32px;
     display: flex;
     flex-direction: column;
@@ -149,7 +158,8 @@ const style = css`
     }
     ${mq.atLeast.desktop} {
       border-bottom: 0;
-      margin-top: 16px;
+      margin-top: 32px;
+      padding-left: 8px;
       grid-row: 3;
       grid-column: column 3 / span 3;
       flex-direction: column;
@@ -186,15 +196,15 @@ const style = css`
           order: 4;
         }
         ${mq.is.desktop} {
-          &:first-of-type {
-            padding-left: 8px;
-          }
           width: 100%;
           &:nth-child(1n) {
             order: 1;
           }
           &:nth-child(2n) {
             order: 1;
+          }
+          &:nth-child(3n) {
+            margin-top: 16px;
           }
         }
         ${mq.atLeast.large} {
