@@ -8,7 +8,6 @@ import { DateTime } from '@components/DateTime';
 import { List } from '@components/List';
 
 const style = css`
-  --image-offset: -20px;
   padding-top: var(--image-offset, 0);
   grid-column: full-bleed;
   &:not(:first-child) {
@@ -35,9 +34,20 @@ const style = css`
     ${mq.atLeast.desktop} {
       grid-column: column 4 / column -1;
       grid-row: 1 / 3;
+      & > span {
+        width: calc(100% - var(--column-gap)) !important;
+        margin-left: var(--column-gap) !important;
+      }
+    }
+    ${mq.atLeast.large} {
+      grid-column: column 3 / column -1;
+      grid-row: 1 / 3;
+    }
+    & > span {
+      overflow: visible !important;
     }
     img {
-      margin-top: var(--image-offset, 0);
+      margin-top: var(--image-offset, 0) !important;
     }
   }
   .Project-excerpt__title {
@@ -76,6 +86,7 @@ const style = css`
       width: 100%;
     }
     ${mq.atLeast.desktop} {
+      --list-font-style: var(--typestyle__body--small);
       align-self: start;
       flex-direction: column;
       justify-content: stretch;
@@ -85,6 +96,7 @@ const style = css`
       padding: 32px;
     }
     ${mq.atLeast.large} {
+      --list-font-style: var(--typestyle__body);
       padding: var(--column-gap);
       margin-left: calc(-1 * var(--column-gap));
       grid-column: column 1 / span 3;
@@ -238,6 +250,7 @@ const Project = ({ project }: ComponentProps) => {
   return (
     <section className={`Project-excerpt Project-card Project-card__link Grid ${project.class} ${style}`}>
       {/* <div className="Project-excerpt__info Grid"> */}
+        {/* @ts-ignore */}
         <div className="Picture">
           <Image
             alt={project.picture.alt}
