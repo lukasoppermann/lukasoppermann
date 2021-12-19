@@ -64,6 +64,22 @@ const style = css`
     .Project-card__client {
       margin-top: 0;
     }
+    h4 {
+      text-transform: uppercase;
+      letter-spacing: 0.1px;
+      &::before {
+        content: "";
+        display: inline-block;
+        position: relative;
+        flex: 0 0 auto;
+        align-self: center;
+        height: 2px;
+        width: 40px;
+        transform: translateY(-5px);
+        background: currentColor;
+        margin-right: 8px;
+      }
+    }
   }
   // ====================================
   // Responsibilities
@@ -130,7 +146,7 @@ const style = css`
     ${mq.atLeast.desktop} {
       margin-top: 32px;
       grid-row: 3;
-      grid-column: column 6 / span 7;
+      grid-column: column 7 / span 6;
       p {
         padding-left: 8px;
       }
@@ -171,13 +187,13 @@ const style = css`
     ${mq.atLeast.desktop} {
       border-bottom: 0;
       margin-top: 32px;
-      padding-left: 8px;
       grid-row: 3;
-      grid-column: column 3 / span 3;
+      grid-column: column 4 / span 3;
       flex-direction: column;
       justify-content: stretch;
     }
     ${mq.atLeast.large} {
+      padding-left: 8px;
       grid-column: column 3 / span 4;
     }
     .Project-excerpt__time {
