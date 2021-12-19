@@ -249,8 +249,6 @@ type ComponentProps = {
 const Project = ({ project }: ComponentProps) => {
   return (
     <section className={`Project-excerpt Project-card Project-card__link Grid ${project.class} ${style}`}>
-      {/* <div className="Project-excerpt__info Grid"> */}
-        {/* @ts-ignore */}
         <div className="Picture">
           <Image
             alt={project.picture.alt}
@@ -269,12 +267,9 @@ const Project = ({ project }: ComponentProps) => {
           <List items={project.responsibilities.slice(0, Math.ceil(project.responsibilities.length / 2))}></List>
           <List items={project.responsibilities.slice(Math.ceil(project.responsibilities.length / 2))}></List>
         </div>
-      {/* </div> */}
-      {/* <div className="Project-excerpt__details Grid"> */}
         <div className="Project-excerpt__approach">
           {project.content}
         </div>
-      {/* </div> */}
       <aside className="Project-excerpt__data">
         <dl className="Project-excerpt__time">
           <dt><Headline style="6">Year</Headline></dt>
@@ -286,49 +281,10 @@ const Project = ({ project }: ComponentProps) => {
             <DateTime duration from={project.startDate} to={project.endDate} />
           </dd>
         </dl>
-        {project.url && <Link href={project.url} type="button" icon={true}>Open</Link>}
+        {project.url && <Link href={project.url} target={project.buttonTarget} type="button" icon={true}>{project.buttonLabel || "Open"}</Link>}
       </aside>
     </section>
   )
 }
 
 export { Project }
-
-{/* <div className="Project-excerpt__info Grid">
-        <div className="Picture">
-          <Image
-            alt={project.picture.alt}
-            src={project.picture.url}
-            layout="responsive"
-            width={project.picture.width}
-            height={project.picture.height}
-          />
-        </div>
-        <div className="Project-excerpt__title">
-          <h4 className="Project-card__client">{project.client}</h4>
-          <h2 className="Project-card__title">{project.title}</h2>
-        </div>
-        <div className="Project-excerpt__responsibilities">
-          <Headline style="6">Responsibilities</Headline>
-          <List items={project.responsibilities.slice(0, Math.ceil(project.responsibilities.length / 2))}></List>
-          <List items={project.responsibilities.slice(Math.ceil(project.responsibilities.length / 2))}></List>
-        </div>
-      </div>
-      <div className="Project-excerpt__details Grid">
-        <div className="Project-excerpt__approach">
-          {project.content}
-        </div>
-      </div>
-      <aside className="Project-excerpt__data">
-        <dl className="Project-excerpt__time">
-          <dt><Headline style="6">Year</Headline></dt>
-          <dd>
-            <DateTime format="YYYY" from={project.startDate} to={project.endDate} />
-          </dd>
-          <dt><Headline style="6">Duration</Headline></dt>
-          <dd>
-            <DateTime duration from={project.startDate} to={project.endDate} />
-          </dd>
-        </dl>
-        {project.url && <Link href={project.url} type="button" icon={true}>Open</Link>}
-      </aside> */}

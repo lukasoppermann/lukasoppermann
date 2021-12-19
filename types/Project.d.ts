@@ -2,6 +2,8 @@ export type ProjectDetails = {
   client: string,
   title: string,
   class?: string,
+  buttonLabel?: string
+  buttonTarget?: string
   url?: string,
   responsibilities?: string[],
   approach?: {[key: string]: string}[],
