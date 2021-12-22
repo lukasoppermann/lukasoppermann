@@ -4,6 +4,15 @@ import NextLink from 'next/link'
 import { Icon, IconType } from './Icon'
 
 const style = css`
+  &.type--inline {
+    text-decoration: underline;
+    color: var(--on-background__high-emphasis);
+    &:hover {
+      cursor: pointer;
+      color: var(--link-color, var(--interaction));
+      text-decoration: none;
+    }
+  }
   &.type--link {
     font: var(--typestyle__link);
     display: inline-flex;
@@ -55,7 +64,7 @@ const style = css`
 type LinkProps = {
   children: any,
   href: string,
-  type?: 'link' | 'button',
+  type?: 'link' | 'inline' | 'button',
   icon?: false | true | string,
   rel?: string,
   target?: string

@@ -13,6 +13,10 @@ body.dark-mode,
   --ui--fair-contrast: #1e2021;
   --ui--medium-contrast: #323435;
   --ui--high-contrast: #464849;
+  // functional colors
+  --interaction: var(--blue);
+  --link: var(--interaction);
+
   // on colors
   --on-background__highest-emphasis: rgba(var(--neutrals-0-rgb), 1);
   --on-background__high-emphasis: rgba(var(--neutrals-0-rgb), 0.8);
