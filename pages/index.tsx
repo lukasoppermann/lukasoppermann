@@ -8,6 +8,7 @@ import { DIR_PROJECTS } from 'config/directories'
 import { GetStaticProps } from 'next'
 import { getMarkdownFile, markdownFile } from '@lib/getMarkdownFile'
 import { markdownToReact } from '@lib/markdownToHtml'
+import { Headline } from '@components/Headline'
 
 const style = css`
   .lab1886 {
@@ -25,6 +26,12 @@ const style = css`
   }
 `
 
+const markdownOptions = {
+  components: {
+    'h6': ({ children }) => <Headline style="6">{children}</Headline>,
+  }
+}
+
 export default function Home({ projects }) {
   return (
     <main className={`${style}`}>
@@ -38,7 +45,7 @@ export default function Home({ projects }) {
       </Head>
       <Intro />
       <Resume />
-      {projects.map(project => <Project key={project.meta.title} project={{ ...project.meta, ...{ content: markdownToReact(project.content)}}} />)}
+      {projects.map(project => <Project key={project.meta.title} project={{ ...project.meta, ...{ content: markdownToReact(project.content, markdownOptions)}}} />)}
       <Clients />
     </main>
   )

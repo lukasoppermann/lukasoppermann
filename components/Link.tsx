@@ -70,7 +70,13 @@ type LinkProps = {
   target?: string
 }
 
-const Link = ({ children, href, type = 'link', icon = false, ...props }: LinkProps) => {
+const Link = ({ children, href, type = 'link', icon = false, rel = undefined, ...props }: LinkProps) => {
+  // set rel
+  const regex = /^(www\.|https?:|\/\/)/g;
+  if (!rel && href.match(regex) !== null) {
+    rel = 'noopener'
+  }
+  // return link
   return (
     <NextLink href={href}>
       <a className={`${style} link type--${type}`} {...props}>

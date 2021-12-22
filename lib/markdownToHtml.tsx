@@ -24,7 +24,7 @@ export default function markdownToHtml (markdown) {
     .toString()
 }
 
-export function markdownToReact(markdown) {
+export function markdownToReact(markdown, options?) {
   return unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -36,10 +36,13 @@ export function markdownToReact(markdown) {
       createElement: React.createElement,
       Fragment: React.Fragment,
       components: {
-        p: Paragraph,
-        'h5': ({children}) => <Headline level="5">{ children }</Headline>,
-        'h6': ({ children }) => <Headline level="6">{children}</Headline>,
-        'a': ({ href, children }) => <Link href={href} type="inline" target="_blank">{children[0]}</Link>,
+        ...{
+          p: Paragraph,
+          'h5': ({children}) => <Headline level="5">{ children }</Headline>,
+          'h6': ({ children }) => <Headline level="6">{children}</Headline>,
+          'a': ({ href, children }) => <Link href={href} type="inline" target="_blank">{children[0]}</Link>,
+        },
+        ...options.components
       }
     })
     .processSync(markdown)
