@@ -27,6 +27,7 @@ const style = css`
     }
     a:hover {
       color: var(--on-background__high-emphasis);
+      text-decoration: underline;
       cursor: pointer;
     }
     a:first-child {

@@ -13,14 +13,36 @@ const style = css`
     display: flex;
     justify-content: flex-end;
     a {
+      position: relative;
       color: var(--on-background__high-emphasis);
       font-size: var(--font-size--default);
       font-weight: var(--font-weight--bold);
       text-transform: uppercase;
       letter-spacing: .2px;
-      padding: 8px 0 8px 24px;
+      padding: 8px;
+      margin-left: 8px;
       span {
         transition: none;
+      }
+      &:after {
+        content: "";
+        display: inline;
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: currentColor;
+        border-radius: 100%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        opacity: 0;
+        transition: opacity .3s ease, bottom .3s ease, width .3s ease, background .3s ease;
+        bottom: 8px;
+      }
+      &.is-active, &:hover {
+        &:after {
+          bottom: 0;
+          opacity: 1;
+        }
       }
     }
     .dark-mode-toggle {
@@ -42,6 +64,7 @@ const style = css`
       flex-direction: column;
       a {
         font-size: var(--font-size--headline);
+        letterspacing: .5px;
         opacity: 0;
         transform: translate(0, -25%);
         transition: opacity .75s ease .25s, transform .75s ease .25s, color .25s ease;

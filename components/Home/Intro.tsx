@@ -17,7 +17,6 @@ const style = css`
     grid-column: columns;
     grid-row: 1;
     max-width: 360px;
-    padding-top: 16px;
     &.Header--intro__info--1 {
       animation: 1.25s var(--easeOutQuint) 1s forwards fadeSlideIn;
       grid-row: 2;
@@ -63,21 +62,19 @@ const style = css`
         grid-column-start: column 7;
       }
     }
-    h5 {
-      margin-top: 24px;
+    h3 {
+      margin-top: 32px;
       color: var(--on-background__high-emphasis);
+      font: var(--typestyle__h6);
       ${mq.atLeast.desktop} {
         margin-top: 40px;
       }
-      /* // @include font(mono, bold); */
-      /* // @include type-scale(sm); */
       text-transform: uppercase;
     }
     p {
       margin-top: 8px;
-      /* // @include font(sans); */
-      /* // @include type-scale(sm); */
-      color: var(--on-background__low-emphasis);;
+      font: var(--typestyle__body--small);
+      color: var(--on-background__low-emphasis);
     }
   }
 
