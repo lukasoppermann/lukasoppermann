@@ -79,7 +79,7 @@ const Link = ({ children, href, type = 'link', icon = false, rel = undefined, ..
   // return link
   return (
     <NextLink href={href}>
-      <a className={`${style} link type--${type}`} {...props}>
+      <a className={`${style} link type--${type}`} rel={rel} {...props}>
         {children}
         {icon && <Icon type={icon !== true ? icon as IconType : "arrowRight"} />}
       </a>
