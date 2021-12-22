@@ -32,6 +32,9 @@ export default function Home({ projects }) {
         <title>Home | Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist</title>
         <meta property="og:title" content="Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist — vea.re" key="title" />
         <meta name="description" content="Lukas Oppermann is a design lead and creative director from berlin, germany. He loves creating experiences with a focus on usability."></meta>
+        <link rel="icon" href="/favicon-veare.svg" />
+        <link rel="mask-icon" href="/safari-mask-icon.svg" color="#f0aa1e" />
+        <link rel="apple-touch-icon" href="/veare-apple-touch-icon-180.png" />
       </Head>
       <Intro />
       <Resume />
