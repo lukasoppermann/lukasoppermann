@@ -27,16 +27,16 @@ const headlineStyle = css`
     }
   }
   &.h3 {
-    font-size: var(--font-size--headline);
-    font-weight: var(--font-weight--bold);
+    font: var(--typestyle__h4);
     margin-bottom: 24px;
   }
   &.h4 {
+    font: var(--typestyle__h4);
     margin-bottom: 16px;
   }
   &.h5 {
+    font: var(--typestyle__h5);
     margin-bottom: 8px;
-    /* @include font(mono, bold); */
   }
   &.h6 {
     font: var(--typestyle__h6);

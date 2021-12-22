@@ -64,9 +64,9 @@ const style = css`
     .Project-card__client {
       margin-top: 0;
     }
-    h4 {
+    .h5 {
       text-transform: uppercase;
-      letter-spacing: 0.1px;
+      letter-spacing: 0.2px;
       &::before {
         content: "";
         display: inline-block;
@@ -275,8 +275,8 @@ const Project = ({ project }: ComponentProps) => {
           />
         </div>
         <div className="Project-excerpt__title">
-          <h4 className="Project-card__client">{project.client}</h4>
-          <Headline level="2" className="Project-card__title">{project.title}</Headline>
+          <Headline level="2" style="5" className="Project-card__client">{project.client}</Headline>
+          <Headline level="3" style="2" className="Project-card__title">{project.title}</Headline>
         </div>
         <div className="Project-excerpt__responsibilities">
           <Headline style="6">Responsibilities</Headline>
