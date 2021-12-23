@@ -18,7 +18,10 @@
       ],
       "@styles/*": [
         "styles/*"
-      ]
+      ],
+      "@svgs/*": [
+        "svgs/*"
+      ],
     },
     "target": "es5",
     "lib": [

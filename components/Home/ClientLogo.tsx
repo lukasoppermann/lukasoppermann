@@ -59,12 +59,6 @@ export type CompanyType =
   'eon' |
   'lufthansa'
 
-const style = css`
-  path {
-    fill: inherit;
-  }
-`
-
 type IconProps = {
   company: CompanyType
 }

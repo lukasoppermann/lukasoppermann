@@ -69,8 +69,14 @@ const style = css`
         transform: translate(0, -25%);
         transition: opacity .75s ease .25s, transform .75s ease .25s, color .25s ease;
         height: 64px;
+        padding-left: 32px;
         display: flex;
         align-items: center;
+        &:after {
+          bottom: auto;
+          top: calc(50% - 2px);
+          left: 16px;
+        }
       }
       .dark-mode-toggle {
         margin-left: 0px;

@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   pageExtensions: ['ts', 'tsx'],
   async rewrites () {
@@ -9,6 +11,14 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [".js", ".json", ".ts", ".tsx"],
+    extensions: [".js", ".json", ".ts", ".tsx"]
   },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"]
+    });
+
+    return config;
+  }
 }
