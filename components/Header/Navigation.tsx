@@ -80,7 +80,7 @@ const style = css`
       }
       .dark-mode-toggle {
         margin-left: 0px;
-        position: absolute;
+        position: fixed;
         width: 64px;
         height: 64px;
         bottom: 16px;
