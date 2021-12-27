@@ -303,4 +303,4 @@ const Project = ({ project }: ComponentProps) => {
   )
 }
 
-export { Project }
+export default Project

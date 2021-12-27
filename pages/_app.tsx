@@ -2,10 +2,15 @@ import type { AppProps /*, AppContext */ } from 'next/app'
 import Head from 'next/head'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { useRouter } from 'next/router'
-import { Header } from '@components/Header/Header'
+// import { Header } from '@components/Header/Header'
 import { Footer } from '@components/Footer/Footer'
 import '@styles/globals.scss'
+import dynamic from 'next/dynamic'
 
+const Header = dynamic(
+  () => import('@components/Header/Header'),
+  { loading: () => <p></p> }
+)
 
 function MyApp ({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter()

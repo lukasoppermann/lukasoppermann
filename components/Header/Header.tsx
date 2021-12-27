@@ -55,7 +55,7 @@ const style = css`
   }
 `
 
-export const Header = () => {
+const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   // const [scrollDirection, setScrollDirection] = useState({
   //   direction: null,
@@ -90,3 +90,5 @@ export const Header = () => {
     </header>
   )
 }
+
+export default Header

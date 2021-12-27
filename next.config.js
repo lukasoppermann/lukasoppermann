@@ -1,6 +1,9 @@
 const path = require('path')
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
-module.exports = {
+module.exports = withBundleAnalyzer({
   pageExtensions: ['ts', 'tsx'],
   async rewrites () {
     return [
@@ -21,4 +24,4 @@ module.exports = {
 
     return config;
   }
-}
+})

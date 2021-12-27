@@ -1,7 +1,7 @@
 import { css } from '@emotion/css'
-import { Project } from '@components/Home/Project'
+// import { Project } from '@components/Home/Project'
 import Resume from '@components/Home/Resume'
-import Clients from '@components/Home/Clients'
+// import Clients from '@components/Home/Clients'
 import Intro from '@components/Home/Intro'
 import Head from 'next/head'
 import { DIR_PROJECTS } from 'config/directories'
@@ -9,6 +9,17 @@ import { GetStaticProps } from 'next'
 import { getMarkdownFile, markdownFile } from '@lib/getMarkdownFile'
 import { markdownToReact } from '@lib/markdownToHtml'
 import { Headline } from '@components/Headline'
+import dynamic from 'next/dynamic'
+
+const Project = dynamic(
+  () => import('@components/Home/Project'),
+  { loading: () => <p>...</p> }
+)
+
+const Clients = dynamic(
+  () => import('@components/Home/Clients'),
+  { loading: () => <p>...</p> }
+)
 
 const style = css`
   .lab1886 {
