@@ -1,6 +1,12 @@
-// import { Logo } from '@components/Logo'
 import { css } from '@emotion/css'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+const Newsletter = dynamic(
+  () => import('@components/Footer/Newsletter'),
+  { loading: () => <p></p> }
+)
+
 
 const style = css`
   margin-top: 64px;
@@ -53,6 +59,7 @@ const style = css`
 
 const Footer = () =>{
   return (<footer className={`${style} Grid`}>
+    <Newsletter />
     <nav>
       <a href='https://dribbble.com/lukasoppermann' rel='noreferrer' target="_blank">Dribbble</a>
       <a href="https://www.linkedin.com/in/lukasoppermann" rel='noreferrer' target="_blank">LinkedIn</a>
