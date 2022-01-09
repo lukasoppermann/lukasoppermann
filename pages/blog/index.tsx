@@ -6,6 +6,7 @@ import { DIR_BLOG } from 'config/directories'
 import { getAllMarkdown } from '@lib/getMarkdown'
 import { PostList } from '@components/Blog/PostList'
 import { mq } from 'config/mediaQueries'
+import { Link } from '@components/Link'
 
 const style = css`
   padding-top: 120px;
@@ -26,6 +27,9 @@ const style = css`
       grid-column: columns;
       padding-bottom: 56px;
     }
+  }
+  .more-link-container {
+    grid-column: columns;
   }
   ${mq.is.mobile} {
     padding-top: 80px;
@@ -51,12 +55,28 @@ export default function Blog ({ posts }) {
       <SVGThoughtsAndIdeas className="svg-title svg-title--default" />
       <SVGThoughtsAndIdeasStacked className="svg-title svg-title--stacked" />
       <PostList posts={posts} />
+      <div className="more-link-container">
+        <Link type="link" icon={true} href="https://medium.com/@lukasoppermann" target='_blank'>More articles on medium</Link>
+      </div>
     </main>
   )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = getAllMarkdown(DIR_BLOG)
+  const posts = getAllMarkdown(DIR_BLOG).sort((itemA, itemB) => {
+    const dateArrayA = itemA.published.split('.').map(item => parseInt(item))
+    const dateArrayB = itemB.published.split('.').map(item => parseInt(item))
+    const dateA = new Date(dateArrayA[2], dateArrayA[1], dateArrayA[0])
+    const dateB = new Date(dateArrayB[2], dateArrayB[1], dateArrayB[0])
+    // compare
+    if (dateA > dateB) {
+      return 1
+    }
+    if (dateA < dateB) {
+      return -1
+    }
+    return 0
+  }).reverse()
 
   return {
     props: {

@@ -67,10 +67,11 @@ type LinkProps = {
   type?: 'link' | 'inline' | 'button',
   icon?: false | true | string,
   rel?: string,
-  target?: string
+  target?: string,
+  className?: string
 }
 
-const Link = ({ children, href, type = 'link', icon = false, rel = undefined, ...props }: LinkProps) => {
+const Link = ({ children, href, type = 'link', icon = false, rel = undefined, className, ...props }: LinkProps) => {
   // set rel
   const regex = /^(www\.|https?:|\/\/)/g;
   if (!rel && href.match(regex) !== null) {
@@ -79,7 +80,7 @@ const Link = ({ children, href, type = 'link', icon = false, rel = undefined, ..
   // return link
   return (
     <NextLink href={href}>
-      <a className={`${style} link type--${type}`} rel={rel} {...props}>
+      <a className={`${style} link type--${type} ${className}`} rel={rel} {...props}>
         {children}
         {icon && <Icon type={icon !== true ? icon as IconType : "arrowRight"} />}
       </a>
