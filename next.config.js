@@ -13,6 +13,15 @@ module.exports = withBundleAnalyzer({
       }
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/blog/:slug',
+        destination: '/blog',
+        permanent: false,
+      },
+    ]
+  },
   resolve: {
     extensions: [".js", ".json", ".ts", ".tsx"]
   },
