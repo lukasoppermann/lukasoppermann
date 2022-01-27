@@ -9,19 +9,24 @@ const Newsletter = dynamic(
 
 
 const style = css`
-  margin-top: 64px;
+  margin-top: 96px;
   align-items: center;
   align-self: center;
-  nav {
-    height: 100%;
+  .Newsletter {
     grid-row: 1;
-    grid-column: columns;
+    grid-column: full-bleed;
+  }
+  nav {
+    background: var(--footer--background, var(--surface-alternative));
+    height: 100%;
+    grid-row: 2;
+    grid-column: full-bleed;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     a, span {
       display: inline-block;
-      color: var(--on-background__medium-emphasis);
+      color: var(--on-dark__medium-emphasis);
       font-size: var(--font-size--caption);
       display: flex;
       height: 64px;
@@ -29,10 +34,10 @@ const style = css`
       align-items: center;
     }
     .copyright {
-      color: var(--on-background__low-emphasis);
+      color: var(--on-dark__low-emphasis);
     }
     a:hover {
-      color: var(--on-background__high-emphasis);
+      color: var(--on-dark__high-emphasis);
       text-decoration: underline;
       cursor: pointer;
     }
@@ -68,7 +73,7 @@ const Footer = () =>{
       <Link href="/imprint">
         <a>Imprint & privacy policy</a>
       </Link>
-      <span className="copyright">Copyright 2021 — Lukas Oppermann</span>
+      <span className="copyright">Copyright ${new Date().getFullYear()} — Lukas Oppermann</span>
     </nav>
   </footer>)
 }

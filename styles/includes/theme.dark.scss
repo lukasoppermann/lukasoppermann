@@ -34,6 +34,12 @@ body.dark-mode,
   );
   --on-surface-alternative__low-emphasis: rgba(var(--neutrals-1000-rgb), 0.44);
 
+  // on dark
+  --on-dark__highest-emphasis: rgba(var(--neutrals-0-rgb), 1);
+  --on-dark__high-emphasis: rgba(var(--neutrals-0-rgb), 0.8);
+  --on-dark__medium-emphasis: rgba(var(--neutrals-0-rgb), 0.55);
+  --on-dark__low-emphasis: rgba(var(--neutrals-0-rgb), 0.47);
+
   /** ----------------
   / Custom component tokens
   */
@@ -47,4 +53,5 @@ body.dark-mode,
   --project-card--text-high-emphasis: var(--on-background__high-emphasis);
   --project-card--text-low-emphasis: var(--on-background__low-emphasis);
   --project-card--list-indicator-color: var(--on-background__low-emphasis);
+  --footer--background: var(--surface);
 }

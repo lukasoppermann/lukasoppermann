@@ -4,6 +4,7 @@ type ParagraphStyles = 'default' | 'small'
 
 type ParagraphProps = {
   children: any,
+  className?: string,
   type?: ParagraphStyles
 }
 
@@ -19,8 +20,8 @@ const style = css`
   }
 `
 
-const Paragraph = ({children, type = 'default'}: ParagraphProps) => {
-  return (<p className={`Paragraph ${style} ${type}`}>
+const Paragraph = ({ children, type = 'default', className }: ParagraphProps) => {
+  return (<p className={`Paragraph ${style} ${type} ${className}`}>
     {children}
   </p>)
 }

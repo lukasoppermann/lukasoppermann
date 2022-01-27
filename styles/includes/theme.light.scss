@@ -29,6 +29,13 @@ body.light-mode,
   --on-surface-alternative__high-emphasis: rgba(var(--neutrals-0-rgb), 0.88);
   --on-surface-alternative__medium-emphasis: rgba(var(--neutrals-0-rgb), 0.66);
   --on-surface-alternative__low-emphasis: rgba(var(--neutrals-0-rgb), 0.44);
+  // on dark
+  --on-dark__highest-emphasis: rgba(var(--neutrals-0-rgb), 1);
+  --on-dark__high-emphasis: rgba(var(--neutrals-0-rgb), 0.8);
+  --on-dark__medium-emphasis: rgba(var(--neutrals-0-rgb), 0.55);
+  --on-dark__low-emphasis: rgba(var(--neutrals-0-rgb), 0.47);
+
+
 
   /** ----------------
   / Custom component tokens

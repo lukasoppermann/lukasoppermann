@@ -3,6 +3,7 @@ import Close from '@svgs/icon-close.svg'
 import Menu from '@svgs/icon-menu.svg'
 import lightMode from '@svgs/icon-light-mode.svg'
 import darkMode from '@svgs/icon-dark-mode.svg'
+import Mail from '@svgs/icon-mail.svg'
 import { css } from '@emotion/css'
 
 const iconTypes = {
@@ -10,7 +11,8 @@ const iconTypes = {
   close: Close,
   menu: Menu,
   darkMode: darkMode,
-  lightMode: lightMode
+  lightMode: lightMode,
+  mail: Mail
 };
 
 export type IconType = 
@@ -18,7 +20,8 @@ export type IconType =
   'close' |
   'menu' |
   'darkMode'|
-  'lightMode'
+  'lightMode' |
+  'mail'
 
 const style = css`
   fill: currentColor;
