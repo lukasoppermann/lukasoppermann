@@ -46,17 +46,16 @@ const style = css`
     }
   }
   @media (max-width: 992px) {
-    padding-bottom: 24px;
     .logo {
       display: none;
     }
     nav {
-      grid-column: columns;
       justify-content: center;
       a, span {
         font-size: var(--font-size--default);
         height: 48px;
-        padding: 0 16px;
+        padding: 8px 16px;
+        margin: 0;
       }
     }
   }
@@ -73,7 +72,7 @@ const Footer = () =>{
       <Link href="/imprint">
         <a>Imprint & privacy policy</a>
       </Link>
-      <span className="copyright">Copyright ${new Date().getFullYear()} — Lukas Oppermann</span>
+      <span className="copyright">Copyright {new Date().getFullYear()} — Lukas Oppermann</span>
     </nav>
   </footer>)
 }
