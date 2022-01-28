@@ -4,13 +4,17 @@ import { Icon } from '@components/Icon'
 import { Link } from '@components/Link'
 import { Paragraph } from '@components/Paragraph'
 import { css } from '@emotion/css'
+import { mq } from 'config/mediaQueries'
 
 const style = css`
   margin-bottom: 96px;
   .title {
     position: relative;
-    grid-row: 1 / span 2;
-    grid-column: column 1 / span 4;
+    grid-column: columns;
+    ${mq.atLeast.tablet} {
+      grid-row: 1;
+      grid-column: column 1 / span 4;
+    }
     & > :first-child {
       margin-bottom: 0;
     }
@@ -24,9 +28,25 @@ const style = css`
       left: -12px;
     }
   }
+  .legal-text {
+    grid-row: 3;
+    grid-column: columns;
+    margin-top: 32px;
+    ${mq.atLeast.tablet} {
+      margin-top: 0;
+      grid-row: 2;
+      grid-column: column 1 / span 4;
+    }
+  }
   form {
     grid-row: 2;
-    grid-column: column 6 / span 5;
+    grid-column: columns;
+    ${mq.atLeast.tablet} {
+      grid-column: column 6 / span 7;
+    }
+    ${mq.atLeast.desktop} {
+      grid-column: column 6 / span 5;
+    }
   }
   .input-container {
     width: 100%;
@@ -80,7 +100,6 @@ const Newsletter = () => {
       <div className="title">
         <Headline level="4" style="5">Newsletter</Headline>
         <Headline style="4">Stay in the loop</Headline>
-        <Paragraph type="small">By subscribing, you agree with Revue’s <Link target="_blank" href="https://www.getrevue.co/terms">Terms of Service</Link> and <Link target="_blank" href="https://www.getrevue.co/privacy">Privacy Policy</Link>.</Paragraph>
       </div>
       <form action="https://www.getrevue.co/profile/lukasoppermann/add_subscriber" method="post" id="revue-form" name="revue-form" target="_blank">
         <div className="input-container">
@@ -89,6 +108,7 @@ const Newsletter = () => {
           <input className="revue-form-field" placeholder="your@email.com" type="email" name="member[email]" id="member_email" />
         </div>
       </form>
+      <Paragraph className="legal-text" type="small">By subscribing, you agree with Revue’s <Link target="_blank" href="https://www.getrevue.co/terms">Terms of Service</Link> and <Link target="_blank" href="https://www.getrevue.co/privacy">Privacy Policy</Link>.</Paragraph>
     </div>
   )
 }
