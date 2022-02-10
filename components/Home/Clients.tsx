@@ -35,6 +35,8 @@ const style = css`
     grid-column-end: span 4;
     margin-bottom: 16px;
     width: 100%;
+    opacity: 0.5;
+    transition: opacity .5s ease;
     &:nth-child(3n+2) { /* offset by one (+2 instead of +1 ) to ignore headline*/
       grid-column-start: columns;
     }
@@ -44,14 +46,8 @@ const style = css`
     &:nth-child(3n+1) {
       grid-column-start: column 9;
     }
-    path {
-      fill: var(--on-background__medium-emphasis);
-      transition: fill .5s ease;
-    }
     &:hover {
-      path {
-        fill: var(--on-background__high-emphasis);
-      }
+      opacity: 1;
     }
   }
   ${mq.is.tablet} {

@@ -1,42 +1,22 @@
-import daimler from '@svgs/clients/client-daimler.svg'
-import bosch from '@svgs/clients/client-bosch.svg'
-import telekom from '@svgs/clients/client-telekom.svg'
-import bertelsmann from '@svgs/clients/client-bertelsmann.svg'
-import rtl from '@svgs/clients/client-rtl.svg'
-import eyeem from '@svgs/clients/client-eyeem.svg'
-import republica from '@svgs/clients/client-republica.svg'
-import aperto from '@svgs/clients/client-aperto.svg'
-import tlgg from '@svgs/clients/client-tlgg.svg'
-import swisscom from '@svgs/clients/client-swisscom.svg'
-import redbull from '@svgs/clients/client-redbull.svg'
-import kb from '@svgs/clients/client-kb.svg'
-import zalando from '@svgs/clients/client-zalando.svg'
-import vodafone from '@svgs/clients/client-vodafone.svg'
-import congstar from '@svgs/clients/client-congstar.svg'
-import bmw from '@svgs/clients/client-bmw.svg'
-import eon from '@svgs/clients/client-eon.svg'
-import lufthansa from '@svgs/clients/client-lufthansa.svg'
-import { css } from '@emotion/css'
-
 const companies = {
-  daimler: daimler,
-  bosch: bosch,
-  telekom: telekom,
-  bertelsmann: bertelsmann,
-  rtl: rtl,
-  eyeem: eyeem,
-  republica: republica,
-  aperto: aperto,
-  tlgg: tlgg,
-  swisscom: swisscom,
-  redbull: redbull,
-  kb: kb,
-  zalando: zalando,
-  vodafone: vodafone,
-  congstar: congstar,
-  bmw: bmw,
-  eon: eon,
-  lufthansa: lufthansa
+  daimler: '/svgs/clients/client-daimler.svg',
+  bosch: '/svgs/clients/client-bosch.svg',
+  telekom: '/svgs/clients/client-telekom.svg',
+  bertelsmann: '/svgs/clients/client-bertelsmann.svg',
+  rtl: '/svgs/clients/client-rtl.svg',
+  eyeem: '/svgs/clients/client-eyeem.svg',
+  republica: '/svgs/clients/client-republica.svg',
+  aperto: '/svgs/clients/client-aperto.svg',
+  tlgg: '/svgs/clients/client-tlgg.svg',
+  swisscom: '/svgs/clients/client-swisscom.svg',
+  redbull: '/svgs/clients/client-redbull.svg',
+  kb: '/svgs/clients/client-kb.svg',
+  zalando: '/svgs/clients/client-zalando.svg',
+  vodafone: '/svgs/clients/client-vodafone.svg',
+  congstar: '/svgs/clients/client-congstar.svg',
+  bmw: '/svgs/clients/client-bmw.svg',
+  eon: '/svgs/clients/client-eon.svg',
+  lufthansa: '/svgs/clients/client-lufthansa.svg'
 }
 
 export type CompanyType = 
@@ -63,11 +43,11 @@ type IconProps = {
   company: CompanyType
 }
 
+
 const ClientLogo = ({company}: IconProps) => {
-  // with props
-  let Icon = companies[company]
-  // return icon
-  return <Icon className={`svg-client-logo`} />
+  return <object type="image/svg+xml" data={companies[company]} className={`svg-client-logo`}>
+      {company}
+    </object>
 }
 
 export { ClientLogo }
