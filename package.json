@@ -36,7 +36,7 @@
     "remark-footnotes": "^3.0.0",
     "remark-gfm": "^1.0.0",
     "remark-highlight.js": "^6.0.0",
-    "remark-html": "^13.0.1",
+    "remark-html": "^13.0.2",
     "remark-mdx": "^1.6.22",
     "remark-react": "^8.0.0",
     "remark-rehype": "^8.1.0",
