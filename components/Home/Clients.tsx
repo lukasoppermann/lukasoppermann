@@ -34,6 +34,7 @@ const style = css`
   .svg-client-logo {
     grid-column-end: span 4;
     margin-bottom: 16px;
+    width: 100%;
     &:nth-child(3n+2) { /* offset by one (+2 instead of +1 ) to ignore headline*/
       grid-column-start: columns;
     }
