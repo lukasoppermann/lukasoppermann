@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 const companies = {
   daimler: '/svgs/clients/client-daimler.svg',
   bosch: '/svgs/clients/client-bosch.svg',
@@ -45,9 +47,10 @@ type IconProps = {
 
 
 const ClientLogo = ({company}: IconProps) => {
-  return <object type="image/svg+xml" data={companies[company]} className={`svg-client-logo`}>
-      {company}
-    </object>
+  return <img src={companies[company]} className={`svg-client-logo`} tabIndex={0} alt={company} loading="lazy" />
+  // return <object type="image/svg+xml" data={companies[company]} className={`svg-client-logo`} tabIndex={0} title={company}>
+  //     {company}
+  //   </object>
 }
 
 export { ClientLogo }
