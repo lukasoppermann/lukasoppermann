@@ -106,26 +106,26 @@ const style = css`
 export default function Intro () {
 
   return (
-    <section className={`${style} Grid`}>
+    <section className={`${style} Grid`} role="main" aria-label="Resume">
       <div>
         <Headline level="4" margin="none">Hello — I’m Lukas</Headline>
         <Headline level="5">Design Lead from Berlin</Headline>
         <Paragraph type="small">I love solving problems by combining technology with the aesthetics &amp; human-centered psychology that is UI/UX design.</Paragraph>
       </div>
       <div>
-        <Headline className="title--resume" style="6">Resumé / recent</Headline>
+        <Headline id="resumeTitle" className="title--resume" style="6" aria-hidden="true">Resumé / recent</Headline>
         <Headline level="4" margin="none">veare</Headline>
-        <Headline level="5"><DateTime from="2005" to="2017" /></Headline>
+        <Headline style="5" role="group"><DateTime from="2005" to="2017" /></Headline>
         <Paragraph type="small">Building products for startups, agencies &amp; businesses focusing on product thinking to merge user experience &amp; business needs.</Paragraph>
       </div>
       <div>
         <Headline level="4" margin="none">Bosch eBike</Headline>
-        <Headline level="5"><DateTime from="2015" to="2017" /></Headline>
+        <Headline style="5" role="group"><DateTime from="2015" to="2017" /></Headline>
         <Paragraph type="small">Leading the evolution of the eBike eco-system including design system, platform, mobile apps, web apps &amp; HMI.</Paragraph>
       </div>
       <div>
         <Headline level="4" margin="none">Daimler innovation lab</Headline>
-        <Headline level="5"><DateTime from="2017" to="2020" /></Headline>
+        <Headline style="5" role="group"><DateTime from="2017" to="2020" /></Headline>
         <Paragraph type="small">Building out major innovation topics for the future of mobility for Daimler AG. Helping the design team grow &amp; develop.</Paragraph>
         <Link href="https://drive.google.com/file/d/10K9F9o0hokq4iPAbF5mseKJn_yflt19k/view" rel="noopener noreferrer nofollow" target="_blank" icon={true}>Download resumé (PDF)</Link>
       </div>

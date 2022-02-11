@@ -221,8 +221,8 @@ const style = css`
 export default function Intro () {
 
   return (
-    <section className={`${style} Grid`}>
-      <h1 className="Header--intro__roles">
+    <section className={`${style} Grid`} aria-labelledby="introTitle" role="main">
+      <h1 className="Header--intro__roles" aria-label="Design Lead UI / UX & Creative Direction" id="introTitle">
         Design Lead UI / UX &<br />
         Creative Direction
       </h1>

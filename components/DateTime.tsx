@@ -26,7 +26,7 @@ const style = css`
       position: relative;
       margin-right: 1.5em;
       &:before {
-        content: "—";
+        content: "—" / "to";
         position: absolute; 
         right: -1.25em;
       }
@@ -125,9 +125,9 @@ const DateTime = ({ from, to, format = 'DD.MM.YYYY', duration = false }: DatePro
   }
   // return single date
   return (
-    <span className={`${style} ${dateObject.isRange ? 'is-range' : ''} dateTime`}>
-      <time dateTime={Object.values(dateObject.from).join('-')}>{formatDate(dateObject.from, format)}</time>
-      {dateObject.isRange && <time dateTime={Object.values(dateObject.to).join('-')}>{formatDate(dateObject.to, format)}</time>}
+    <span className={`${style} ${dateObject.isRange ? 'is-range' : ''} dateTime`} role="group" aria-label={Object.values(dateObject.from).join('-').replace(/-{1,}$/, '') + " to " + Object.values(dateObject.to).join('-').replace(/-{1,}$/, '')}>
+      <time aria-hidden dateTime={Object.values(dateObject.from).join('-').replace(/-{1,}$/, '')}>{formatDate(dateObject.from, format)}</time>
+      {dateObject.isRange && <time aria-hidden dateTime={Object.values(dateObject.to).join('-').replace(/-{1,}$/, '')}>{formatDate(dateObject.to, format)}</time>}
     </span>
   )
 }

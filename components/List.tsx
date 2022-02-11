@@ -31,7 +31,8 @@ const style = css`
       margin-top: -.05em;
       // for unordered lists
       padding-left: .2em;
-      content: "— ";
+      content: "— " / "";
+      speak: none;
     }
     &:last-child {
       margin-bottom: 0;

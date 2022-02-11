@@ -1,7 +1,8 @@
 import { css } from '@emotion/css'
 import { mq } from 'config/mediaQueries'
+import { HTMLAttributes } from 'react'
 
-type HeadlineProps = {
+type HeadlineProps = HTMLAttributes<HTMLDivElement> & {
   children: any
   level?: '1' | '2' | '3' | '4' | '5' | '6',
   style?: '1' | '2' | '3' | '4' | '5' | '6' | 'none',
@@ -52,11 +53,11 @@ const headlineStyle = css`
   }
 `
 
-const Headline = ({children, level, style, center, margin, className}: HeadlineProps) => {
+const Headline = ({children, level, style, center, margin, className, ...rest}: HeadlineProps) => {
   const Headline: HeadlineType = level ? `h${level}` : 'span' as HeadlineType
 
   return (
-    <Headline className={`Headline ${headlineStyle} ${!style ? `h${level}` : `h${style}`} ${center ? 'center' : ''} ${margin === 'none' ? 'margin-none' : ''} ${className ? `${className}` : ''}`}>
+    <Headline className={`Headline ${headlineStyle} ${!style ? `h${level}` : `h${style}`} ${center ? 'center' : ''} ${margin === 'none' ? 'margin-none' : ''} ${className ? `${className}` : ''}`} {...rest}>
       {children}
     </Headline>
   )

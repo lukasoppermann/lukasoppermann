@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { Footer } from '@components/Footer/Footer'
 import '@styles/globals.scss'
 import dynamic from 'next/dynamic'
+import { DateTime } from '@components/DateTime'
 
 const Header = dynamic(
   () => import('@components/Header/Header'),
