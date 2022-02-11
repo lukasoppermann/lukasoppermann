@@ -31,14 +31,15 @@ const style = css`
 `
 
 type IconProps = {
-  type: IconType
+  type: IconType,
+  ariaHidden?: boolean
 }
 
-const Icon = ({type}: IconProps) => {
+const Icon = ({ type, ariaHidden }: IconProps) => {
   // with props
   let Icon = iconTypes[type]
   // return icon
-  return <Icon className={`${style} svg-icon`} />
+  return <Icon className={`${style} svg-icon`} aria-hidden={ariaHidden}/>
 }
 
 export { Icon }

@@ -222,22 +222,22 @@ export default function Intro () {
 
   return (
     <section className={`${style} Grid`}>
-      <h1 className="Header--intro__roles" tabIndex={0}>
+      <h1 className="Header--intro__roles">
         Design Lead UI / UX &<br />
         Creative Direction
       </h1>
-      <h2 className="Header--intro__slogan" tabIndex={0}>Designing experiences with a focus on usability</h2>
+      <h2 className="Header--intro__slogan">Designing experiences with a focus on usability</h2>
       <div className="Header--intro__info Header--intro__info--1">
-        <h3>Design</h3>
-        <p>— a toolkit of methods to explore and address user needs & problems.</p>
+        <h3 aria-hidden>Design</h3>
+        <p aria-hidden>— a toolkit of methods to explore and address user needs & problems.</p>
       </div>
       <div className="Header--intro__info Header--intro__info--2">
-        <h3>Technology</h3>
-        <p>— the constraints but also the material from which to build an exciting solution.</p>
+        <h3 aria-hidden>Technology</h3>
+        <p aria-hidden>— the constraints but also the material from which to build an exciting solution.</p>
       </div>
       <div className="Header--intro__info Header--intro__info--3">
-        <h3>Product Thinking</h3>
-        <p>— my approach of building products based on user needs & measured impact.</p>
+        <h3 aria-hidden>Product Thinking</h3>
+        <p aria-hidden>— my approach of building products based on user needs & measured impact.</p>
       </div>
       <figure className="Header--intro__headline">
         <SolvingProblemsSvg />

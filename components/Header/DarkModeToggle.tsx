@@ -28,7 +28,7 @@ const DarkModeToggle = () => {
 
   return (<>
     <button type='button' onClick={toggleDarkmode} className={`dark-mode-toggle ${style}`} aria-label={isDarkmode ? 'toggle light mode' : 'toggle dark mode'}>
-      <Icon type={isDarkmode ? 'darkMode' : 'lightMode'} />
+      <Icon type={isDarkmode ? 'darkMode' : 'lightMode'} ariaHidden={true} />
     </button>
   </>)
 }
