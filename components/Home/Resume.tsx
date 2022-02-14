@@ -86,15 +86,15 @@ const style = css`
         margin-top: -32px;
       }
     }
-    &:nth-child(4) {
+    &:nth-child(2) {
       h4::before {
         position: absolute;
         content: "";
         width: 2px;
-        height: 40px;
+        height: 48px;
         background-color: var(--accent);
-        top: 0;
-        left: -12px;
+        top: 6px;
+        left: -16px;
       }
     }
     a {
@@ -109,19 +109,19 @@ export default function Intro () {
     <section className={`${style} Grid`} role="main" aria-label="Resume">
       <div>
         <Headline level="4" margin="none">Hello — I’m Lukas</Headline>
-        <Headline level="5">Design Lead from Berlin</Headline>
+        <Headline level="5">Design Lead & creative technologist</Headline>
         <Paragraph type="small">I love solving problems by combining technology with the aesthetics &amp; human-centered psychology that is UI/UX design.</Paragraph>
       </div>
       <div>
         <Headline id="resumeTitle" className="title--resume" style="6" aria-hidden="true">Resumé / recent</Headline>
-        <Headline level="4" margin="none">veare</Headline>
-        <Headline style="5" role="group"><DateTime from="2005" to="2017" /></Headline>
-        <Paragraph type="small">Building products for startups, agencies &amp; businesses focusing on product thinking to merge user experience &amp; business needs.</Paragraph>
+        <Headline level="4" margin="none">Deutsche Telekom</Headline>
+        <Headline style="5" role="group"><DateTime from="2021" to="NOW" /></Headline>
+        <Paragraph type="small">Leading Scale — the Telekom Design System and working on the future of eCommerce at Deutsche Telekom.</Paragraph>
       </div>
       <div>
-        <Headline level="4" margin="none">Bosch eBike</Headline>
-        <Headline style="5" role="group"><DateTime from="2015" to="2017" /></Headline>
-        <Paragraph type="small">Leading the evolution of the eBike eco-system including design system, platform, mobile apps, web apps &amp; HMI.</Paragraph>
+        <Headline level="4" margin="none">Bertelsmann / RTL+</Headline>
+        <Headline style="5" role="group"><DateTime from="2020" to="2021" /></Headline>
+        <Paragraph type="small">Invisioning the future digital media platform with a focus on personalised relevance. Building the RTL Design System from the ground up &amp; leading the design team.</Paragraph>
       </div>
       <div>
         <Headline level="4" margin="none">Daimler innovation lab</Headline>

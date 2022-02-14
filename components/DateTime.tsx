@@ -34,17 +34,28 @@ const style = css`
   } 
 `
 
+const isFullDateObject = (date: dateObject): boolean => {
+  return (date !== undefined && typeof date?.day === 'number' && typeof date?.month === 'number' && typeof date?.year === 'number')
+}
+
 const formatDate = (date: dateObject, formatString: string = 'DD.MM.YYYY') => {
+  if (date === undefined) return null
+  // return string if exists
+  if (typeof date === 'string') return date
+  
+  // else
   return formatString
     .replace('DD', `${date.day}`)
     .replace('MM', `${date.month}`)
     .replace('YYYY', `${date.year}`)
-    .replace(/^[^0-9]+/g, '')
+    .replace(/^[^\d]+/g, '')
+    .replace(/[^\d]+$/g, '')
 }
+
 
 const calcDuration = (from: dateObject, to: dateObject) => {
   // guard
-  if (from === undefined || to === undefined) {
+  if (!isFullDateObject(from) || !isFullDateObject(to)) {
     return null
   }
 
@@ -84,32 +95,41 @@ const calcDuration = (from: dateObject, to: dateObject) => {
   }
 }
 
-const prepareDates = (from: string, to: string) => {
-  // init variables
-  let fromDate: dateObject = undefined, toDate: dateObject = undefined
+const isRange = (from: any, to: any): boolean => {
+  return (from !== to && from !== undefined && to !== undefined)
+}
 
+const prepareDates = (from: any, to: any) => {
   if (from !== undefined) {
+    // split date string
     const fromDateArray = from.split('.').reverse().map(item => item === undefined ? undefined : parseInt(item))
-    fromDate = {
-      year: fromDateArray[0],
-      month: fromDateArray[1],
-      day: fromDateArray[2]
+    // return date object of valid
+    if (!isNaN(fromDateArray[0])) {
+      from = {
+        year: fromDateArray[0],
+        month: fromDateArray[1] || '',
+        day: fromDateArray[2] || ''
+      }
     }
   }
   if (to !== undefined) {
-    let toDateArray = to.split('.').reverse().map(item => item === undefined ? undefined : parseInt(item))
-    toDate = {
-      year: toDateArray[0],
-      month: toDateArray[1],
-      day: toDateArray[2]
+    // split date string
+    const toDateArray = to.split('.').reverse().map(item => item === undefined ? undefined : parseInt(item))
+    // return date object of valid   
+    if (!isNaN(toDateArray[0])) {
+      to = {
+        year: toDateArray[0],
+        month: toDateArray[1] || '',
+        day: toDateArray[2] || ''
+      }
     }
   }
-
+  
   return {
-    from: fromDate,
-    to: toDate,
-    duration: calcDuration(fromDate, toDate),
-    isRange: toDate?.year && to !== from
+    from: from,
+    to: to,
+    duration: calcDuration(from, to),
+    isRange: isRange(from, to)
   }
 }
 
@@ -125,9 +145,9 @@ const DateTime = ({ from, to, format = 'DD.MM.YYYY', duration = false }: DatePro
   }
   // return single date
   return (
-    <span className={`${style} ${dateObject.isRange ? 'is-range' : ''} dateTime`} role="group" aria-label={Object.values(dateObject.from).join('-').replace(/-{1,}$/, '') + " to " + Object.values(dateObject.to).join('-').replace(/-{1,}$/, '')}>
-      <time aria-hidden dateTime={Object.values(dateObject.from).join('-').replace(/-{1,}$/, '')}>{formatDate(dateObject.from, format)}</time>
-      {dateObject.isRange && <time aria-hidden dateTime={Object.values(dateObject.to).join('-').replace(/-{1,}$/, '')}>{formatDate(dateObject.to, format)}</time>}
+    <span className={`${style} ${dateObject.isRange && 'is-range'} dateTime`} role="group" aria-label={formatDate(dateObject.from, 'YYYY-MM-DD') + " to " + formatDate(dateObject.to, 'YYYY-MM-DD') }>
+      <time aria-hidden dateTime={formatDate(dateObject.from, 'YYYY-MM-DD')}>{formatDate(dateObject.from, format)}</time>
+      {dateObject.isRange && <time aria-hidden dateTime={formatDate(dateObject.to, 'YYYY-MM-DD')}>{formatDate(dateObject.to, format)}</time>}
     </span>
   )
 }
