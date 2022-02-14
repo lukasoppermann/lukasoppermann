@@ -34,9 +34,15 @@ const style = css`
   } 
 `
 
+const isFullDateObject = (date: dateObject): boolean => {
+  return (date !== undefined && typeof date?.day === 'number' && typeof date?.month === 'number' && typeof date?.year === 'number')
+}
+
 const formatDate = (date: dateObject, formatString: string = 'DD.MM.YYYY') => {
+  if (date === undefined) return null
   // return string if exists
   if (typeof date === 'string') return date
+  
   // else
   return formatString
     .replace('DD', `${date.day}`)
@@ -46,9 +52,10 @@ const formatDate = (date: dateObject, formatString: string = 'DD.MM.YYYY') => {
     .replace(/[^\d]+$/g, '')
 }
 
+
 const calcDuration = (from: dateObject, to: dateObject) => {
   // guard
-  if (from === undefined || typeof from === 'string' || to === undefined || typeof to === 'string') {
+  if (!isFullDateObject(from) || !isFullDateObject(to)) {
     return null
   }
 
@@ -89,10 +96,7 @@ const calcDuration = (from: dateObject, to: dateObject) => {
 }
 
 const isRange = (from: any, to: any): boolean => {
-  if (from === to || to === undefined) {
-    return false
-  }
-  return true
+  return (from !== to && from !== undefined && to !== undefined)
 }
 
 const prepareDates = (from: any, to: any) => {
