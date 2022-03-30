@@ -104,8 +104,8 @@ const Newsletter = () => {
       <form action="https://www.getrevue.co/profile/lukasoppermann/add_subscriber" method="post" id="revue-form" name="revue-form" target="_blank">
         <div className="input-container">
           <label htmlFor="member_email"><Icon type="mail" /></label>
-          <Button type="submit" style="ghost" icon>Subscribe</Button>
           <input className="revue-form-field" placeholder="your@email.com" type="email" name="member[email]" id="member_email" />
+          <Button type="submit" style="ghost" icon>Subscribe</Button>
         </div>
       </form>
       <Paragraph className="legal-text" type="small">By subscribing, you agree with Revue’s <Link target="_blank" href="https://www.getrevue.co/terms">Terms of Service</Link> and <Link target="_blank" href="https://www.getrevue.co/privacy">Privacy Policy</Link>.</Paragraph>
