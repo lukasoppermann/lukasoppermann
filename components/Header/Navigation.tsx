@@ -9,7 +9,7 @@ type NavigationProps = {
 }
 
 const style = css`
-  nav {
+  .Menu__items {
     display: flex;
     justify-content: flex-end;
     a {
@@ -111,8 +111,8 @@ const style = css`
 
 const Navigation = ({closeMenu, active}: NavigationProps) => {
   return (
-    <menu className={`Navigation ${style} ${active ? 'is-active' : ''}`} role="navigation">
-      <nav className='Menu__items' suppressHydrationWarning={true}>
+    <nav className={`Navigation ${style} ${active ? 'is-active' : ''}`}>
+      <div className='Menu__items' suppressHydrationWarning={true}>
         <ActivatableLink href='/'>
           <a onClick={closeMenu}>Home</a>
         </ActivatableLink>
@@ -138,8 +138,8 @@ const Navigation = ({closeMenu, active}: NavigationProps) => {
           <span className='Menu__link-text'>Contact</span>
         </a>
         <DarkModeToggle />
-      </nav>
-    </menu>
+      </div>
+    </nav>
   )
 }
 

@@ -264,7 +264,7 @@ type ComponentProps = {
 
 const Project = ({ project }: ComponentProps) => {
   return (
-    <section className={`Project-excerpt Project-card Project-card__link Grid ${project.class} ${style}`}>
+    <section className={`Project-excerpt Project-card Project-card__link Grid ${project.class} ${style}`} aria-label={`${project.client} — ${project.title}`}>
         <div className="Picture">
           <Image
             alt={project.picture.alt}
@@ -286,7 +286,7 @@ const Project = ({ project }: ComponentProps) => {
         <div className="Project-excerpt__approach">
           {project.content}
         </div>
-      <aside className="Project-excerpt__data">
+      <div className="Project-excerpt__data">
         <dl className="Project-excerpt__time">
           <dt><Headline style="6">Year</Headline></dt>
           <dd>
@@ -298,7 +298,7 @@ const Project = ({ project }: ComponentProps) => {
           </dd>
         </dl>
         {project.url && <Link href={project.url} target={project.buttonTarget} type="button" icon={true}>{project.buttonLabel || "Open"}</Link>}
-      </aside>
+      </div>
     </section>
   )
 }
