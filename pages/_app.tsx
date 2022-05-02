@@ -2,11 +2,9 @@ import type { AppProps /*, AppContext */ } from 'next/app'
 import Head from 'next/head'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { useRouter } from 'next/router'
-// import { Header } from '@components/Header/Header'
 import { Footer } from '@components/Footer/Footer'
 import '@styles/globals.scss'
 import dynamic from 'next/dynamic'
-import { DateTime } from '@components/DateTime'
 
 const Header = dynamic(
   () => import('@components/Header/Header'),
@@ -15,16 +13,6 @@ const Header = dynamic(
 
 function MyApp ({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter()
-  // const [scroll, setScroll] = useState(false)
-
-  // useEffect(() => {
-  //   document.addEventListener("scroll", () => {
-  //     if (window.scrollY < 5) {
-  //       setScroll(false)
-  //     }
-  //     setScroll(true)
-  //   })
-  // })
   
   return (
     <>

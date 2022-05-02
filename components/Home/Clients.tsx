@@ -77,8 +77,8 @@ const style = css`
 export default function Clients() {
 
   return (
-    <section className={`${style} Grid`}>
-      <Headline level="2" style="3" center>Clients & Partners</Headline>
+    <section className={`${style} Grid`} aria-labelledby="clientHeadline">
+      <Headline id="clientHeadline" level="2" style="3" center>Clients & Partners</Headline>
       {clients.map((client: CompanyType) => {
         return <ClientLogo company={client} key={client} />
       })}

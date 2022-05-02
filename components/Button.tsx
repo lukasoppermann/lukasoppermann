@@ -6,7 +6,7 @@ const cssStyle = css`
   display: inline-flex;
   align-items: center;
   border-radius: 0px;
-  border: 0;
+  border: 2px solid transparent;
   padding: 8px 16px;
   font: var(--typestyle__button);
   background: var(surface-alternative);
