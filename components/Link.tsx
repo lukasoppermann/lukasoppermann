@@ -41,6 +41,7 @@ const style = css`
     text-decoration: none;
     padding: 8px 16px;
     margin: 8px 0;
+    border: 2px solid transparent;
     color: var(--on-surface-alternative__high-emphasis);
     background: var(--surface-alternative);
     box-shadow: 0 1px 0 rgba(var(--black-rgb), .05), 0 8px 8px 4px rgba(var(--black-rgb), .05);
