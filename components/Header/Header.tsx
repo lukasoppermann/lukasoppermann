@@ -3,7 +3,7 @@ import { Logo } from '@components/Logo'
 import { Icon } from '@components/Icon'
 import { css } from '@emotion/css'
 import { useState} from 'react'
-import { useWindowScroll, useThrottledFn } from 'beautiful-react-hooks'; 
+import { useWindowScroll, useThrottledCallback } from 'beautiful-react-hooks'; 
 import { mq } from 'config/mediaQueries'
 
 const style = css`
@@ -64,7 +64,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const closeMobileMenu = () => setMenuOpen(false)
   
-  useWindowScroll(useThrottledFn(() => {
+  useWindowScroll(useThrottledCallback(() => {
     if(window.scrollY > 0) {
       setIsScrolled(true)
     } else {
