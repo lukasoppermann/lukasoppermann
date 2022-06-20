@@ -3,7 +3,8 @@ import { Logo } from '@components/Logo'
 import { Icon } from '@components/Icon'
 import { css } from '@emotion/css'
 import { useState } from 'react'
-import { useWindowScroll, useThrottledCallback } from 'beautiful-react-hooks'; 
+import useWindowScroll from 'beautiful-react-hooks/useWindowScroll'
+import useThrottledCallback from 'beautiful-react-hooks/useThrottledCallback'
 import { mq } from 'config/mediaQueries'
 
 const style = css`
