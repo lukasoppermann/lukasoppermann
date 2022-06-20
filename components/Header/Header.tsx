@@ -2,7 +2,7 @@ import { Navigation } from './Navigation'
 import { Logo } from '@components/Logo'
 import { Icon } from '@components/Icon'
 import { css } from '@emotion/css'
-import { useState} from 'react'
+import { useState } from 'react'
 import { useWindowScroll, useThrottledCallback } from 'beautiful-react-hooks'; 
 import { mq } from 'config/mediaQueries'
 
@@ -63,8 +63,9 @@ const Header = () => {
   // })
   const [isScrolled, setIsScrolled] = useState(false)
   const closeMobileMenu = () => setMenuOpen(false)
+  const onWindowScroll = useWindowScroll()
   
-  useWindowScroll(useThrottledCallback(() => {
+  const onWindowScrollHandler = useThrottledCallback(() => {
     if(window.scrollY > 0) {
       setIsScrolled(true)
     } else {
@@ -74,7 +75,11 @@ const Header = () => {
     //   direction: window.scrollY > scrollDirection.y ? 'down' : 'up',
     //   y: window.scrollY
     // })
-  }, [], 100))
+  })
+
+  onWindowScroll((event) => {
+    onWindowScrollHandler()
+  })
 
   return (
     <header className={`${style} Grid ${isScrolled ? 'is-scrolled' : ''}`}>
