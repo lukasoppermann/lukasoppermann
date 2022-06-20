@@ -117,7 +117,8 @@ const Navigation = ({closeMenu, active}: NavigationProps) => {
           <a onClick={closeMenu}>Home</a>
         </ActivatableLink>
         <a
-          href='//images.ctfassets.net/5dfliyp93yzg/cjGKGKXUMxAaOVJg53FHI/f3d3c9a2a176335affec167154b6881c/resume_lukas_oppermann_01.4.pdf'
+          download
+          href='/resume_lukas_oppermann.pdf'
           target='_blank'
           rel='noreferrer'
           className='Menu__link'
