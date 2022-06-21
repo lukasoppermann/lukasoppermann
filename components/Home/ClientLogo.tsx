@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { css } from '@emotion/css'
 
 const companies = {
   daimler: '/svgs/clients/client-daimler.svg',
@@ -45,9 +45,14 @@ type IconProps = {
   company: CompanyType
 }
 
+const cssStyle = css`
+  @media (prefers-color-scheme: dark) {
+    filter: invert(1);
+  }
+`
 
 const ClientLogo = ({company}: IconProps) => {
-  return <img src={companies[company]} className={`svg-client-logo`} title={company} alt={company} loading="lazy" />
+  return <img src={companies[company]} className={`${cssStyle} svg-client-logo`} title={company} alt={company} loading="lazy" />
   // return <object type="image/svg+xml" data={companies[company]} className={`svg-client-logo`} tabIndex={0} title={company}>
   //     {company}
   //   </object>
