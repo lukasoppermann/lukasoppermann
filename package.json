@@ -22,8 +22,7 @@
     "rehype-stringify": "^9.0.3",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
-    "unified": "^10.1.2",
-    "use-dark-mode": "^2.3.1"
+    "unified": "^10.1.2"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.1.6",

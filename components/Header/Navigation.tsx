@@ -1,5 +1,4 @@
 import { ActivatableLink } from '../ActivatableLink'
-import DarkModeToggle from './DarkModeToggle'
 import { css } from '@emotion/css'
 import { mq } from 'config/mediaQueries'
 
@@ -45,9 +44,6 @@ const style = css`
         }
       }
     }
-    .dark-mode-toggle {
-      margin-left: 32px;
-    }
   }
   ${mq.is.mobile} {
     position: absolute;
@@ -78,17 +74,6 @@ const style = css`
           left: 16px;
         }
       }
-      .dark-mode-toggle {
-        margin-left: 0px;
-        position: fixed;
-        width: 64px;
-        height: 64px;
-        bottom: 16px;
-        right: 16px;
-        opacity: 0;
-        transform: translate(100%, 100%);
-        transition: opacity .75s ease 0s, transform .75s ease 0s;
-      }
     }
     &.is-active {
       height: var(--mobile-menu-height, 100vh);
@@ -98,11 +83,6 @@ const style = css`
           opacity: 1;
           transform: translate(0, 0);
           transition: opacity .75s ease .25s, transform .75s ease .25s, color .25s ease;
-        }
-        .dark-mode-toggle {
-          opacity: 1;
-          transform: translate(0, 0);
-          transition: opacity .75s ease .75s, transform .75s ease .75s;
         }
       }
     }
@@ -138,7 +118,6 @@ const Navigation = ({closeMenu, active}: NavigationProps) => {
         >
           <span className='Menu__link-text'>Contact</span>
         </a>
-        <DarkModeToggle />
       </div>
     </nav>
   )
