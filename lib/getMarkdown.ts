@@ -2,7 +2,6 @@ import fs from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
 import { PostPreviewType } from 'types/PostPreviewType'
-// import { parseMarkdown } from '@lib/parseMarkdown'
 
 export const getMarkdownBySlug = (slug, directory) => {
   const filename = slug.replace('.mdx', '')
@@ -12,9 +11,7 @@ export const getMarkdownBySlug = (slug, directory) => {
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   // parse with gray matter to get meta data
   const { data, content } = matter(fileContents)
-  // parse markdown
-  // const parsedFile = parseMarkdown(content)
-  // return
+
   return { filename: filename, meta: data, content: content }
 }
 

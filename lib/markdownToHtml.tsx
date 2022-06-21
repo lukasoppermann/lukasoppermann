@@ -1,7 +1,7 @@
 
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
-import remarkGfm from 'remark-gfm'
+// import gfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import remarkRehype from 'remark-rehype'
 import rehypeFormat from 'rehype-format'
@@ -15,7 +15,7 @@ import { Link } from '@components/Link'
 export default function markdownToHtml (markdown) {
   return unified()
     .use(remarkParse)
-    .use(remarkGfm)
+    // .use(gfm)
     .use(remarkRehype, {allowDangerousHtml: true})
     .use(rehypeRaw)
     .use(rehypeFormat)
@@ -27,7 +27,7 @@ export default function markdownToHtml (markdown) {
 export function markdownToReact(markdown, options?) {
   return unified()
     .use(remarkParse)
-    .use(remarkGfm)
+    // .use(gfm)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeFormat)
