@@ -6,7 +6,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        - run: npm install
+      - name: Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
