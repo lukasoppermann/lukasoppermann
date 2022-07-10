@@ -1,11 +1,11 @@
-import SVGWordmark from '@svgs/veare-wordmark.svg'
+import SVGWordmark from '@svgs/lukas-oppermann-logo.svg'
 import Link from 'next/link'
 import { css } from '@emotion/css'
 
 const style = css`
   fill: var(--on-background__high-emphasis);
   display: block;
-  height: 24px;
+  height: 30px;
   &.is-small {
     height: 16px;
   }
