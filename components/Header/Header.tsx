@@ -81,7 +81,6 @@ const Header = () => {
   onWindowScroll((event) => {
     onWindowScrollHandler()
   })
-
   return (
     <header className={`${style} Grid ${isScrolled ? 'is-scrolled' : ''}`}>
       <Logo homepageLink />

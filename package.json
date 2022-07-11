@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@emotion/css": "^11.9.0",
+    "@splitbee/web": "^0.3.0",
     "beautiful-react-hooks": "^3.2.3",
     "gray-matter": "^4.0.3",
     "next": "^12.1.6",
