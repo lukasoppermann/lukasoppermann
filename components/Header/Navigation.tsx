@@ -103,7 +103,7 @@ const Navigation = ({closeMenu, active}: NavigationProps) => {
           className='Menu__link'
           onClick={closeMenu}
           data-splitbee-event="Downloaded Resume"
-          data-splitbee-event-location="Main Navivgation"
+          data-splitbee-event-location="Main Navigation"
         >
           <span className='Menu__link-text'>Resume</span>
         </a>
@@ -117,7 +117,7 @@ const Navigation = ({closeMenu, active}: NavigationProps) => {
           rel='noreferrer'
           onClick={closeMenu}
           data-splitbee-event="Contact"
-          data-splitbee-event-location="Main Navivgation"
+          data-splitbee-event-location="Main Navigation"
         >
           <span className='Menu__link-text'>Contact</span>
         </a>

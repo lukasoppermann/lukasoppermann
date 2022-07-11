@@ -101,7 +101,7 @@ const Newsletter = () => {
         <Headline level="4" style="5">Newsletter</Headline>
         <Headline style="4">Stay in the loop</Headline>
       </div>
-      <form action="https://www.getrevue.co/profile/lukasoppermann/add_subscriber" method="post" id="revue-form" name="revue-form" target="_blank">
+      <form action="https://www.getrevue.co/profile/lukasoppermann/add_subscriber" method="post" id="revue-form" name="revue-form" target="_blank" data-splitbee-event="Newsletter Signup">
         <div className="input-container">
           <label htmlFor="member_email"><Icon type="mail" /></label>
           <input className="revue-form-field" placeholder="your@email.com" type="email" name="member[email]" id="member_email" />

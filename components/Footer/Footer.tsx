@@ -65,10 +65,10 @@ const Footer = () =>{
   return (<footer className={`${style} Grid`}>
     <Newsletter />
     <nav>
-      <a href='https://dribbble.com/lukasoppermann' rel='noreferrer' target="_blank">Dribbble</a>
-      <a href="https://www.linkedin.com/in/lukasoppermann" rel='noreferrer' target="_blank">LinkedIn</a>
-      <a href='https://twitter.com/lukasoppermann' rel='noreferrer' target="_blank">Twitter</a>
-      <a href='https://github.com/lukasoppermann' rel='noreferrer' target="_blank">GitHub</a>
+      <a href='https://dribbble.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-type="Dribbble">Dribbble</a>
+      <a href="https://www.linkedin.com/in/lukasoppermann" rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-type="LinkedIn">LinkedIn</a>
+      <a href='https://twitter.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-type="Twitter">Twitter</a>
+      <a href='https://github.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-type="GitHub">GitHub</a>
       <Link href="/imprint">
         <a>Imprint & privacy policy</a>
       </Link>
