@@ -1,10 +1,9 @@
 import { css } from '@emotion/css'
-
-type DateString = string
+import moment from 'moment'
 
 type DateProps = {
-  from: DateString,
-  to?: DateString,
+  from: string,
+  to?: string,
   format?: string,
   duration?: boolean
 }
@@ -133,21 +132,32 @@ const prepareDates = (from: any, to: any) => {
   }
 }
 
-const DateTime = ({ from, to, format = 'DD.MM.YYYY', duration = false }: DateProps) => {
-  const dateObject = prepareDates(from, to)
+function formatDuration(duration: moment.Duration): string {
+  return duration.locale("en").humanize()
+}
+
+const DateTime = ({ from: fromString, to: toString = undefined, format = 'MMMM d, YYYY', duration = false }: DateProps) => {
+  const validFormats = ['DD.MM.YYYY', 'DD-MM-YYYY']
+  const from = moment(fromString, validFormats, true)
+  const to = moment(toString, validFormats, true)
+  const isRange = to.isValid()
+  
+  console.log('from: ', from, 'to:', to, 'range: ', isRange)
+  
   // return a duration
   if (duration !== false) {
+    const duration = moment.duration(to.diff(from))
     return (
       <span className={`${style} is-duration dateTime`}>
-        <time dateTime={dateObject.duration.string}>{dateObject.duration.formatted}</time>
+        <time dateTime={duration.toISOString()}>{formatDuration(duration)}</time>
       </span>
     )
   }
-  // return single date
+  // return date or range
   return (
-    <span className={`${style} ${dateObject.isRange && 'is-range'} dateTime`} role="group" aria-label={formatDate(dateObject.from, 'YYYY-MM-DD') + " to " + formatDate(dateObject.to, 'YYYY-MM-DD') }>
-      <time aria-hidden dateTime={formatDate(dateObject.from, 'YYYY-MM-DD')}>{formatDate(dateObject.from, format)}</time>
-      {dateObject.isRange && <time aria-hidden dateTime={formatDate(dateObject.to, 'YYYY-MM-DD')}>{formatDate(dateObject.to, format)}</time>}
+    <span className={`${style} ${isRange && 'is-range'} dateTime`} role="group" aria-label={"formatDate(dateObject.from, 'YYYY-MM-DD') +  to  + formatDate(dateObject.to, 'YYYY-MM-DD')" }>
+      <time aria-hidden dateTime={""}>{from.format(format)}</time>
+      {isRange && <time aria-hidden dateTime={""}>{from.format(format)}</time>}
     </span>
   )
 }
