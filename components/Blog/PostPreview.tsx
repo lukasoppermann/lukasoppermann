@@ -13,7 +13,7 @@ const style = css`
   color: var(--on-background__high-emphasis);
   display: block;
   h3 {
-    margin-bottom: 8px;
+    margin-bottom: 0 !important;
   }
   .svg-icon {
     position: absolute;
@@ -23,8 +23,8 @@ const style = css`
       fill: var(--on-background__high-emphasis);
     }
   }
-  .post-details {
-    margin-bottom: 16px;
+  .dateTime {
+    margin-bottom: 0;
     color: var(--on-background__low-emphasis);
     font-size: var(--font-size--caption);
     font-weight: var(--font-weight--bold);
@@ -34,10 +34,8 @@ const style = css`
 const PostPreview = ( {post}: PostPreviewProps ) => {
   return (
         <a target="_blank" rel="noreferrer" className={style} href={`${post.url}`} data-splitbee-event="Blog Post" data-splitbee-event-article={`${post.title}`}>
+          <DateTime from={post.published} />
           <Headline level="3">{post.title}<Icon type="arrowRight" /></Headline>
-          <div className="post-details">
-            <DateTime from={post.published} />
-          </div>
           <Paragraph>{post.excerpt}</Paragraph>
         </a>
   )
