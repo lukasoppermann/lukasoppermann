@@ -55,15 +55,12 @@ export default function Blog ({ posts }) {
       <SVGThoughtsAndIdeasStacked className="svg-title svg-title--stacked" />
       <PostList posts={posts} />
       <div className="more-link-container">
-        <Link type="link" icon={true} href="https://medium.com/@lukasoppermann" target='_blank'>More articles on medium</Link>
+        <Link type="link" icon={true} href="https://medium.com/@lukasoppermann" target='_blank' data-splitbee-event="Social Profile" data-splitbee-event-destination="Medium.com" data-splitbee-event-location="Blog pages">More articles on medium</Link>
       </div>
     </main>
   )
 }
 
-// TODO: Remove slug page & move out of folder
-// TODO: Load articles from array (config file)
-// TODO: remove categories from blog posts
 export const getStaticProps: GetStaticProps = async () => {
   const posts = articles.sort((itemA, itemB) => {
     const dateArrayA = itemA.published.split('.').map(item => parseInt(item))
