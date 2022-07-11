@@ -2,11 +2,10 @@ import { GetStaticProps } from 'next'
 import SVGThoughtsAndIdeas from '@svgs/thoughts-&-opinions.svg'
 import SVGThoughtsAndIdeasStacked from '@svgs/thoughts-&-opinions-stacked.svg'
 import { css } from '@emotion/css'
-import { DIR_BLOG } from 'config/directories'
-import { getAllMarkdown } from '@lib/getMarkdown'
 import { PostList } from '@components/Blog/PostList'
 import { mq } from 'config/mediaQueries'
 import { Link } from '@components/Link'
+import { articles } from '@data/articles'
 
 const style = css`
   padding-top: 120px;
@@ -66,7 +65,7 @@ export default function Blog ({ posts }) {
 // TODO: Load articles from array (config file)
 // TODO: remove categories from blog posts
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = getAllMarkdown(DIR_BLOG).sort((itemA, itemB) => {
+  const posts = articles.sort((itemA, itemB) => {
     const dateArrayA = itemA.published.split('.').map(item => parseInt(item))
     const dateArrayB = itemB.published.split('.').map(item => parseInt(item))
     const dateA = new Date(dateArrayA[2], dateArrayA[1], dateArrayA[0])

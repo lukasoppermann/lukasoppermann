@@ -1,5 +1,5 @@
 import { css } from '@emotion/css'
-import { PostPreviewType } from 'types/PostPreviewType'
+import { PostPreview as PostPreviewType } from 'types/PostPreview'
 import { PostPreview } from './PostPreview'
 
 type PostListProps = {
