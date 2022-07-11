@@ -24,7 +24,7 @@ function MyApp ({ Component, pageProps }: AppProps) {
       // Token can be found in project settings
       token: 'QDBC8O2WAN5J',
       // Enable cookie-less mode. Defaults to `false`
-      disableCookie: false
+      disableCookie: true
     });
   }, [])
   
