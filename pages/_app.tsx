@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 import { Footer } from '@components/Footer/Footer'
 import '@styles/globals.scss'
 import dynamic from 'next/dynamic'
+import splitbee from '@splitbee/web'
+import { useEffect } from 'react'
 
 const Header = dynamic(
   () => import('@components/Header/Header'),
@@ -13,6 +15,18 @@ const Header = dynamic(
 
 function MyApp ({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter()
+  // analytics
+  useEffect((): void => {
+    splitbee.init({
+      apiUrl: '/_hive',
+      scriptUrl: '/bee.js',
+      // To use Splitbee on another subdomain.
+      // Token can be found in project settings
+      token: 'QDBC8O2WAN5J',
+      // Enable cookie-less mode. Defaults to `false`
+      disableCookie: false
+    });
+  }, [])
   
   return (
     <>
