@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist</title>
-        <meta property="og:title" content="Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist — vea.re" key="title" />
+        <meta property="og:title" content="Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist" key="title" />
       </Head>
       <Header />
       <TransitionGroup>

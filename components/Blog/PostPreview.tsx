@@ -3,9 +3,7 @@ import { DateTime } from '@components/DateTime'
 import { Headline } from '@components/Headline'
 import { Icon } from '@components/Icon'
 import { Paragraph } from '@components/Paragraph'
-import { Separator } from '@components/Separator'
-import { Category } from '@components/Blog/Category'
-import { PostPreviewType } from 'types/PostPreviewType'
+import { PostPreview as PostPreviewType } from 'types/PostPreview'
 
 type PostPreviewProps = {
   post: PostPreviewType
@@ -39,8 +37,6 @@ const PostPreview = ( {post}: PostPreviewProps ) => {
           <Headline level="3">{post.title}<Icon type="arrowRight" /></Headline>
           <div className="post-details">
             <DateTime from={post.published} />
-            <Separator type="inline"/>
-            <Category type={post.category}/>
           </div>
           <Paragraph>{post.excerpt}</Paragraph>
         </a>

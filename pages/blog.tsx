@@ -2,11 +2,10 @@ import { GetStaticProps } from 'next'
 import SVGThoughtsAndIdeas from '@svgs/thoughts-&-opinions.svg'
 import SVGThoughtsAndIdeasStacked from '@svgs/thoughts-&-opinions-stacked.svg'
 import { css } from '@emotion/css'
-import { DIR_BLOG } from 'config/directories'
-import { getAllMarkdown } from '@lib/getMarkdown'
 import { PostList } from '@components/Blog/PostList'
 import { mq } from 'config/mediaQueries'
 import { Link } from '@components/Link'
+import { articles } from '@data/articles'
 
 const style = css`
   padding-top: 120px;
@@ -56,14 +55,14 @@ export default function Blog ({ posts }) {
       <SVGThoughtsAndIdeasStacked className="svg-title svg-title--stacked" />
       <PostList posts={posts} />
       <div className="more-link-container">
-        <Link type="link" icon={true} href="https://medium.com/@lukasoppermann" target='_blank'>More articles on medium</Link>
+        <Link type="link" icon={true} href="https://medium.com/@lukasoppermann" target='_blank' data-splitbee-event="Social Profile" data-splitbee-event-destination="Medium.com" data-splitbee-event-location="Blog pages">More articles on medium</Link>
       </div>
     </main>
   )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = getAllMarkdown(DIR_BLOG).sort((itemA, itemB) => {
+  const posts = articles.sort((itemA, itemB) => {
     const dateArrayA = itemA.published.split('.').map(item => parseInt(item))
     const dateArrayB = itemB.published.split('.').map(item => parseInt(item))
     const dateA = new Date(dateArrayA[2], dateArrayA[1], dateArrayA[0])

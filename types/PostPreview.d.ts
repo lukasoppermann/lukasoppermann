@@ -1,11 +1,9 @@
 import { DateString } from './Date';
 
 
-type PostPreviewType = {
-  filename: string,
+type PostPreview = {
   url: string,
   title: string,
   published: DateString,
-  category: Category,
   excerpt: string
 }
