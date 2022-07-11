@@ -133,6 +133,7 @@ const prepareDates = (from: any, to: any) => {
 }
 
 function formatDuration(duration: moment.Duration): string {
+  // TODO: Format in years + month
   return duration.locale("en").humanize()
 }
 
@@ -155,9 +156,9 @@ const DateTime = ({ from: fromString, to: toString = undefined, format = 'MMMM d
   }
   // return date or range
   return (
-    <span className={`${style} ${isRange && 'is-range'} dateTime`} role="group" aria-label={"formatDate(dateObject.from, 'YYYY-MM-DD') +  to  + formatDate(dateObject.to, 'YYYY-MM-DD')" }>
-      <time aria-hidden dateTime={""}>{from.format(format)}</time>
-      {isRange && <time aria-hidden dateTime={""}>{from.format(format)}</time>}
+    <span className={`${style} ${isRange && 'is-range'} dateTime`} role="group" aria-label={`${from.format(format)}${isRange && "to " + to.format(format)}`}>
+      <time aria-hidden dateTime={from.toISOString()}>{from.format(format)}</time>
+      {isRange && <time aria-hidden dateTime={to.toISOString()}>{to.format(format)}</time>}
     </span>
   )
 }
