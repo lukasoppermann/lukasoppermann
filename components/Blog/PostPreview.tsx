@@ -35,7 +35,7 @@ const style = css`
 
 const PostPreview = ( {post}: PostPreviewProps ) => {
   return (
-        <a target="_blank" rel="noreferrer" className={style} href={`${post.url}`} data-splitbee-event="Blog Post" data-splitbee-event-type={`${post.title}`}>
+        <a target="_blank" rel="noreferrer" className={style} href={`${post.url}`} data-splitbee-event="Blog Post" data-splitbee-event-article={`${post.title}`}>
           <Headline level="3">{post.title}<Icon type="arrowRight" /></Headline>
           <div className="post-details">
             <DateTime from={post.published} />
