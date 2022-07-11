@@ -7,7 +7,6 @@ describe('Navigation', () => {
   it('verify home page', () => {
     // Start from the index page
     cy.visit('/')
-
     // The new page should contain an h1 with "About page"
     cy.get('.Header--intro__slogan').should('have.text', 'Designing experiences with a focus on usability')
     cy.get('#resumeTitle').should('have.text', 'Resumé / recent')

@@ -16,8 +16,8 @@ const Header = dynamic(
 function MyApp({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter()
   // analytics
-  useEffect((): void => {   
-    if (process.env.NODE_ENV !== 'development') {
+  useEffect((): void => {
+    if (process.env.NODE_ENV !== 'development' && window.location.hostname !== 'localhost') {
       splitbee.init({
         apiUrl: '/_hive',
         scriptUrl: '/bee.js',
