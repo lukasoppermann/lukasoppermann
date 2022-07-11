@@ -62,6 +62,9 @@ export default function Blog ({ posts }) {
   )
 }
 
+// TODO: Remove slug page & move out of folder
+// TODO: Load articles from array (config file)
+// TODO: remove categories from blog posts
 export const getStaticProps: GetStaticProps = async () => {
   const posts = getAllMarkdown(DIR_BLOG).sort((itemA, itemB) => {
     const dateArrayA = itemA.published.split('.').map(item => parseInt(item))
