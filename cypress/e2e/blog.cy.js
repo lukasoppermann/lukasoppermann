@@ -14,8 +14,8 @@ describe('Blog', () => {
     // The new url should include "/about"
     cy.url().should('include', '/blog')
 
-    // The new page should contain an h1 with "About page"
-    cy.get('main > ol > li > a > h3').first().should('have.text', 'Make your design system accessible — Color')
+    // The new page should contain an h3 with "About page"
+    cy.get('main > ol > li > a > h3').last().should('have.text', '3 tricks to make your design files accessible to your colleagues')
   })
 
   it('check all links in main', () => {
