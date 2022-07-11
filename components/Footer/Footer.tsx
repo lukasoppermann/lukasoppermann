@@ -11,7 +11,7 @@ const Newsletter = dynamic(
 const style = css`
   margin-top: 96px;
   align-items: center;
-  align-self: center;
+  align-self: self-end;
   .Newsletter {
     grid-row: 1;
     grid-column: full-bleed;
