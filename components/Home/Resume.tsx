@@ -115,17 +115,17 @@ export default function Intro () {
       <div>
         <Headline id="resumeTitle" className="title--resume" style="6" aria-hidden="true">Resumé / recent</Headline>
         <Headline level="4" margin="none">Deutsche Telekom</Headline>
-        <Headline style="5" role="group"><DateTime from="2021" to="NOW" /></Headline>
+        <Headline style="5" role="group"><DateTime from="2021" to="now" toLabel="NOW" format="YYYY"/></Headline>
         <Paragraph type="small">Leading Scale — the Telekom Design System and working on the future of eCommerce at Deutsche Telekom.</Paragraph>
       </div>
       <div>
         <Headline level="4" margin="none">Bertelsmann / RTL+</Headline>
-        <Headline style="5" role="group"><DateTime from="2020" to="2021" /></Headline>
+        <Headline style="5" role="group"><DateTime from="2020" to="2021" format="YYYY"/></Headline>
         <Paragraph type="small">Invisioning the future digital media platform with a focus on personalised relevance. Building the RTL Design System from the ground up &amp; leading the design team.</Paragraph>
       </div>
       <div>
         <Headline level="4" margin="none">Daimler innovation lab</Headline>
-        <Headline style="5" role="group"><DateTime from="2017" to="2020" /></Headline>
+        <Headline style="5" role="group"><DateTime from="2017" to="2020" format="YYYY"/></Headline>
         <Paragraph type="small">Building out major innovation topics for the future of mobility for Daimler AG. Helping the design team grow &amp; develop.</Paragraph>
         <Link href="/resume" rel="noopener noreferrer nofollow" target="_blank" icon={true}>Download resumé (PDF)</Link>
       </div>
