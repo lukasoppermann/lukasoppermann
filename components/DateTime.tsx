@@ -40,10 +40,10 @@ const parseTime = (fromString: string, toString: string = undefined): {
   isRange: boolean
 } => {
   const validFormats = ['DD.MM.YYYY', 'DD-MM-YYYY', 'YYYY']
-  const to = toString === 'now' ? moment() :  moment(toString, validFormats, true)
+  const to = toString === 'now' ? moment().utc() :  moment.utc(toString, validFormats, true)
   // return object
   return {
-    from: moment(fromString, validFormats, true),
+    from: moment.utc(fromString, validFormats, true),
     to: to,
     isRange: to.isValid()
   }
@@ -70,12 +70,13 @@ const Duration = ({ from: fromString, to: toString }: DurationProps) => {
   )
 }
 
-const DateTime = ({ from: fromString, to: toString = undefined, format = 'MMMM d, YYYY', toLabel, fromLabel }: DateProps) => {
+const DateTime = ({ from: fromString, to: toString = undefined, format = 'MMMM D, YYYY', toLabel, fromLabel }: DateProps) => {
   const {from, to, isRange} = parseTime(fromString, toString)
-  const showRange = isRange && from.format(format) !== to.format(format)
+  
+  const showRange: boolean = isRange && (!to.isValid() || from.format(format) !== to.format(format))
   // return date or range
   return (
-    <span className={`${style} ${showRange && 'is-range'} dateTime`} role="group" aria-label={`${from.format(format)}${isRange && "to " + to.format(format)}`}>
+    <span className={`${style} ${showRange && 'is-range'} dateTime`} role="group" aria-label={`${from.format(format)}${isRange === true ? "to " + to.format(format) : ''}`}>
       <time aria-hidden dateTime={from.toISOString()}>{fromLabel ??from.format(format)}</time>
       {showRange && <time aria-hidden dateTime={to.toISOString()}>{toLabel ?? to.format(format)}</time>}
     </span>
