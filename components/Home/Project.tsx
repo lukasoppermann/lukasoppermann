@@ -4,7 +4,7 @@ import { ProjectDetails } from 'types/Project'
 import { Link } from '@components/Link';
 import Image from 'next/image'
 import { mq } from 'config/mediaQueries';
-import { DateTime } from '@components/DateTime';
+import { DateTime, Duration } from '@components/DateTime';
 import { List } from '@components/List';
 
 const style = css`
@@ -294,7 +294,7 @@ const Project = ({ project }: ComponentProps) => {
           </dd>
           <dt><Headline style="6">Duration</Headline></dt>
           <dd>
-            <DateTime duration from={project.startDate} to={project.endDate} />
+            <Duration from={project.startDate} to={project.endDate} />
           </dd>
         </dl>
         {project.url && <Link href={project.url} target={project.buttonTarget} type="button" icon={true}>{project.buttonLabel || "Open"}</Link>}
