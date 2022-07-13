@@ -2,10 +2,10 @@ import { GetStaticProps } from 'next'
 import SVGThoughtsAndIdeas from '@svgs/thoughts-&-opinions.svg'
 import SVGThoughtsAndIdeasStacked from '@svgs/thoughts-&-opinions-stacked.svg'
 import { css } from '@emotion/css'
-import { PostList } from '@components/Blog/PostList'
 import { mq } from 'config/mediaQueries'
 import { Link } from '@components/Link'
 import { articles } from '@data/articles'
+import { PostPreview, PostPreviewType } from '@components/PostPreview'
 
 const style = css`
   padding-top: 120px;
@@ -53,7 +53,9 @@ export default function Blog ({ posts }) {
     <main className={`${style} Grid`}>
       <SVGThoughtsAndIdeas className="svg-title svg-title--default" />
       <SVGThoughtsAndIdeasStacked className="svg-title svg-title--stacked" />
-      <PostList posts={posts} />
+      <ol className={`${style} PostList`}>
+        {posts.map((post: PostPreviewType) => <li key={post.url}><PostPreview post={post} /></li>)}
+      </ol>
       <div className="more-link-container">
         <Link type="link" icon={true} href="https://medium.com/@lukasoppermann" target='_blank' data-splitbee-event="Social Profile" data-splitbee-event-destination="Medium.com" data-splitbee-event-location="Blog pages">More articles on medium</Link>
       </div>
