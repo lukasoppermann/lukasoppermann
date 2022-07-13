@@ -1,6 +1,7 @@
 import { ActivatableLink } from '../ActivatableLink'
 import { css } from '@emotion/css'
 import { mq } from 'config/mediaQueries'
+import config from '@data/config'
 
 type NavigationProps = {
   closeMenu: any,
@@ -111,7 +112,7 @@ const Navigation = ({closeMenu, active}: NavigationProps) => {
           <a onClick={closeMenu}>Writing</a>
         </ActivatableLink>
         <a
-          href='mailto:lukas@vea.re?subject=Hey 👋,%20what&apos;s%20up?&body=Great%20to%20hear%20from%20you,%20how%20can%20I%20help?'
+          href={`mailto:${config.email}?subject=Hey 👋,%20what&apos;s%20up?&body=Great%20to%20hear%20from%20you,%20how%20can%20I%20help?`}
           className='Menu__link'
           target='_blank'
           rel='noreferrer'
