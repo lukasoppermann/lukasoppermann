@@ -1,7 +1,5 @@
 import { css } from '@emotion/css'
-// import { Project } from '@components/Home/Project'
 import Resume from '@components/Home/Resume'
-// import Clients from '@components/Home/Clients'
 import Intro from '@components/Home/Intro'
 import Head from 'next/head'
 import { DIR_PROJECTS } from 'config/directories'
@@ -10,17 +8,22 @@ import { getMarkdownFile, markdownFile } from '@lib/getMarkdownFile'
 import { markdownToReact } from '@lib/markdownToHtml'
 import { Headline } from '@components/Headline'
 import dynamic from 'next/dynamic'
-import { HomepageLink } from '@components/Home/HomepageLink'
-import { homepageLinks } from '@data/homepageLinks'
+import homepageLinks from '@data/homepageLinks'
+import { Suspense } from 'react'
 
 const Project = dynamic(
   () => import('@components/Home/Project'),
-  { loading: () => <p>...</p> }
+  { suspense: true, }
+)
+
+const HomepageLink = dynamic(
+  () => import('@components/Home/HomepageLink'),
+  { suspense: true, }
 )
 
 const Clients = dynamic(
   () => import('@components/Home/Clients'),
-  { loading: () => <p>...</p> }
+  { suspense: true, }
 )
 
 const style = css`
@@ -58,9 +61,15 @@ export default function Home({ projects }) {
       </Head>
       <Intro />
       <Resume />
-      {projects.map(project => <Project key={project.meta.title} project={{ ...project.meta, ...{ content: markdownToReact(project.content, markdownOptions)}}} />)}
-      {homepageLinks.map(homepageLink => <HomepageLink key={homepageLink.url} item={homepageLink}/>)}
-      <Clients />
+      <Suspense fallback={`Loading...`}>
+        {projects.map(project => <Project key={project.meta.title} project={{ ...project.meta, ...{ content: markdownToReact(project.content, markdownOptions)}}} />)}
+      </Suspense>
+      <Suspense fallback={`Loading...`}>
+        {homepageLinks.map(homepageLink => <HomepageLink key={homepageLink.url} item={homepageLink}/>)}
+      </Suspense>
+      <Suspense fallback={`Loading...`}>
+        <Clients />
+      </Suspense>
     </main>
   )
 }
