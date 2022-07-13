@@ -1,5 +1,10 @@
 import { css } from '@emotion/css'
-import moment from 'moment'
+import dayjs, { Dayjs } from 'dayjs'
+import duration, { Duration } from 'dayjs/plugin/duration'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+
+dayjs.extend(duration)
+dayjs.extend(customParseFormat)
 
 type DurationProps = {
   from: string,
@@ -35,21 +40,25 @@ const style = css`
 `
 
 const parseTime = (fromString: string, toString: string = undefined): {
-  from: moment.Moment,
-  to: moment.Moment,
+  from: Dayjs,
+  to: Dayjs,
   isRange: boolean
 } => {
   const validFormats = ['DD.MM.YYYY', 'DD-MM-YYYY', 'YYYY']
-  const to = toString === 'now' ? moment().utc() :  moment.utc(toString, validFormats, true)
+  const to = toString === 'now' ? dayjs() :  dayjs(toString, validFormats, true)
+  if(!to.isValid()) {
+    console.log('parseTime', dayjs(fromString, validFormats, true).format('DD/MM/YYYY'), toString, to.format('DD/MM/YYYY'), to.isValid());
+  }
+  
   // return object
   return {
-    from: moment.utc(fromString, validFormats, true),
+    from: dayjs(fromString, validFormats, true),
     to: to,
     isRange: to.isValid()
   }
 }
 
-function formatDuration(duration: moment.Duration): string {
+function formatDuration(duration: Duration): string {
   const month = Math.round(duration.asMonths() % 12)
   const years = Math.floor(duration.asMonths() / 12)
   
@@ -61,8 +70,7 @@ function formatDuration(duration: moment.Duration): string {
 
 const Duration = ({ from: fromString, to: toString }: DurationProps) => {
   const {from, to} = parseTime(fromString, toString)
-  const duration = moment.duration(to.diff(from))
-  // 
+  const duration = dayjs.duration(to.diff(from))
   return (
     <span className={`${style} is-duration dateTime`}>
       <time dateTime={duration.toISOString()}>{formatDuration(duration)}</time>
