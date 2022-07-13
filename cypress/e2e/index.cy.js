@@ -15,7 +15,8 @@ describe('Navigation', () => {
 
   it('check all links in main', () => {
     const ignoreUrls = [
-      'https://www.figma.com/community/plugin/888356646278934516/Design-Tokens'
+      'https://www.figma.com/community/plugin/888356646278934516/Design-Tokens',
+      'https://dribbble.com/lukasoppermann'
     ]
     cy.visit('/')
     cy.get("main").within(() => {
