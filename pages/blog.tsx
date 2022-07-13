@@ -11,6 +11,12 @@ const style = css`
   padding-top: 120px;
   .PostList {
     grid-column: columns;
+    list-style: none;
+    & li {
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--ui--fair-contrast);
+    }
   }
   .svg-title {
     max-width: 100%;
