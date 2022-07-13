@@ -9,21 +9,17 @@ import { markdownToReact } from '@lib/markdownToHtml'
 import { Headline } from '@components/Headline'
 import dynamic from 'next/dynamic'
 import homepageLinks from '@data/homepageLinks'
-import { Suspense } from 'react'
 
 const Project = dynamic(
   () => import('@components/Home/Project'),
-  { suspense: true, }
 )
 
 const HomepageLink = dynamic(
-  () => import('@components/Home/HomepageLink'),
-  { suspense: true, }
+  () => import('@components/Home/HomepageLink')
 )
 
 const Clients = dynamic(
-  () => import('@components/Home/Clients'),
-  { suspense: true, }
+  () => import('@components/Home/Clients')
 )
 
 const style = css`
@@ -48,7 +44,7 @@ const markdownOptions = {
   }
 }
 
-export default function Home({ projects }) {
+export default function Home({ projects, links }) {
   return (
     <main className={`${style}`}>
       <Head>
@@ -61,25 +57,21 @@ export default function Home({ projects }) {
       </Head>
       <Intro />
       <Resume />
-      <Suspense fallback={`Loading...`}>
-        {projects.map(project => <Project key={project.meta.title} project={{ ...project.meta, ...{ content: markdownToReact(project.content, markdownOptions)}}} />)}
-      </Suspense>
-      <Suspense fallback={`Loading...`}>
-        {homepageLinks.map(homepageLink => <HomepageLink key={homepageLink.url} item={homepageLink}/>)}
-      </Suspense>
-      <Suspense fallback={`Loading...`}>
-        <Clients />
-      </Suspense>
+      {projects.map(project => <Project key={project.meta.title} project={{ ...project.meta, ...{ content: markdownToReact(project.content, markdownOptions)}}} />)}
+      {links.map(homepageLink => <HomepageLink key={homepageLink.url} item={homepageLink}/>)}
+      <Clients />
     </main>
   )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const projects: markdownFile[] = await getMarkdownFile(DIR_PROJECTS)
+  const links = homepageLinks
   
   return {
     props: {
-      projects: projects
+      projects: projects,
+      links: links
     }
   }
 }

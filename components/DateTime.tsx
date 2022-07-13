@@ -46,10 +46,6 @@ const parseTime = (fromString: string, toString: string = undefined): {
 } => {
   const validFormats = ['DD.MM.YYYY', 'DD-MM-YYYY', 'YYYY']
   const to = toString === 'now' ? dayjs() :  dayjs(toString, validFormats, true)
-  if(!to.isValid()) {
-    console.log('parseTime', dayjs(fromString, validFormats, true).format('DD/MM/YYYY'), toString, to.format('DD/MM/YYYY'), to.isValid());
-  }
-  
   // return object
   return {
     from: dayjs(fromString, validFormats, true),
