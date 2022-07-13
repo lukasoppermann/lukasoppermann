@@ -1,6 +1,6 @@
 import { HomepageLink } from '@components/Home/HomepageLink';
 
-export const homepageLinks: HomepageLink[] = [
+export default <HomepageLink[]>[
   {
     url: 'https://dribbble.com/lukasoppermann',
     target: '_blank',
