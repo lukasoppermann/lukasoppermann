@@ -10,6 +10,8 @@ import { getMarkdownFile, markdownFile } from '@lib/getMarkdownFile'
 import { markdownToReact } from '@lib/markdownToHtml'
 import { Headline } from '@components/Headline'
 import dynamic from 'next/dynamic'
+import { HomepageLink } from '@components/Home/HomepageLink'
+import { homepageLinks } from '@data/homepageLinks'
 
 const Project = dynamic(
   () => import('@components/Home/Project'),
@@ -57,6 +59,7 @@ export default function Home({ projects }) {
       <Intro />
       <Resume />
       {projects.map(project => <Project key={project.meta.title} project={{ ...project.meta, ...{ content: markdownToReact(project.content, markdownOptions)}}} />)}
+      {homepageLinks.map(homepageLink => <HomepageLink key={homepageLink.url} item={homepageLink}/>)}
       <Clients />
     </main>
   )
