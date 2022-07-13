@@ -5,7 +5,7 @@ export const homepageLinks: HomepageLink[] = [
     url: 'https://dribbble.com/lukasoppermann',
     target: '_blank',
     rel: 'noopener noreferrer nofollow',
-    title: 'Find more work on dribbble',
+    title: 'Find more on dribbble',
     subtitle: 'dribbble',
     picture: {
       url: '/assets/lukasoppermann-dribbble_2x.jpg',
