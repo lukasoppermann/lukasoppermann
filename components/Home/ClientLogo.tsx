@@ -53,9 +53,6 @@ const cssStyle = css`
 
 const ClientLogo = ({company}: IconProps) => {
   return <img src={companies[company]} className={`${cssStyle} svg-client-logo`} title={company} alt={company} loading="lazy" />
-  // return <object type="image/svg+xml" data={companies[company]} className={`svg-client-logo`} tabIndex={0} title={company}>
-  //     {company}
-  //   </object>
 }
 
 export { ClientLogo }
