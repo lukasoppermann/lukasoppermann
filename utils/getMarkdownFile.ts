@@ -2,7 +2,7 @@ import fs from 'fs'
 import { join } from 'path'
 import matter from 'gray-matter'
 
-export type markdownFile = {
+export type markdownFileType = {
   filename: string,
   meta?: any,
   content: string
@@ -19,7 +19,7 @@ const getFileByName = (directory: string, filename: string) => {
   return { filename: filename, meta: data, content: content }
 }
 
-export const getMarkdownFile = (directory: string, filename?): markdownFile[] => {
+export const getMarkdownFile = (directory: string, filename?): markdownFileType[] => {
   // set files
   let files = [filename]
   // read files from dir if not filename given

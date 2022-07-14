@@ -3,7 +3,7 @@ import { css } from '@emotion/css'
 import { mq } from 'config/mediaQueries'
 import Image from 'next/image'
 
-export type HomepageLink = {
+export type HomepageLinkType = {
   url: string,
   target?: string,
   rel?: string,
@@ -18,7 +18,7 @@ export type HomepageLink = {
 }
 
 type HomepageLinkProps = {
-  item: HomepageLink
+  item: HomepageLinkType
 }
 
 const style = css`
