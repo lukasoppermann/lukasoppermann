@@ -9,8 +9,7 @@ import { useEffect } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 const Header = dynamic(
-  () => import('@components/Header/Header'),
-  { loading: () => <p></p> }
+  () => import('@components/Header/Header')
 )
 
 function MyApp({ Component, pageProps }: AppProps) {
