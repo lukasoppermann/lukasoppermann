@@ -1,7 +1,7 @@
 import { Footer } from '@components/Footer'
 import splitbee from '@splitbee/web'
 import '@styles/globals.scss'
-import type { AppProps /*, AppContext */ } from 'next/app'
+import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
