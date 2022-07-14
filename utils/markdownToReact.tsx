@@ -5,26 +5,13 @@ import remarkParse from 'remark-parse'
 import rehypeRaw from 'rehype-raw'
 import remarkRehype from 'remark-rehype'
 import rehypeFormat from 'rehype-format'
-import rehypeStringify from 'rehype-stringify'
 import rehype2react from 'rehype-react'
 import React from 'react'
 import { Paragraph } from '@components/Paragraph'
 import { Headline } from '@components/Headline'
 import { Link } from '@components/Link'
 
-export default function markdownToHtml (markdown) {
-  return unified()
-    .use(remarkParse)
-    // .use(gfm)
-    .use(remarkRehype, {allowDangerousHtml: true})
-    .use(rehypeRaw)
-    .use(rehypeFormat)
-    .use(rehypeStringify)
-    .processSync(markdown)
-    .toString()
-}
-
-export function markdownToReact(markdown, options?) {
+export default function markdownToReact(markdown, options?) {
   return unified()
     .use(remarkParse)
     // .use(gfm)
