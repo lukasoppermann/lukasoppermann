@@ -10,6 +10,8 @@ import { Headline } from '@components/Headline'
 import dynamic from 'next/dynamic'
 import homepageLinks from '@data/homepageLinks'
 import { HomepageLinkType } from '@components/Home/HomepageLink'
+import articles from '@data/articles'
+import { PostPreviewType } from '@components/PostPreview'
 
 const Project = dynamic(
   () => import('@components/Home/Project'),
@@ -45,7 +47,7 @@ const markdownOptions = {
   }
 }
 
-export default function Home({ projects, links }) {
+export default function Home({ projects, links, posts }: {projects: markdownFileType[], links: HomepageLinkType[], posts: PostPreviewType[]}) {
   return (
     <main className={`${style}`}>
       <Head>
@@ -71,7 +73,8 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       projects: projects,
-      links: homepageLinks as HomepageLinkType[]
+      links: homepageLinks as HomepageLinkType[],
+      posts: articles
     }
   }
 }

@@ -4,7 +4,7 @@ import SVGThoughtsAndIdeasStacked from '@svgs/thoughts-&-opinions-stacked.svg'
 import { css } from '@emotion/css'
 import { mq } from 'config/mediaQueries'
 import { Link } from '@components/Link'
-import { articles } from '@data/articles'
+import articles from '@data/articles'
 import { PostPreview, PostPreviewType } from '@components/PostPreview'
 
 const style = css`

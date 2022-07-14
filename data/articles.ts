@@ -1,6 +1,6 @@
 import { PostPreviewType } from '@components/PostPreview'
 
-export const articles: PostPreviewType[] = [
+export default <PostPreviewType[]>[
   {
     title: "Make your design system accessible — Icons",
     url: "https://uxdesign.cc/make-your-design-system-accessible-part-2-icons-f3f7bd0b4b5a",
