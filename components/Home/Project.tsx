@@ -1,11 +1,30 @@
 import { Headline } from '@components/Headline'
 import { css } from '@emotion/css'
-import { ProjectDetails } from 'types/Project'
 import { Link } from '@components/Link';
 import Image from 'next/image'
 import { mq } from 'config/mediaQueries';
 import { DateTime, Duration } from '@components/DateTime';
 import { List } from '@components/List';
+
+export type ProjectDetails = {
+  client: string,
+  title: string,
+  class?: string,
+  buttonLabel?: string
+  buttonTarget?: string
+  url?: string,
+  responsibilities?: string[],
+  approach?: {[key: string]: string}[],
+  startDate: string,
+  endDate: string,
+  picture: {
+    url: string,
+    alt: string,
+    width: number,
+    height: number
+  },
+  content: any
+}
 
 const style = css`
   padding-top: var(--image-offset, 0);

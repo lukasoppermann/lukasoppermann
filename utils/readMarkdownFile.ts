@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { join } from 'path'
-import markdownToHtml from '@lib/markdownToHtml'
+import markdownToHtml from '@utils/markdownToHtml'
 
 const dataDirectory = join(process.cwd(), 'data')
 

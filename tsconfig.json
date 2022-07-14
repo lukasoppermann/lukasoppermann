@@ -13,8 +13,8 @@
       "@context/*": [
         "context/*"
       ],
-      "@lib/*": [
-        "lib/*"
+      "@utils/*": [
+        "utils/*"
       ],
       "@styles/*": [
         "styles/*"
