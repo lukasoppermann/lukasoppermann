@@ -4,11 +4,12 @@ import Intro from '@components/Home/Intro'
 import Head from 'next/head'
 import { DIR_PROJECTS } from 'config/directories'
 import { GetStaticProps } from 'next'
-import { getMarkdownFile, markdownFile } from '@utils/getMarkdownFile'
+import { getMarkdownFile, markdownFileType } from '@utils/getMarkdownFile'
 import markdownToReact from '@utils/markdownToReact'
 import { Headline } from '@components/Headline'
 import dynamic from 'next/dynamic'
 import homepageLinks from '@data/homepageLinks'
+import { HomepageLinkType } from '@components/Home/HomepageLink'
 
 const Project = dynamic(
   () => import('@components/Home/Project'),
@@ -65,13 +66,12 @@ export default function Home({ projects, links }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const projects: markdownFile[] = await getMarkdownFile(DIR_PROJECTS)
-  const links = homepageLinks
+  const projects: markdownFileType[] = await getMarkdownFile(DIR_PROJECTS)
   
   return {
     props: {
       projects: projects,
-      links: links
+      links: homepageLinks as HomepageLinkType[]
     }
   }
 }

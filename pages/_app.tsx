@@ -1,7 +1,7 @@
 import { Footer } from '@components/Footer'
 import splitbee from '@splitbee/web'
 import '@styles/globals.scss'
-import type { AppProps /*, AppContext */ } from 'next/app'
+import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -9,8 +9,7 @@ import { useEffect } from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 const Header = dynamic(
-  () => import('@components/Header/Header'),
-  { loading: () => <p></p> }
+  () => import('@components/Header/Header')
 )
 
 function MyApp({ Component, pageProps }: AppProps) {
