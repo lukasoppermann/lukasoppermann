@@ -1,8 +1,8 @@
 import { GetStaticProps } from 'next'
-import readMarkdownFile from '@lib/readMarkdownFile'
+import readMarkdownFile from '@utils/readMarkdownFile'
 import { css } from '@emotion/css'
-import SVGImprint from 'svgs/imprint.svg'
-import SVGImprintStacked from 'svgs/imprint-stacked.svg'
+import SVGImprint from '@svgs/imprint.svg'
+import SVGImprintStacked from '@svgs/imprint-stacked.svg'
 import { mq } from 'config/mediaQueries'
 
 const style = css`

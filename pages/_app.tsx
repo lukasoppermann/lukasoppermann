@@ -1,4 +1,4 @@
-import { Footer } from '@components/Footer/Footer'
+import { Footer } from '@components/Footer'
 import splitbee from '@splitbee/web'
 import '@styles/globals.scss'
 import type { AppProps /*, AppContext */ } from 'next/app'

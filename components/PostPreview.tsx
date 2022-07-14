@@ -3,12 +3,11 @@ import { DateTime } from '@components/DateTime'
 import { Headline } from '@components/Headline'
 import { Icon } from '@components/Icon'
 import { Paragraph } from '@components/Paragraph'
-import { DateString } from 'types/Date'
 
 export type PostPreviewType = {
   url: string,
   title: string,
-  published: DateString,
+  published: string,
   excerpt: string
 }
 

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 
 const Newsletter = dynamic(
-  () => import('@components/Footer/Newsletter'),
+  () => import('@components/Newsletter'),
   { loading: () => <p></p> }
 )
 
