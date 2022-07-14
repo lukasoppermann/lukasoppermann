@@ -17,10 +17,10 @@
         "utils/*"
       ],
       "@styles/*": [
-        "styles/*"
+        "assets/css/*"
       ],
       "@svgs/*": [
-        "svgs/*"
+        "assets/svgs/*"
       ],
     },
     "target": "es5",
