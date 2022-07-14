@@ -1,6 +1,6 @@
-import { HomepageLink } from '@components/Home/HomepageLink';
+import { HomepageLinkType } from '@components/Home/HomepageLink';
 
-export default <HomepageLink[]>[
+export default <HomepageLinkType[]>[
   {
     url: 'https://dribbble.com/lukasoppermann',
     target: '_blank',
