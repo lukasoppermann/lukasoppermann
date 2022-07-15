@@ -26,6 +26,8 @@ const Clients = dynamic(
 )
 
 const style = css`
+  opacity: 0;
+  transition: opacity .25s ease;
   .lab1886 {
     --project-color-tint: var(--lab1886-project-color);
     --image-offset: -20px;
