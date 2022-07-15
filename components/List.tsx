@@ -1,7 +1,6 @@
 import { css } from '@emotion/css'
-import { mq } from 'config/mediaQueries'
 
-type Props = {
+type ListProps = {
   items: string[],
   size?: 'default' | 'small'
 }
@@ -40,7 +39,7 @@ const style = css`
   }
 `
 
-export const List = ({ items, size = "default" }: Props) => {
+export const List = ({ items, size = "default" }: ListProps) => {
   return (<ul className={`${style} List List--${size}`}>
     {items.map(item => <li key={item}>{item}</li>)}
   </ul>
