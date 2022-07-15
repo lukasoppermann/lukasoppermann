@@ -1,11 +1,11 @@
 import { css } from '@emotion/css'
 
-type ParagraphStyles = 'default' | 'small'
+type ParagraphStylesType = 'default' | 'small'
 
 type ParagraphProps = {
   children: any,
   className?: string,
-  type?: ParagraphStyles
+  type?: ParagraphStylesType
 }
 
 const style = css`

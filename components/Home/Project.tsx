@@ -6,7 +6,7 @@ import { mq } from 'config/mediaQueries';
 import { DateTime, Duration } from '@components/DateTime';
 import { List } from '@components/List';
 
-export type ProjectDetails = {
+export type ProjectDetailsType = {
   client: string,
   title: string,
   class?: string,
@@ -278,7 +278,7 @@ const style = css`
 `
 
 type ComponentProps = {
-  project: ProjectDetails
+  project: ProjectDetailsType
 }
 
 const Project = ({ project }: ComponentProps) => {
