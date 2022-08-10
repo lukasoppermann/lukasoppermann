@@ -1,8 +1,10 @@
+![me-working](https://user-images.githubusercontent.com/813754/183907598-d18d505d-56fd-4af4-8d9c-0f723bb05e60.gif)
+
 ### Hi there 👋
 
-🔭 I’m currently working [refreshing my portfolio](https://lukasoppermann.com) on my Figma plugins: [design tokens](https://github.com/lukasoppermann/design-tokens) & [elevation scale](https://github.com/lukasoppermann/elevation-scale)
+🔭 I’m currently [refreshing my portfolio](https://lukasoppermann.com) and working on my Figma plugins: [design tokens](https://github.com/lukasoppermann/design-tokens) & [elevation scale](https://github.com/lukasoppermann/elevation-scale)
 
-🌱 I’m currently learning: how to use screen readers
+🌱 I am learning: how to use screen readers
 
 🤔 I’m looking for help with my open source projects:  
 - [Figma design tokens export plugin](https://github.com/lukasoppermann/design-tokens)
