@@ -1,8 +1,10 @@
+# Hi there 👋
 ![me-working](https://user-images.githubusercontent.com/813754/183907598-d18d505d-56fd-4af4-8d9c-0f723bb05e60.gif)
 
-### Hi there 👋
+I'm Lukas,
+I work at GitHub 🐱🐙 on the [primer](https://primer.style/) team.
 
-🔭 I’m currently [refreshing my portfolio](https://lukasoppermann.com) and working on my Figma plugins: [design tokens](https://github.com/lukasoppermann/design-tokens) & [elevation scale](https://github.com/lukasoppermann/elevation-scale)
+🔭 I constantly [refresh my portfolio](https://lukasoppermann.com) try out new react stuff and work on my Figma plugins: [design tokens](https://github.com/lukasoppermann/design-tokens) & [elevation scale](https://github.com/lukasoppermann/elevation-scale)
 
 #### 🌱 I am learning
 - how to use screen readers
