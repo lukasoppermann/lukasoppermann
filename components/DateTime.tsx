@@ -80,7 +80,7 @@ const DateTime = ({ from: fromString, to: toString = undefined, format = 'MMMM D
   const showRange: boolean = isRange && (!to.isValid() || from.format(format) !== to.format(format))
   // return date or range
   return (
-    <span className={`${style} ${showRange && 'is-range'} dateTime`} role="group" aria-label={`${from.format(format)}${isRange === true ? "to " + to.format(format) : ''}`}>
+    <span className={`${style} ${showRange && 'is-range'} dateTime`} role="group" aria-label={`${from.format(format)}${isRange === true ? " to " + to.format(format) : ''}`}>
       <time aria-hidden dateTime={from.toISOString()}>{fromLabel ??from.format(format)}</time>
       {showRange && <time aria-hidden dateTime={to.toISOString()}>{toLabel ?? to.format(format)}</time>}
     </span>
