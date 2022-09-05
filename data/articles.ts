@@ -2,6 +2,12 @@ import { PostPreviewType } from '@components/PostPreview'
 
 export const articles: PostPreviewType[] = [
   {
+    title: "Dark mode with design tokens",
+    url: "https://uxdesign.cc/dark-mode-with-design-tokens-8d7b9d9753a",
+    published: "08.08.2022",
+    excerpt: "Learn how to implement dark mode with as little effort as possible."
+  },
+  {
     title: "Make your design system accessible — Icons",
     url: "https://uxdesign.cc/make-your-design-system-accessible-part-2-icons-f3f7bd0b4b5a",
     published: "17.05.2022",
