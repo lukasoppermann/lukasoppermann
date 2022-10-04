@@ -69,8 +69,11 @@ const Footer = () =>{
       <a href="https://www.linkedin.com/in/lukasoppermann" rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="LinkedIn">LinkedIn</a>
       <a href='https://twitter.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="Twitter">Twitter</a>
       <a href='https://github.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="GitHub">GitHub</a>
-      <Link href="/imprint">
-        <a>Imprint & privacy policy</a>
+      <Link href="/impressum">
+        <a>Impressum / imprint</a>
+      </Link>
+      <Link href="/impressum">
+        <a>Datenschutz / privacy policy</a>
       </Link>
       <span className="copyright">Copyright {new Date().getFullYear()} — Lukas Oppermann</span>
     </nav>

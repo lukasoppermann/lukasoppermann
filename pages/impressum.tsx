@@ -37,6 +37,9 @@ const style = css`
     .imprint__contact-details {
       grid-column: columns;
       grid-row: 1;
+      h2:first-child {
+        margin-top: 0;
+      }
     }
     .imprint__main-content {
       grid-column: columns;
@@ -70,13 +73,13 @@ const style = css`
   }
 `
 
-export default function imprint ({ content }) {
+export default function imprint({ content }) {
   return (
-      <main className={`${style} Grid`}>
-        <SVGImprint className="svg-title svg-imprint--default" />
-        <SVGImprintStacked className="svg-title svg-imprint--stacked" />
-        <div className="content Grid" dangerouslySetInnerHTML={{ __html: content }} />
-      </main>
+    <main className={`${style} Grid`}>
+      <SVGImprint className="svg-title svg-imprint--default" />
+      <SVGImprintStacked className="svg-title svg-imprint--stacked" />
+      <div className="content Grid" dangerouslySetInnerHTML={{ __html: content }} />
+    </main>
   )
 }
 

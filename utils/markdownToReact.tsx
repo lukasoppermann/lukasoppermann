@@ -25,6 +25,8 @@ export default function markdownToReact(markdown, options?) {
       components: {
         ...{
           p: Paragraph,
+          'h3': ({ children }) => <Headline level="3">{children}</Headline>,
+          'h4': ({ children }) => <Headline level="4">{children}</Headline>,
           'h5': ({children}) => <Headline level="5">{ children }</Headline>,
           'h6': ({ children }) => <Headline level="6">{children}</Headline>,
           'a': ({ href, children }) => <Link href={href} type="inline" target="_blank">{children[0]}</Link>,
