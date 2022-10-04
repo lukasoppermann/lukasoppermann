@@ -60,7 +60,7 @@ export default function Home({ projects, links }) {
       <Resume />
       {projects.map(project => <Project key={project.meta.title} project={{ ...project.meta, ...{ content: markdownToReact(project.content, markdownOptions)}}} />)}
       {links.map(homepageLink => <HomepageLink key={homepageLink.url} item={homepageLink}/>)}
-      <Clients />
+      {/* <Clients /> */}
     </main>
   )
 }
