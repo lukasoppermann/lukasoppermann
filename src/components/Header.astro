@@ -1,0 +1,69 @@
+---
+import Logo from './Logo.astro';
+import Navigation from './Navigation.astro';
+import Icon from './Icon.astro';
+import ToggleButton from './ToggleButton.astro';
+
+---
+<style>
+  header {
+    --header-height: 64px;
+    --mobile-menu-height: calc(100vh - var(--header-height));
+    height: var(--header-height);
+    align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: var(--background);
+    &.is-scrolled {
+      box-shadow: 1px 0 15px rgba(0,0,0,.02);
+      background: var(--surface);
+    }
+    & .Logo {
+      grid-column: columns / span 2;
+      z-index: 2;
+    }
+    & .Navigation {
+      z-index: 1;
+      grid-column: column 8 / span 5;
+      @media (--mobile) {
+        top: var(--header-height) !important;
+      }
+    }
+    & .NavigationToggle {
+      z-index: 2;
+      display: none;
+      color: var(--on-background__high-emphasis);
+      height: 64px;
+      width: 64px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      justify-content: center;
+      align-items: center;
+      @media (--mobile) {
+        display: flex;
+      }
+    }
+  }
+</style>
+
+<script>
+  const nav = document.querySelector('nav.Navigation')
+  const navigationToggle = document.querySelector('.NavigationToggle')
+  if (navigationToggle && nav)
+    navigationToggle!.addEventListener('click', () => {
+      navigationToggle.classList.toggle('is-active')
+      nav.classList.toggle('is-open')
+    })
+</script>
+
+<header class="Grid">
+  <Logo class="Logo" href="/" />
+  <Navigation class="Navigation" />
+  <ToggleButton class="NavigationToggle">
+    <Icon slot="enabled" type="menu" />
+    <Icon slot="disabled" type="close" />
+  </ToggleButton>
+</header>

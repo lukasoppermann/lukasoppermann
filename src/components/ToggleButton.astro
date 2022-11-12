@@ -1,0 +1,46 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+export interface Props extends HTMLAttributes<'div'> {
+	active?: boolean;
+}
+
+const { active, ...attr } = Astro.props;
+
+---
+<style>
+  button {
+    height: 40px;
+    width: 40px;
+    background: transparent;
+    border: none;
+    color: var(--on-background__high-emphasis);
+    & * {
+      pointer-events: none;
+    }
+    svg {
+      fill: var(--on-background__high-emphasis);
+    }
+    & .disabled, & .enabled {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+    & .disabled {
+      display: none;
+    }
+    &.is-active {
+      & .enabled {
+        display: none;
+      }
+      & .disabled {
+        display: block;
+      }
+    }
+  }
+</style>
+
+<button class:list={[attr.class]} data-enabled={active} {...attr}>
+  <div class="enabled"><slot name="enabled"></slot></div>
+  <div class="disabled"><slot name="disabled"></slot></div>
+</button>

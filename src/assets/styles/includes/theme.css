@@ -1,0 +1,137 @@
+/* // CORE COLORS */
+:root {
+  --blue: rgb(40, 80, 235);
+  --yellow: #ffc800;
+  --black-rgb: 0, 0, 0;
+  /* // whites */
+  --white-tint: rgb(250, 251, 252); /* can be replaced with neutrals 0 */
+  --white-tint-60: rgba(250, 251, 252, 0.6);
+  /* // grey */
+  --grey-800: #1e2225;
+
+  /**
+   * Neutrals
+   */
+  --neutrals-0-rgb: 250, 251, 252;
+  --neutrals-0: rgb(var(--neutrals-0-rgb));
+  --neutrals-50: rgb(245, 248, 250);
+  --neutrals-100: rgb(233, 236, 238);
+  --neutrals-150: rgb(221, 224, 226);
+  --neutrals-200: rgb(209, 212, 214);
+  --neutrals-250: rgb(197, 200, 203);
+  --neutrals-300: rgb(185, 189, 191);
+  --neutrals-350: rgb(173, 177, 179);
+  --neutrals-400: rgb(161, 165, 167);
+  --neutrals-450: rgb(149, 153, 155);
+  --neutrals-500: rgb(137, 141, 143);
+  --neutrals-550: rgb(126, 129, 132);
+  --neutrals-600: rgb(114, 117, 120);
+  --neutrals-650: rgb(102, 105, 108);
+  --neutrals-700: rgb(90, 93, 96);
+  --neutrals-750: rgb(78, 82, 84);
+  --neutrals-800: rgb(66, 70, 73);
+  --neutrals-850: rgb(54, 58, 61);
+  --neutrals-900: rgb(42, 46, 49);
+  --neutrals-950: rgb(30, 34, 37);
+  --neutrals-1000-rgb: 18, 22, 25;
+  --neutrals-1000: rgb(--neutrals-1000-rgb);
+}
+/*
+ *
+ * Light & default mode
+ *
+ */
+:root {
+  /* background colors */
+  --background: #fdfeff;
+  --surface: #fdfeff;
+  --surface-alternative: #030506;
+  --accent: var(--yellow);
+  /* // UI Colors */
+  --ui--low-contrast: #f3f4f5;
+  --ui--fair-contrast: #e9eaeb;
+  --ui--medium-contrast: #d5d6d7;
+  --ui--high-contrast: #c1c2c3;
+  /* // functional colors */
+  --interaction: var(--blue);
+  --link: var(--interaction);
+  /* // on colors */
+  --on-background__highest-emphasis: rgba(var(--neutrals-1000-rgb), 1);
+  --on-background__high-emphasis: rgba(var(--neutrals-1000-rgb), 0.88);
+  --on-background__medium-emphasis: rgba(var(--neutrals-1000-rgb), 0.66);
+  --on-background__low-emphasis: rgba(var(--neutrals-1000-rgb), 0.44);
+  /* // on colors */
+  --on-surface__high-emphasis: rgba(var(--neutrals-1000-rgb), 0.88);
+  --on-surface__medium-emphasis: rgba(var(--neutrals-1000-rgb), 0.66);
+  --on-surface__low-emphasis: rgba(var(--neutrals-1000-rgb), 0.44);
+  /* // on suface alternative */
+  --on-surface-alternative__high-emphasis: rgba(var(--neutrals-0-rgb), 0.88);
+  --on-surface-alternative__medium-emphasis: rgba(var(--neutrals-0-rgb), 0.66);
+  --on-surface-alternative__low-emphasis: rgba(var(--neutrals-0-rgb), 0.44);
+  /* // on dark */
+  --on-dark__high-emphasis: rgba(var(--neutrals-0-rgb), 0.8);
+  --on-dark__medium-emphasis: rgba(var(--neutrals-0-rgb), 0.55);
+  --on-dark__low-emphasis: rgba(var(--neutrals-0-rgb), 0.47);
+
+  /** ----------------
+  / Custom component tokens
+  */
+  --intro__background: #f6f5f3;
+  --project-default-tint: #c2e8e3;
+  --lab1886-project-color: #ebe5d2;
+  --copra-project-color: #f1dada;
+  --design-tokens-project-color: #fccf2b;
+}
+
+/* dark mode css */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* // background colors */
+    --background: #030506;
+    --surface: #0d0f11;
+    --surface-alternative: var(--neutrals-0);
+    --accent: var(--yellow);
+    /* // UI Colors */
+    --ui--low-contrast: #141617;
+    --ui--fair-contrast: #1e2021;
+    --ui--medium-contrast: #323435;
+    --ui--high-contrast: #464849;
+    /* // functional colors */
+    --interaction: var(--blue);
+    --link: var(--interaction);
+
+    /* // on colors */
+    --on-background__highest-emphasis: rgba(var(--neutrals-0-rgb), 1);
+    --on-background__high-emphasis: rgba(var(--neutrals-0-rgb), 0.8);
+    --on-background__medium-emphasis: rgba(var(--neutrals-0-rgb), 0.55);
+    --on-background__low-emphasis: rgba(var(--neutrals-0-rgb), 0.47);
+    /* // on colors */
+    --on-surface__high-emphasis: rgba(var(--neutrals-0-rgb), 0.8);
+    --on-surface__medium-emphasis: rgba(var(--neutrals-0-rgb), 0.55);
+    --on-surface__low-emphasis: rgba(var(--neutrals-0-rgb), 0.47);
+    /* // on suface alternative */
+    --on-surface-alternative__high-emphasis: rgba(var(--neutrals-1000-rgb), 0.88);
+    --on-surface-alternative__medium-emphasis: rgba(var(--neutrals-1000-rgb), 0.66);
+    --on-surface-alternative__low-emphasis: rgba(var(--neutrals-1000-rgb), 0.44);
+
+    /* // on dark */
+    --on-dark__high-emphasis: rgba(var(--neutrals-0-rgb), 0.8);
+    --on-dark__medium-emphasis: rgba(var(--neutrals-0-rgb), 0.55);
+    --on-dark__low-emphasis: rgba(var(--neutrals-0-rgb), 0.47);
+
+    /** ----------------
+    / Custom component tokens
+    */
+    --intro__background: var(--surface);
+    --project-default-tint: #428980;
+    --bosch-project-color: #212b29;
+    --lab1886-project-color: #141415;
+    --copra-project-color: #221919;
+    --design-tokens-project-color: #fccf2b;
+    --project-card--background: var(--neutrals-950);
+    --project-card--text-high-emphasis: var(--on-background__high-emphasis);
+    --project-card--text-low-emphasis: var(--on-background__low-emphasis);
+    --project-card--list-indicator-color: var(--on-background__low-emphasis);
+    --footer--background: var(--surface);
+  }
+}

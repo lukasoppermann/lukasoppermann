@@ -1,0 +1,25 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type IconTypes = 
+  'arrowRight' |
+  'close' |
+  'menu' |
+  'mail' |
+  'fileDownload'
+
+export interface Props extends HTMLAttributes<'svg'> {
+	type: IconTypes;
+}
+
+const { type } = Astro.props;
+
+const { default: iconSvg } = await import(`../assets/svgs/icon-${type}.svg?raw`);
+---
+<style>
+  :global(svg) {
+    fill: var(--on-background__high-emphasis) !important;
+  }
+</style>
+
+<Fragment set:html={iconSvg} />

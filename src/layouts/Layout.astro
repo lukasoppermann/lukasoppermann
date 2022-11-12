@@ -1,0 +1,33 @@
+---
+
+import Header from '@components/Header.astro'
+import '@styles/global.css'
+
+export interface Props {
+	title: string;
+  description?: string;
+}
+
+const titleSuffix = "Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist"
+const defaults = {
+  description: "Lukas Oppermann is a design lead and creative director from berlin, germany. He loves creating experiences with a focus on usability."
+}
+const { title, description } = Astro.props;
+---
+
+<html lang='en'>
+  <head>
+    <title>{title} | {titleSuffix}</title>
+    <meta property="og:title" content={`${title} | ${titleSuffix}`} />
+    <meta name="description" content={description || defaults.description} >
+    <link rel="icon" href="/favicon-veare.svg" />
+    <link rel="mask-icon" href="/safari-mask-icon.svg" color="#f0aa1e" />
+    <link rel="apple-touch-icon" href="/veare-apple-touch-icon-180.png" />
+    {/* <link href='https://fonts.googleapis.com/css?family=Montserrat:700|Noto+Serif:400,400i,400b|Source+Sans+Pro:400,600|Source+Code+Pro:700&display=swap' rel='stylesheet' /> */}
+    <meta name="color-scheme" content="light dark" />
+  </head>
+  <body>
+    <Header></Header>
+    <slot></slot>
+  </body>
+</html>
