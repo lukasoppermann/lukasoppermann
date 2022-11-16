@@ -1,0 +1,99 @@
+:root {
+  /* font sizes */
+  --font-size--caption: 1.3rem;
+  --font-size--default: 1.6rem;
+  --font-size--headline: 2rem;
+  /* font lineheight */
+  --font-lineheight--default: 1.4;
+  /* font weights */
+  --font-weight--regular: 400;
+  --font-weight--bold: 600;
+  /* ====================================
+      Type Scale
+  ==================================== */
+  /* xs */
+  --ts-size-xs: 1.3rem;
+  --ts-line-height-xs: 1.4;
+  /* sm */
+  --ts-size-sm: 1.6rem;
+  --ts-line-height-sm: 1.4;
+  /* md */
+  --ts-size-md: 2rem;
+  --ts-line-height-md: 1.55;
+  /* lg */
+  --ts-size-lg: 2.5rem;
+  --ts-line-height-lg: 1.35;
+  /* xl */
+  --ts-size-xl: 3.1rem;
+  --ts-line-height-xl: 1.35;
+  /* xxl */
+  --ts-size-xxl: 3.9rem;
+  --ts-line-height-xxl: 1.2;
+  /* hg */
+  --ts-size-hg: 4.9rem;
+  --ts-line-height-hg: 1.1;
+  /* xh */
+  --ts-size-xh: 6.1rem;
+  --ts-line-height-xh: 1.1;
+  /* xh */
+  --ts-size-title: 7.2rem;
+  --ts-line-height-title: 1.1;
+  /* ====================================
+    Font families
+  ==================================== */
+  /* Sans Serif */
+  --font-sans: 'Source Sans Pro', helvetica, sans-serif;
+  /* weights */
+  --font-sans-weight-regular: 400;
+  --font-sans-weight-bold: 600;
+  /* styles */
+  --font-sans-style-normal: normal;
+  --font-sans-style-italic: italic;
+  /* ==================================== */
+  /* Serif */
+  --font-serif: 'Noto Serif', georgia, serif;
+  /* weights */
+  --font-serif-weight-regular: 400;
+  --font-serif-weight-bold: 700;
+  /* styles */
+  --font-serif-style-normal: normal;
+  --font-serif-style-italic: italic;
+  /* ==================================== */
+  /* Monospace */
+  --font-mono: 'Source Code Pro', monospace;
+  /* weights */
+  /* --font-mono-weight-regular: 400; */
+  --font-mono-weight-bold: 700;
+  /* styles */
+  --font-mono-style-normal: normal;
+  --font-mono-style-italic: italic;
+  /* ==================================== */
+  /* Typestyles */
+  /* body small */
+  --typestyle__body--small: var(--font-sans-style-normal) var(--font-sans-weight-regular) var(--ts-size-sm) / var(--ts-line-height-sm) var(--font-sans);
+  /* body */
+  --typestyle__body: var(--font-sans-style-normal) var(--font-sans-weight-regular) var(--ts-size-md) / var(--ts-line-height-md) var(--font-sans);
+  --typestyle__body--bold: var(--font-sans-style-normal) var(--font-sans-weight-bold) var(--ts-size-md) / var(--ts-line-height-md) var(--font-sans);
+  /* link */
+  --typestyle__link: var(--font-sans-style-normal) var(--font-sans-weight-bold) var(--ts-size-sm) / var(--ts-line-height-sm) var(--font-sans);
+  /* button */
+  --typestyle__button: var(--font-sans-style-normal) var(--font-sans-weight-regular) var(--ts-size-md) / var(--ts-line-height-md) var(--font-sans);
+  /* h6 */
+  --typestyle__h6: var(--font-mono-style-normal) var(--font-mono-weight-bold) var(--ts-size-sm) / var(--ts-line-height-sm) var(--font-mono);
+  /* h5 */
+  --typestyle__h5: var(--font-sans-style-normal) var(--font-sans-weight-bold)
+  var(--ts-size-sm) / var(--ts-line-height-sm) var(--font-sans);
+  /* h4 */
+  --typestyle__h4: var(--font-sans-style-normal) var(--font-sans-weight-bold)
+  var(--ts-size-md) / var(--ts-line-height-md) var(--font-sans);
+  /* h3 */
+  --typestyle__h3: var(--font-sans-style-normal) var(--font-sans-weight-bold)
+  var(--ts-size-xl) / var(--ts-line-height-xl) var(--font-sans);
+  /* h2 */
+  --typestyle__h2: var(--font-sans-style-normal) var(--font-sans-weight-bold) var(--ts-size-xxl) / var(--ts-line-height-xxl) var(--font-sans);
+  /* DESKTOP */
+  @media (--min-desktop) {
+    --typestyle__h2: var(--font-sans-style-normal) var(--font-sans-weight-bold)
+  var(--ts-size-hg) / var(--ts-line-height-hg) var(--font-sans);
+  }
+}

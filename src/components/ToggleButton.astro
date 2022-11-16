@@ -10,32 +10,28 @@ const { active, ...attr } = Astro.props;
 ---
 <style>
   button {
+    cursor: pointer;
     height: 40px;
     width: 40px;
     background: transparent;
     border: none;
+    display: block;
     color: var(--on-background__high-emphasis);
     & * {
       pointer-events: none;
     }
-    svg {
-      fill: var(--on-background__high-emphasis);
-    }
     & .disabled, & .enabled {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       height: 100%;
       width: 100%;
     }
-    & .disabled {
+    &:not(.is-active) .disabled {
       display: none;
     }
-    &.is-active {
-      & .enabled {
+    &.is-active .enabled {
         display: none;
-      }
-      & .disabled {
-        display: block;
-      }
     }
   }
 </style>

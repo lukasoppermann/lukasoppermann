@@ -1,4 +1,5 @@
 ---
+import { importSvg } from '@src/utilities/importSvg';
 import type { HTMLAttributes } from 'astro/types'
 
 type IconTypes = 
@@ -14,12 +15,12 @@ export interface Props extends HTMLAttributes<'svg'> {
 
 const { type } = Astro.props;
 
-const { default: iconSvg } = await import(`../assets/svgs/icon-${type}.svg?raw`);
+const { attributes: svgAttributes, innerHTML } = await importSvg(`../assets/svgs/icon-${type}.svg?raw`);
 ---
 <style>
-  :global(svg) {
+  svg {
     fill: var(--on-background__high-emphasis) !important;
   }
 </style>
 
-<Fragment set:html={iconSvg} />
+<svg {...svgAttributes} set:html={innerHTML}></svg>
