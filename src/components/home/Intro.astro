@@ -1,0 +1,259 @@
+---
+import { importSvg } from '@src/utilities/importSvg';
+
+const { attributes: svgAttributes, innerHTML: svgInnerHTML } = await importSvg(`../assets/svgs/solving-problems-is-my-passion.svg?raw`);
+---
+
+<style>
+  .Header--intro {
+    --max-grid-rows: 7;
+    grid-template-rows: auto;
+    padding-bottom: 32px;
+    grid-column: full-bleed;
+    @media (--min-tablet) {
+      grid-template-rows: max-content auto max-content;
+    }
+    /* ====================================
+      Info Boxes
+    ==================================== */
+    & .Header--intro__info {
+      --fadeSlideIn-translateY: 10%;
+      opacity: 0;
+      position: relative;
+      z-index: 2;
+      grid-column: columns;
+      grid-row: 1;
+      max-width: 360px;
+      &.Header--intro__info--1 {
+        animation: 1.25s var(--easeOutQuint) 1s forwards fadeSlideIn;
+        grid-row: 2;
+      }
+      &.Header--intro__info--2 {
+        animation: 1.25s var(--easeOutQuint) 1.25s forwards fadeSlideIn;
+        grid-row: 3;
+      }
+      &.Header--intro__info--3 {
+        animation: 1.25s var(--easeOutQuint) 1.5s forwards fadeSlideIn;
+        grid-row: 4;
+      }
+      @media (--min-tablet) {
+        grid-template-rows: max-content auto max-content;
+        grid-column-end: span 4;
+        &.Header--intro__info--1 {
+          grid-row: 1;
+          grid-column-start: columns;
+        }
+        &.Header--intro__info--2 {
+          grid-row: 1;
+          grid-column-start: column 5;
+        }
+        &.Header--intro__info--3 {
+          grid-row: 1;
+          grid-column-start: column 9;
+        }
+      }
+      @media (--min-desktop) {
+        grid-column-end: span 4;
+        &.Header--intro__info--2 {
+          grid-column-start: column 5;
+        }
+        &.Header--intro__info--3 {
+          grid-column-start: column 9;
+        }
+      }
+      @media (--min-large) {
+        grid-column-end: span 3;
+        &.Header--intro__info--2 {
+          grid-column-start: column 4;
+        }
+        &.Header--intro__info--3 {
+          grid-column-start: column 7;
+        }
+      }
+      & h3 {
+        margin-top: 32px;
+        color: var(--on-background__high-emphasis);
+        font: var(--typestyle__h6);
+        text-transform: uppercase;
+        @media (--min-desktop) {
+          margin-top: 40px;
+        }
+      }
+      & p {
+        margin-top: 8px;
+        font: var(--typestyle__body--small);
+        color: var(--on-background__low-emphasis);
+      }
+    }
+
+    /* ====================================
+      Background
+    ==================================== */
+    & .Header__background {
+      grid-row: 1 / var(--max-grid-rows);
+      grid-column: columns;
+      width: calc(100% + var(--grid-column-gap) * 2);
+      height: calc(100% + 32px);
+      margin-left: calc(-1 * var(--grid-column-gap));
+      background-color: var(--intro__background);
+      --origin-start: right;
+      animation: .75s var(--easeInOutQuint) forwards .5s blockFill;
+      transform: scaleX(0);
+      z-index: 0;
+    }
+
+    /* ====================================
+      Headline (svg)
+    ==================================== */
+    & .Header--intro__headline {
+      order: 2;
+      --fadeSlideIn-translateY: 0%;
+      --fadeSlideIn-translateX: 5%;
+      opacity: 0;
+      animation: 1.5s var(--easeOutQuint) 1s forwards fadeSlideIn;
+      display: flex;
+      position: relative;
+      z-index: 10;
+      justify-content: flex-start;
+      align-items: flex-start;
+      box-sizing: border-box;
+      grid-row: 1;
+      grid-column: columns;
+      margin: 0;
+      margin-top: 32px;
+      padding-bottom: 40px;
+      &::before {
+        position: absolute;
+        content: "";
+        width: 80px;
+        bottom: 0;
+        background-color: var(--accent);
+        height: 8px;
+      }
+      @media (--min-tablet) {
+        grid-row: 2;
+        margin-top: 64px;
+        &::before {
+          display: none;
+        }
+      }
+      @media (--min-desktop) {
+        /* grid-row: 2; */
+        grid-column: columns / span 11;
+        margin-top: 96px;
+      }
+      @media (--min-large) {
+        grid-column: columns / span 9;
+      }
+      & svg {
+        height: 100%;
+        width: 100%;
+        fill: var(--on-surface__high-emphasis) !important;
+      }
+    }
+
+    /* ====================================
+      Bottom Info
+    ==================================== */
+    & .Header--intro__slogan {
+      display: block;
+      position: relative;
+      opacity: 0;
+      animation: 1.5s var(--easeOutQuint) 1.5s forwards fadeSlideIn;
+      z-index: 10;
+      font-style: italic;
+      font-size: 2rem;
+      padding-top: 16px;
+      margin-top: 48px;
+      color: var(--on-surface__high-emphasis);
+      grid-column: columns;
+      grid-row: 5;
+      &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 1px;
+        background-color: rgba(var(--black-rgba-15));
+        top: 0;
+      }
+      @media (--min-tablet) {
+        max-width: 360px;
+        font-size: 2.4rem;
+      }
+      @media (--min-desktop) {
+        &::before {
+          width: 112px;
+          top: -8px;
+          background-color: var(--accent);
+          height: 12px;
+        }
+        border-top: none;
+        grid-column: columns / span 4;
+        margin-bottom: 32px;
+        margin-top: 32px;
+      }
+      @media (--min-large) {
+        grid-row: 3;
+        grid-column: columns / span 4;
+      }
+    }
+    & .Header--intro__roles {
+      opacity: 0;
+      animation: 1.5s var(--easeOutQuint) 1.75s forwards fadeSlideIn;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 10;
+      padding-top: 16px;
+      max-width: 100%;
+      font-weight: var(--font-weight--regular);
+      font-size: 2rem;
+      color: var(--on-surface__high-emphasis);
+      line-height: 130%;
+      grid-column: columns;
+      grid-row: 6;
+      @media (--min-tablet) {
+        font-size: 2.4rem;
+      }
+      @media (--min-desktop) {
+        grid-column: column 5 / span 4;
+        grid-row: 5;
+        margin-bottom: 32px;
+        margin-top: 32px;
+      }
+      @media (--min-large) {
+        grid-row: 3;
+        grid-column: column 5 / span 4;
+      }
+    }
+  }
+</style>
+
+
+<section class="Header--intro Grid" aria-labelledby="introTitle" role="main">
+  <h1 class="Header--intro__roles" aria-label="Design Lead UI / UX & Creative Direction" id="introTitle">
+    Design Lead UI / UX &<br />
+    Creative Direction
+  </h1>
+  <h2 class="Header--intro__slogan">Designing experiences with a focus on usability</h2>
+  <div class="Header--intro__info Header--intro__info--1">
+    <h3 aria-hidden>Design</h3>
+    <p aria-hidden>&mdash; a toolkit of methods to explore and address user needs & problems.</p>
+  </div>
+  <div class="Header--intro__info Header--intro__info--2">
+    <h3 aria-hidden>Technology</h3>
+    <p aria-hidden>&mdash; the constraints but also the material from which to build an exciting solution.</p>
+  </div>
+  <div class="Header--intro__info Header--intro__info--3">
+    <h3 aria-hidden>Product Thinking</h3>
+    <p aria-hidden>&mdash; my approach of building products based on user needs & measured impact.</p>
+  </div>
+  <figure class="Header--intro__headline">
+    <svg
+      {...svgAttributes}
+      class="svg-title svg-title--default"
+      set:html={svgInnerHTML}
+    ></svg>
+  </figure>
+  <div class="Header__background"></div>
+</section>

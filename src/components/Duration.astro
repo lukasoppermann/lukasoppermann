@@ -1,0 +1,40 @@
+---
+import { parseTime } from '@src/utilities/parseTime'
+import dayjs from 'dayjs'
+import durationPlugin from 'dayjs/plugin/duration'
+import type { Duration } from 'dayjs/plugin/duration'
+dayjs.extend(durationPlugin)
+
+export interface Props {
+  from: string,
+  to: string
+}
+
+
+const {to: toString, from: fromString} = Astro.props
+
+const {from, to} = parseTime(fromString, toString)
+const duration = dayjs.duration(to.diff(from))
+
+const formatDuration = (duration: Duration): string => {
+  const month = Math.round(duration.asMonths() % 12)
+  const years = Math.floor(duration.asMonths() / 12)
+  const yearString = years > 1 ? `${years} yrs` : (years === 1 ? `${years} yr` : '')
+  const monthString = month > 0 ? `${month} mth` : ''
+  //
+  return `${yearString} ${monthString}`.trim()
+}
+---
+<style>
+  .dateTime {
+    display: inline-block;
+    position: relative;
+    time {
+      font-size: inherit;
+    }
+  }
+</style>
+
+<span class='is-duration dateTime'>
+  <time datetime={duration.toISOString()}>{formatDuration(duration)}</time>
+</span>

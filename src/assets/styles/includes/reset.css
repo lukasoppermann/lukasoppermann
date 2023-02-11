@@ -1,0 +1,41 @@
+/* ====================================
+    CSS RESET
+==================================== */
+html,
+body,
+p,
+ol,
+ul,
+li,
+blockquote,
+figure,
+menu,
+pre,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+html,
+div {
+  box-sizing: border-box;
+}
+img,
+video {
+  height: 100%;
+  max-width: 100%;
+  vertical-align: top; /* removes margin below */
+}
+a,
+a:active,
+a:focus {
+  color: inherit;
+  transition: color .3s ease;
+}
+a:hover {
+  text-decoration: none;
+}

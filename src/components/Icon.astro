@@ -1,19 +1,13 @@
 ---
 import { importSvg } from '@src/utilities/importSvg';
+import type { IconTypes } from '@src/types/IconTypes';
 import type { HTMLAttributes } from 'astro/types'
 
-type IconTypes = 
-  'arrowRight' |
-  'close' |
-  'menu' |
-  'mail' |
-  'fileDownload'
-
-export interface Props extends HTMLAttributes<'svg'> {
-	type: IconTypes;
+interface Props extends HTMLAttributes<'svg'> {
+  type: IconTypes;
 }
 
-const { type } = Astro.props;
+const { type, ...attr } = Astro.props;
 
 const { attributes: svgAttributes, innerHTML } = await importSvg(`../assets/svgs/icon-${type}.svg?raw`);
 ---
@@ -23,4 +17,4 @@ const { attributes: svgAttributes, innerHTML } = await importSvg(`../assets/svgs
   }
 </style>
 
-<svg {...svgAttributes} set:html={innerHTML}></svg>
+<svg {...svgAttributes} class:list={[attr.class]} set:html={innerHTML}></svg>

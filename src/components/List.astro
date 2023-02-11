@@ -1,0 +1,50 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'ul'> {
+  items: string[],
+  size?: 'default' | 'small'
+}
+
+const { items, size = 'default', ...attr } = Astro.props;
+---
+
+<style>
+  ul {
+    &.List--small{
+        --list-font-style: var(--typestyle__body--small);
+      }
+      margin-top: 0;
+      margin-bottom: 0;
+     & li {
+        counter-increment: listCounter;
+        position: relative;
+        display: list-item;
+        list-style: none; /* decimal-leading-zero */
+        font: var(--list-font-style, var(--typestyle__body));
+        color: inherit;
+        margin: 8px 0;
+        padding-left: 1.6em;
+        &::before {
+          position: absolute;
+          content: "";
+          color: currentColor;
+          color: var(--list-indicator-color, var(--on-surface__low-emphasis));
+          left: 0;
+          top: 0;
+          margin-top: -.05em;
+          /* for unordered lists */
+          padding-left: .2em;
+          content: "— " / "";
+          speak: none;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+  }
+</style>
+
+<ul class:list={[`List List--${size}`]} {...attr}>
+  {items.map(item => <li>{item}</li>)}
+</ul>

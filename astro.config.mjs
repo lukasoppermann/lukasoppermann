@@ -1,6 +1,13 @@
 import { defineConfig } from 'astro/config';
-import preact from '@astrojs/preact';
+import sitemap from "@astrojs/sitemap";
+// https://astro.build/config
+import image from "@astrojs/image";
+
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [preact()],
+  output: "server",
+  integrations: [sitemap(), image({
+    serviceEntryPoint: "@astrojs/image/sharp"
+  })]
 });

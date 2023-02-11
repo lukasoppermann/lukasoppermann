@@ -1,0 +1,43 @@
+---
+import type { Frontmatter } from '@src/layouts/MarkdownPostLayout.astro';
+import type { HTMLAttributes } from 'astro/types';
+import DateTime from './DateTime.astro';
+import Headline from './Headline.astro';
+import Icon from './Icon.astro';
+import Paragraph from './Paragraph.astro';
+
+export interface Props extends HTMLAttributes<'a'>{
+  post: Frontmatter
+}
+
+const { post: {title, url, published, excerpt}, ...attr } = Astro.props
+---
+<style>
+  a {
+    color: var(--on-background__high-emphasis);
+    display: block;
+    & .headline {
+      margin-bottom: 0 !important;
+    }
+    & .svg-icon {
+      position: absolute;
+      margin-top: 2px;
+      margin-left: 8px;
+      path {
+        fill: var(--on-background__high-emphasis);
+      }
+    }
+   & .dateTime {
+      margin-bottom: 0;
+      color: var(--on-background__low-emphasis);
+      font-size: var(--font-size--caption);
+      font-weight: var(--font-weight--bold);
+    }
+  }
+</style>
+
+<a class:list={[attr.class]} target="_blank" rel="noreferrer" href={url} data-splitbee-event="Blog Post" data-splitbee-event-article={title}>
+  <DateTime class="dateTime" from={published} />
+  <Headline level="3" class="headline">{title}<Icon class="svg-icon" type="arrowRight" /></Headline>
+  <Paragraph>{excerpt}</Paragraph>
+</a>

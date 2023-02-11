@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'p'> {
+  type?: 'small'
+}
+
+const { type, class: className, ...attr } = Astro.props;
+---
+
+<style>
+  p {
+    font: var(--typestyle__body);
+    color: var(--on-background__medium-emphasis);
+    margin-bottom: 8px;
+  }
+  &.small {
+    font: var(--typestyle__body--small);
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+</style>
+<p class:list={[className, type]} {...attr}>
+  <slot />
+</p>

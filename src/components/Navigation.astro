@@ -4,10 +4,10 @@ export interface Props {
 }
 const { class: className } = Astro.props;
 
-const activePage = Astro.url.pathname
+const activePage = Astro.url.pathname.replace(/^\//, '')
 
-import email from '@config/index';
-const mailto = `mailto:${email.raw}?subject=Hey 👋,%20what&apos;s%20up?&body=Great%20to%20hear%20from%20you,%20how%20can%20I%20help?`
+import { email } from '@config/index';
+const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20hear%20from%20you,%20how%20can%20I%20help?`
 ---
 <style>
   nav {
@@ -39,7 +39,7 @@ const mailto = `mailto:${email.raw}?subject=Hey 👋,%20what&apos;s%20up?&body=G
         transition: opacity .3s ease, bottom .3s ease, width .3s ease, background .3s ease;
         bottom: 8px;
       }
-      &.is-open, &:hover {
+      &.is-active, &:hover {
         &:after {
           bottom: 0;
           opacity: 1;
@@ -60,35 +60,42 @@ const mailto = `mailto:${email.raw}?subject=Hey 👋,%20what&apos;s%20up?&body=G
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
-      & .Menu__items {
-        & a {
-          font-weight: var(--font-serif-weight-regular);
-          font-family: var(--font-serif);
-          font-style: var(--font-serif-style-italic);
-          font-size: var(--font-size--headline);
-          text-transform: none;
-          letterspacing: .5px;
-          opacity: 0;
-          transform: translate(0, -25%);
-          transition: opacity .75s ease .25s, transform .75s ease .25s, color .25s ease;
-          height: 64px;
-          padding-left: 32px;
-          display: flex;
-          align-items: center;
-          &:after {
-            bottom: auto;
-            top: calc(50% - 2px);
-            left: 16px;
-          }
+      & a {
+        font-weight: var(--font-serif-weight-regular);
+        font-family: var(--font-serif);
+        font-style: var(--font-serif-style-italic);
+        font-size: var(--font-size--headline);
+        text-transform: none;
+        letterspacing: .5px;
+        opacity: 0;
+        transform: translate(0, -25%);
+        transition: opacity .75s ease .25s, transform .75s ease .25s, color .25s ease;
+        height: 64px;
+        padding-left: 32px;
+        display: flex;
+        align-items: center;
+        &:after {
+          bottom: auto;
+          top: calc(50% - 2px);
+          left: 16px;
         }
       }
       &.is-open {
         height: var(--mobile-menu-height, 100vh);
         transition: height .75s ease 0s;
-        & .Menu__items a {
+        & a {
           opacity: 1;
           transform: translate(0, 0);
           transition: opacity .75s ease .25s, transform .75s ease .25s, color .25s ease;
+          &:nth-child(2) {
+            transition-delay: .5s;
+          }
+          &:nth-child(3) {
+            transition-delay: .75s;
+          }
+          &:nth-child(4) {
+            transition-delay: 1s;
+          }
         }
       }
     }
@@ -96,22 +103,20 @@ const mailto = `mailto:${email.raw}?subject=Hey 👋,%20what&apos;s%20up?&body=G
 </style>
 
 <nav class={className}>
-  <div class='Menu__items'>
-    <a href="/" class:list={[(activePage === "/" && 'is-active')]}><span>Home</span></a>
-    <a
-      href='/resume'
-      target='_blank'
-      rel='noreferrer'
-      data-splitbee-event="Downloaded Resume"
-      data-splitbee-event-location="Main Navigation"
-    ><span>Resume</span></a>
-    <a href='/blog' class:list={[(activePage === "/blog" && 'is-active')]}><span>Writing</span></a>
-    <a
-      href={mailto}
-      target='_blank'
-      rel='noreferrer'
-      data-splitbee-event="Contact"
-      data-splitbee-event-location="Main Navigation"
-    ><span>Contact</span></a>
-  </div>
+  <a href="/" class:list={[(activePage === "" && 'is-active')]}><span>Home</span></a>
+  <a
+    href='/resume'
+    target='_blank'
+    rel='noreferrer'
+    data-splitbee-event="Downloaded Resume"
+    data-splitbee-event-location="Main Navigation"
+  ><span>Resume</span></a>
+  <a href='/blog' class:list={[(activePage === "/blog" && 'is-active')]}><span>Writing</span></a>
+  <a
+    href={mailto}
+    target='_blank'
+    rel='noreferrer'
+    data-splitbee-event="Contact"
+    data-splitbee-event-location="Main Navigation"
+  ><span>Contact</span></a>
 </nav>

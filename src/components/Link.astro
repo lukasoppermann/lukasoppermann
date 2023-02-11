@@ -1,0 +1,86 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import Icon from './Icon.astro';
+import type { IconTypes } from '@src/types/IconTypes';
+
+interface Props extends HTMLAttributes<'a'> {
+  style?: 'link' | 'inline' | 'button',
+  icon?: false | true | IconTypes,
+}
+
+const { children, style = 'link', icon, href, rel, class: className, ...attr } = Astro.props;
+
+const setRel = (rel?: string | null) => {
+  const regex = /^(www\.|https?:|\/\/)/g;
+  if (!rel && href?.toString().match(regex) !== null) {
+    return 'noopener'
+  }
+  return rel
+}
+
+---
+
+<style>
+  a {
+    &.inline {
+      text-decoration: underline;
+      color: var(--on-background__high-emphasis);
+      &:hover {
+        cursor: pointer;
+        color: var(--link-color, var(--interaction));
+        text-decoration: none;
+      }
+    }
+    &.link {
+      font: var(--typestyle__link);
+      display: inline-flex;
+      text-decoration: none;
+      position: relative;
+      color: var(--on-background__high-emphasis);
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: -2px; 
+        left: 0;
+        height: 2px;
+        width: 0;
+        background: var(--on-background__high-emphasis);
+        transition: width 1.25s var(--easeOutQuint);
+      }
+      &:hover::before {
+        width: 100%;
+      }
+    }
+    &.button {
+      font: var(--typestyle__button);
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      padding: 8px 16px;
+      margin: 8px 0;
+      border: 2px solid transparent;
+      color: var(--on-surface-alternative__high-emphasis);
+      background: var(--surface-alternative);
+      box-shadow: 0 1px 0 rgba(var(--black-rgb), .05), 0 8px 8px 4px rgba(var(--black-rgb), .05);
+      transform: translateY(-2px);
+      transition: box-shadow .35s ease, transform .35s ease;
+      box-sizing: border-box;
+      text-align: right;
+      @media (--min-tablet) {
+        width: -moz-fit-content;
+        width: fit-content;
+      }
+      @media (--min-desktop) {
+        &:hover {
+          box-shadow: 0 1px 0 rgba(var(--black-rgb), .1), 0 4px 4px 0 rgba(var(--black-rgb), .075);
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+</style>
+
+<a class:list={[style, className]} href={href} rel={setRel(rel)} {...attr}
+><slot />{icon && <Icon type={icon !== true ? icon as IconTypes : "arrowRight"} />}
+</a>

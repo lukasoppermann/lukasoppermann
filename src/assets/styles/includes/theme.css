@@ -77,7 +77,7 @@
   / Custom component tokens
   */
   --intro__background: #f6f5f3;
-  --project-default-tint: #c2e8e3;
+  --project-default-tint: var(--surface);
   --lab1886-project-color: #ebe5d2;
   --copra-project-color: #f1dada;
   --design-tokens-project-color: #fccf2b;
@@ -123,7 +123,7 @@
     / Custom component tokens
     */
     --intro__background: var(--surface);
-    --project-default-tint: #428980;
+    --project-default-tint: var(--surface);
     --bosch-project-color: #212b29;
     --lab1886-project-color: #141415;
     --copra-project-color: #221919;

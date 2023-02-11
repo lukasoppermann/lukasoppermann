@@ -93,7 +93,12 @@
   --typestyle__h2: var(--font-sans-style-normal) var(--font-sans-weight-bold) var(--ts-size-xxl) / var(--ts-line-height-xxl) var(--font-sans);
   /* DESKTOP */
   @media (--min-desktop) {
-    --typestyle__h2: var(--font-sans-style-normal) var(--font-sans-weight-bold)
-  var(--ts-size-hg) / var(--ts-line-height-hg) var(--font-sans);
+    --typestyle__h2: var(--font-sans-style-normal) var(--font-sans-weight-bold) var(--ts-size-hg) / var(--ts-line-height-hg) var(--font-sans);
+  }
+  /* h1 */
+  --typestyle__h1: var(--font-sans-style-normal) var(--font-sans-weight-bold) var(--ts-size-hg) / var(--ts-line-height-hg) var(--font-sans);
+  /* DESKTOP */
+  @media (--min-desktop) {
+    --typestyle__h1: var(--font-sans-style-normal) var(--font-sans-weight-bold) var(--ts-size-xh) / var(--ts-line-height-xh) var(--font-sans);
   }
 }

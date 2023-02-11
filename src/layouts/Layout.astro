@@ -4,9 +4,10 @@ import Header from '@components/Header.astro'
 import '@styles/global.css'
 import "@fontsource/noto-serif"
 import "@fontsource/source-sans-pro"
+import Footer from '@src/components/Footer.astro';
 
 export interface Props {
-	title: string;
+  title: string;
   description?: string;
 }
 
@@ -15,6 +16,7 @@ const defaults = {
   description: "Lukas Oppermann is a design lead and creative director from berlin, germany. He loves creating experiences with a focus on usability."
 }
 const { title, description } = Astro.props;
+
 ---
 
 <html lang='en'>
@@ -22,6 +24,7 @@ const { title, description } = Astro.props;
     <title>{title} | {titleSuffix}</title>
     <meta property="og:title" content={`${title} | ${titleSuffix}`} />
     <meta name="description" content={description || defaults.description} >
+    <meta charset="UTF-8">
     <link rel="icon" href="/favicon-veare.svg" />
     <link rel="mask-icon" href="/safari-mask-icon.svg" color="#f0aa1e" />
     <link rel="apple-touch-icon" href="/veare-apple-touch-icon-180.png" />
@@ -30,6 +33,9 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <Header></Header>
-    <slot></slot>
+    <main class="Grid">
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>

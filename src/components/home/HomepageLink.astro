@@ -1,0 +1,131 @@
+---
+import type { HomepageLink } from '@src/types/HomepageLink';
+import { Image } from '@astrojs/image/components';
+import Headline from "../Headline.astro";
+
+export interface Props extends HomepageLink {}
+
+const { 
+  class: className, 
+  url,
+  target,
+  rel,
+  title,
+  subtitle,
+  picture,
+  ...attr } = Astro.props;
+
+// const src = await 
+// console.log(src.default.src)
+---
+<style>
+  section {
+    grid-column: full-bleed;
+    margin-top: 40px;
+    @media (--min-tablet) {
+      margin-top: 96px;
+    }
+    & .link {
+      grid-column: full-bleed;
+      @media (--min-tablet) {
+        grid-column: columns;
+        grid-row: 1;
+      }
+      @media (--min-desktop) {
+        grid-column: column 4 / column -1;
+        grid-row: 1 / 3;
+      }
+    }
+    & .picture {
+      grid-row: 1;
+      grid-column: full-bleed;
+      z-index: 0;
+      background-color: var(--project-color-tint, var(--project-default-tint));
+      overflow: visible;
+      padding-top: var(--image-offset, 0);
+      @media (--min-tablet) {
+        grid-column: columns;
+        grid-row: 1;
+      }
+      @media (--min-desktop) {
+        grid-column: column 5 / column -1;
+        grid-row: 1 / 3;
+      }
+      @media (--min-large) {
+        grid-column: column 4 / column -1;
+        grid-row: 1 / 3;
+      }
+      & > img {
+        width: 100%;
+        height: auto;
+        overflow: visible !important;
+      }
+    }
+    & .details {
+      z-index: 100;
+      margin-top: 32px;
+      grid-row: 3;
+      grid-column: columns;
+      color: var(--on-background__highest-emphasis);
+      @media (--min-desktop) {
+        grid-row: 1;
+        grid-column: column / span 3;
+        margin-top: 30%;
+      }
+      & .title {
+        margin-top: 0;
+      }
+      & .subtitle {
+        text-transform: uppercase;
+        letter-spacing: 0.2px;
+        &::before {
+          content: "";
+          display: inline-block;
+          position: relative;
+          flex: 0 0 auto;
+          align-self: center;
+          height: 2px;
+          width: 40px;
+          transform: translateY(-5px);
+          background: currentColor;
+          margin-right: 8px;
+        }
+      }
+    }
+    &:nth-child(odd) {
+      & .picture {
+        @media (--min-desktop) {
+          grid-column: column 1 / span 8;
+          grid-row: 1 / 3;
+        }
+        @media (--min-large) {
+          grid-column: column 1 / span 9;
+          grid-row: 1 / 3;
+        }
+      }
+      & .details {
+        @media (--min-desktop) {
+          grid-column: column 10 / span 3;
+        }
+      }
+    }
+  }
+</style>
+
+<section class:list={[className]} {...attr}>
+  <a class="link Grid" href={url} target={target} rel={rel}>
+    <div class="picture">
+      <Image
+        alt={picture.alt || ''}
+        src={`${picture.url}`}
+        aspectRatio={`${picture.width}:${picture.height}`}
+        width={picture.width}
+        height={picture.height}
+      />
+    </div>
+    <div class="details">
+      <Headline level="3" style="h5" class="subtitle">{subtitle}</Headline>
+      <Headline level="2" style="h2" class="title">{title}</Headline>
+    </div>
+  </a>
+</section>

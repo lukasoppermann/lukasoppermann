@@ -1,9 +1,6 @@
-type ConfigEmail = {
-  raw: string,
-  safeEmail: string
+export const email = {
+  raw: 'hello@lukasoppermann.com',
+  safe: 'hello&commat;lukasoppermann&period;com',
 }
 
-export default <ConfigEmail>{
-  raw: 'hello@lukasoppermann.com',
-  safeEmail: 'hello&commat;lukasoppermann&period;com',
-}
+export const resumePdfLink = '/resume_lukas_oppermann.pdf'
