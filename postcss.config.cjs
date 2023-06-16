@@ -3,7 +3,10 @@
 
 module.exports = {
   plugins: [
-    require('postcss-custom-media')(),
-    require('postcss-nesting'),
+    require("@csstools/postcss-global-data")({
+      files: ["./src/assets/styles/includes/custom-media.css"],
+    }),
+    require("postcss-custom-media")(),
+    require("postcss-nesting"),
   ],
 };

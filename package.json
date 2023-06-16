@@ -14,20 +14,21 @@
     "@astrojs/image": "^0.14.1",
     "@astrojs/mdx": "^0.16.0",
     "@astrojs/sitemap": "^1.0.0",
-    "@fontsource/noto-serif": "^4.5.11",
-    "@fontsource/source-sans-pro": "^4.5.11",
-    "astro": "^2.0.2",
+    "@fontsource/noto-serif": "^5.0.3",
+    "@fontsource/source-sans-pro": "^5.0.3",
+    "astro": "^2.6.4",
     "dayjs": "^1.11.7",
     "html-entities": "^2.3.3",
     "sharp": "^0.31.3",
     "svgo": "^3.0.1"
   },
   "devDependencies": {
+    "@csstools/postcss-global-data": "^1.0.3",
     "node-html-parser": "^6.1.1",
-    "postcss": "^8.4.18",
+    "postcss": "^8.4.24",
     "postcss-custom-media": "^9.1.1",
     "postcss-nesting": "^11.0.1",
     "prettier": "^2.7.1",
-    "prettier-plugin-astro": "^0.8.0"
+    "prettier-plugin-astro": "^0.10.0"
   }
 }
