@@ -1,0 +1,75 @@
+---
+import Layout from "@layouts/Layout.astro";
+import PostPreview from "@src/components/PostPreview.astro";
+import { importSvg } from "@src/utilities/importSvg";
+import { getCollection } from "astro:content";
+
+const { attributes: svgAttributes, innerHTML: svgInnerHTML } = await importSvg(
+  `../assets/svgs/thoughts-&-opinions.svg`
+);
+const { attributes: svgStackedAttributes, innerHTML: svgStackedInnerHTML } =
+  await importSvg(`../assets/svgs/thoughts-&-opinions-stacked.svg`);
+
+const allPosts = (await getCollection("articles")).sort(
+  (a, b) =>
+    new Date(b.data.published).getTime() - new Date(a.data.published).getTime()
+);
+---
+
+<style>
+  div {
+    display: block;
+    list-style: none;
+    grid-column: columns;
+    @media (--min-desktop) {
+      grid-column: columns / span 6;
+    }
+    & a {
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--ui--fair-contrast);
+    }
+  }
+  .svg-title {
+    padding-top: 120px;
+    max-width: 100%;
+    fill: var(--on-background__high-emphasis);
+    &.svg-title--default {
+      grid-column: columns / span 12;
+      padding-bottom: 96px;
+    }
+    &.svg-title--stacked {
+      display: none;
+      grid-column: columns;
+      padding-bottom: 56px;
+    }
+    @media (--max-mobile) {
+      padding-top: 80px;
+      &.svg-title--default {
+        display: none;
+      }
+      &.svg-title--stacked {
+        display: block;
+      }
+    }
+  }
+  .more-link-container {
+    grid-column: columns;
+  }
+</style>
+
+<Layout title="My thoughts & opinions">
+  <svg
+    {...svgAttributes}
+    class="svg-title svg-title--default"
+    set:html={svgInnerHTML}
+  />
+  <svg
+    {...svgStackedAttributes}
+    class="svg-title svg-title--stacked"
+    set:html={svgStackedInnerHTML}
+  />
+  <div>
+    {allPosts.map((post) => <PostPreview article={post.data} />)}
+  </div>
+</Layout>
