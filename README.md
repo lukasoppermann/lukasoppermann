@@ -1,49 +1,29 @@
-# Welcome to [Astro](https://astro.build)
+# Hi there 👋
+![me-working](https://user-images.githubusercontent.com/813754/183907598-d18d505d-56fd-4af4-8d9c-0f723bb05e60.gif)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
+#### I'm Lukas,
+I work at GitHub 🐱🐙 on the [primer](https://primer.style/) team. (Which is great because I love cats and octopi)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+🔭 I constantly [refresh my portfolio](https://lukasoppermann.com) try out new react stuff and work on my Figma plugins: [design tokens](https://github.com/lukasoppermann/design-tokens) & [elevation scale](https://github.com/lukasoppermann/elevation-scale)
 
-![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
+#### 🌱 I am learning
+- how to use screen readers
+- productivly using an ANSI keyboard (I switched from a german layout)
 
+#### 🤔 I’m looking for help with my open source projects
+- [Figma design tokens export plugin](https://github.com/lukasoppermann/design-tokens)
+- [Figma elevation system plugin](https://github.com/lukasoppermann/elevation-scale)
+- [HTML5 Sortable (drag & drop) package](https://github.com/lukasoppermann/html5sortable)
 
-## 🚀 Project Structure
+#### 💬 Ask me about
+- design systems
+- design tokens
+- espresso based drinks 
 
-Inside of your Astro project, you'll see the following folders and files:
+📫 Reach me on twitter: https://twitter.com/lukasoppermann
 
-```
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+📚 Read my thoughts on [medium.com/@lukasoppermann](https://medium.com/@lukasoppermann)
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                | Action                                             |
-| :--------------------- | :------------------------------------------------- |
-| `npm install`          | Installs dependencies                              |
-| `npm run dev`          | Starts local dev server at `localhost:3000`        |
-| `npm run build`        | Build your production site to `./dist/`            |
-| `npm run preview`      | Preview your build locally, before deploying       |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro preview` |
-| `npm run astro --help` | Get help using the Astro CLI                       |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+🧪 Check out my work: https://lukasoppermann.com
+ 
+😄 Pronouns: he/him
