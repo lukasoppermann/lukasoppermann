@@ -4,9 +4,13 @@ import Intro from '@src/components/home/Intro.astro';
 import Resume from '@src/components/home/Resume.astro';
 import HomepageLink from '@src/components/home/HomepageLink.astro';
 import Project from '@src/components/home/Project.astro';
+import type { ProjectFrontmatter } from '@src/types/Project';
 import { homepageLinks } from '@src/data/homepageLinks';
 
-const projects = await Astro.glob('../pages/projects/*.md');
+const projects: {
+  frontmatter: ProjectFrontmatter;
+  compiledContent: () => string;
+}[] = await Astro.glob('../pages/projects/*.md');
 ---
 <style>
 
@@ -15,7 +19,7 @@ const projects = await Astro.glob('../pages/projects/*.md');
 <Layout title="Welcome to Astro.">
   <Intro />
   <Resume />
-  {projects.map(project => <Project frontmatter={project.frontmatter} content={project.compiledContent()}} />)}
+  {projects.map((project) => <Project frontmatter={project.frontmatter} content={project.compiledContent()}} />)}
   {homepageLinks.map(link => <HomepageLink {...link}/>)}
 </Layout>
 

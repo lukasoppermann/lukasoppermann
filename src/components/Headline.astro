@@ -4,11 +4,12 @@ import type { HTMLAttributes } from 'astro/types';
 export interface Props extends HTMLAttributes<'span'>{
   level?: '1' | '2' | '3' | '4' | '5' | '6',
   style?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span',
+  margin?: 'none',
 }
 
-const { level, style, class: className, ...attr } = Astro.props
-const Headline = level ? `h${level}` : 'span'
-const styleClass = style ? style : Headline
+const { level, margin, style, class: className, ...attr } = Astro.props
+const HeadlineTag = level ? `h${level}` : 'span'
+const styleClass = style ? style : HeadlineTag
 ---
 <style>
   .Headline {
@@ -48,9 +49,12 @@ const styleClass = style ? style : Headline
       color: var(--on-background__medium-emphasis);
       margin-bottom: 8px;
     }
+    &.margin-none {
+      margin: 0 !important;
+    }
   }
 </style>
-
-<Headline class:list={['Headline', className, styleClass]} {...attr}>
+<!-- @ts-ignore -->
+<HeadlineTag class:list={['Headline', className, styleClass, `${margin ? `margin-${margin}` : ''}`]} {...attr}>
   <slot />
-</Headline>
+</HeadlineTag>

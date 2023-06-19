@@ -1,16 +1,16 @@
 ---
-import type { Frontmatter } from '@src/layouts/MarkdownPostLayout.astro';
 import type { HTMLAttributes } from 'astro/types';
+import type { CollectionEntry } from 'astro:content';
 import DateTime from './DateTime.astro';
 import Headline from './Headline.astro';
 import Icon from './Icon.astro';
 import Paragraph from './Paragraph.astro';
 
 export interface Props extends HTMLAttributes<'a'>{
-  post: Frontmatter
+  article: CollectionEntry<'articles'>['data']
 }
 
-const { post: {title, url, published, excerpt}, ...attr } = Astro.props
+const { article: {title, url, published, excerpt}, ...attr } = Astro.props
 ---
 <style>
   a {

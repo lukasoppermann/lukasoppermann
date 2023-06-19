@@ -1,4 +1,5 @@
 export type HomepageLink = {
+  class: string,
   url: string,
   target?: string,
   rel?: string,

@@ -1,7 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import PostPreview from "@src/components/PostPreview.astro";
-import type { Frontmatter } from "@src/layouts/MarkdownPostLayout.astro";
 import { importSvg } from "@src/utilities/importSvg";
 import { getCollection } from "astro:content";
 
@@ -71,6 +70,6 @@ const allPosts = (await getCollection("articles")).sort(
     set:html={svgStackedInnerHTML}
   />
   <div>
-    {allPosts.map((post) => <PostPreview post={post.data} />)}
+    {allPosts.map((post) => <PostPreview article={post.data} />)}
   </div>
 </Layout>
