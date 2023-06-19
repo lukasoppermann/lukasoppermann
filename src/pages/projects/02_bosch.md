@@ -1,7 +1,7 @@
 ---
 title: Bringing biking into the future
 client: BOSCH
-class: bosch
+class: project-bosch
 buttonLabel: View case study
 buttonTarget: _blank
 url: https://www.behance.net/gallery/133474231/Bosch-Nyon

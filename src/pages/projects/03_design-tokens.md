@@ -1,7 +1,7 @@
 ---
 title: Design Tokens
 client: Figma workflow plugin
-class: figma
+class: project-figma
 buttonLabel: Open Project
 buttonTarget: _blank
 url: https://www.figma.com/community/plugin/888356646278934516/Design-Tokens

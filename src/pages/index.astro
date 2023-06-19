@@ -15,7 +15,7 @@ const projects = await Astro.glob('../pages/projects/*.md');
 <Layout title="Welcome to Astro.">
   <Intro />
   <Resume />
-  {projects.map(project => <Project frontmatter={project.frontmatter} content={project.compiledContent()}/>)}
+  {projects.map(project => <Project frontmatter={project.frontmatter} content={project.compiledContent()}} />)}
   {homepageLinks.map(link => <HomepageLink {...link}/>)}
 </Layout>
 

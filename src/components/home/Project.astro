@@ -30,6 +30,18 @@ const {
 ---
 <style>
   section {
+    &.project-copra {
+      --project-color-tint: var(--copra-project-color);
+    }
+    &.project-lab1886 {
+      --project-color-tint: var(--lab1886-project-color);
+    }
+    &.project-bosch {
+      --project-color-tint: var(--bosch-project-color);
+    }
+    &.project-figma {
+      --project-color-tint: var(--design-tokens-project-color);
+    }
     padding-top: var(--image-offset, 0);
     grid-column: full-bleed;
     &:not(:first-child) {

@@ -11,6 +11,7 @@ const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20
 ---
 <style>
   nav {
+    --header-height: 64px;
     display: flex;
     justify-content: flex-end;
     & a {
@@ -29,8 +30,8 @@ const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20
         content: "";
         display: inline;
         position: absolute;
-        width: 4px;
-        height: 4px;
+        width: 8px;
+        height: 8px;
         background: currentColor;
         border-radius: 100%;
         left: 50%;
@@ -58,20 +59,22 @@ const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20
       background: var(--background);
       transition: height .75s ease .5s;
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
+      align-items: center;
       flex-direction: column;
       & a {
         font-weight: var(--font-serif-weight-regular);
         font-family: var(--font-serif);
         font-style: var(--font-serif-style-italic);
-        font-size: var(--font-size--headline);
+        font-size: 80px;
         text-transform: none;
         letterspacing: .5px;
         opacity: 0;
         transform: translate(0, -25%);
         transition: opacity .75s ease .25s, transform .75s ease .25s, color .25s ease;
-        height: 64px;
-        padding-left: 32px;
+        height: min(140px, 20vw);
+        padding: 24px 32px;
+        margin: 0;
         display: flex;
         align-items: center;
         &:after {
@@ -111,7 +114,7 @@ const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20
     data-splitbee-event="Downloaded Resume"
     data-splitbee-event-location="Main Navigation"
   ><span>Resume</span></a>
-  <a href='/blog' class:list={[(activePage === "/blog" && 'is-active')]}><span>Writing</span></a>
+  <a href='/articles' class:list={[(activePage === "/articles" && 'is-active')]}><span>Writing</span></a>
   <a
     href={mailto}
     target='_blank'

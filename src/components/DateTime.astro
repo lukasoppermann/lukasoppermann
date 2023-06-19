@@ -2,12 +2,17 @@
 import type { HTMLAttributes } from 'astro/types';
 
 export interface Props extends HTMLAttributes<'div'> {
-  from: string
+  from: Date
 }
 
 const { from, ...attr } = Astro.props
+const options: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "long",
+  day: "2-digit",
+}
 ---
 
 <p class:list={[attr.class]}>
-  {from}
+  {from.toLocaleString('en-EN', options)}
 </p>

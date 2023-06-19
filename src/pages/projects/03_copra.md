@@ -1,7 +1,7 @@
 ---
 title: Rebranding digital patient management
 client: COPRA SYSTEMS
-class: copra
+class: project-copra
 buttonLabel: View case study
 buttonTarget: _blank
 url: https://www.behance.net/gallery/133542401/Copra-Systems-Rebranding-digital-patient-management

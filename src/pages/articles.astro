@@ -1,20 +1,28 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import PostPreview from '@src/components/PostPreview.astro';
-import type { Frontmatter } from '@src/layouts/MarkdownPostLayout.astro';
-import { importSvg } from '@src/utilities/importSvg';
+import Layout from "@layouts/Layout.astro";
+import PostPreview from "@src/components/PostPreview.astro";
+import type { Frontmatter } from "@src/layouts/MarkdownPostLayout.astro";
+import { importSvg } from "@src/utilities/importSvg";
+import { getCollection } from "astro:content";
 
-const { attributes: svgAttributes, innerHTML: svgInnerHTML } = await importSvg(`../assets/svgs/thoughts-&-opinions.svg`);
-const { attributes: svgStackedAttributes, innerHTML: svgStackedInnerHTML } = await importSvg(`../assets/svgs/thoughts-&-opinions-stacked.svg`);
+const { attributes: svgAttributes, innerHTML: svgInnerHTML } = await importSvg(
+  `../assets/svgs/thoughts-&-opinions.svg`
+);
+const { attributes: svgStackedAttributes, innerHTML: svgStackedInnerHTML } =
+  await importSvg(`../assets/svgs/thoughts-&-opinions-stacked.svg`);
 
-const allPosts = await Astro.glob<Frontmatter>('./posts/*.md')
+const allPosts = (await getCollection("articles")).sort(
+  (a, b) =>
+    new Date(b.data.published).getTime() - new Date(a.data.published).getTime()
+);
 ---
+
 <style>
   div {
     display: block;
     list-style: none;
     grid-column: columns;
-    @media(--min-desktop) {
+    @media (--min-desktop) {
       grid-column: columns / span 6;
     }
     & a {
@@ -36,7 +44,7 @@ const allPosts = await Astro.glob<Frontmatter>('./posts/*.md')
       grid-column: columns;
       padding-bottom: 56px;
     }
-    @media(--max-mobile) {
+    @media (--max-mobile) {
       padding-top: 80px;
       &.svg-title--default {
         display: none;
@@ -52,17 +60,17 @@ const allPosts = await Astro.glob<Frontmatter>('./posts/*.md')
 </style>
 
 <Layout title="My thoughts & opinions">
-    <svg
+  <svg
     {...svgAttributes}
     class="svg-title svg-title--default"
     set:html={svgInnerHTML}
-  ></svg>
-    <svg
+  />
+  <svg
     {...svgStackedAttributes}
     class="svg-title svg-title--stacked"
     set:html={svgStackedInnerHTML}
-  ></svg>
+  />
   <div>
-    {allPosts.map((post) => <PostPreview post={post.frontmatter} />)}
+    {allPosts.map((post) => <PostPreview post={post.data} />)}
   </div>
 </Layout>
