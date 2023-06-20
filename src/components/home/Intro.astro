@@ -1,7 +1,13 @@
 ---
-import { importSvg } from '@src/utilities/importSvg';
+// import { importSvg } from '@src/utilities/importSvg';
 
-const { attributes: svgAttributes, innerHTML: svgInnerHTML } = await importSvg(`../assets/svgs/solving-problems-is-my-passion.svg?raw`);
+// const { attributes: svgAttributes, innerHTML: svgInnerHTML } = await importSvg(`../assets/svgs/solving-problems-is-my-passion.svg?raw`);
+
+    /* <svg
+      {...svgAttributes}
+      class="svg-title svg-title--default"
+      set:html={svgInnerHTML}
+    ></svg> */
 ---
 
 <style>
@@ -249,11 +255,7 @@ const { attributes: svgAttributes, innerHTML: svgInnerHTML } = await importSvg(`
     <p aria-hidden>&mdash; my approach of building products based on user needs & measured impact.</p>
   </div>
   <figure class="Header--intro__headline">
-    <svg
-      {...svgAttributes}
-      class="svg-title svg-title--default"
-      set:html={svgInnerHTML}
-    ></svg>
+
   </figure>
   <div class="Header__background"></div>
 </section>

@@ -1,13 +1,12 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
-import { importSvg } from '@src/utilities/importSvg'
+import LogoSvg from '../assets/svgs/lukas-oppermann-logo.svg?raw'
+import Svg from './Svg.astro';
 
 interface Props extends HTMLAttributes<'a'> {
   href?: string,
   small?: boolean,
 }
-
-const { attributes: svgAttributes, innerHTML } = await importSvg(`../assets/svgs/lukas-oppermann-logo.svg`);
 
 const { href, small, ...attr } = Astro.props;
 ---
@@ -27,16 +26,10 @@ const { href, small, ...attr } = Astro.props;
 
   {href ? 
     <a class:list={[(small && 'is-small'), attr.class]} aria-label='Go to homepage' href={href} {...attr}>
-      <svg
-        {...svgAttributes}
-        set:html={innerHTML}
-      ></svg>
+      <Svg class="testTesttest" svgString={LogoSvg} />
     </a>
   :
     <div class:list={[(small && 'is-small'), attr.class]}>
-      <svg
-        {...svgAttributes}
-        set:html={innerHTML}
-      ></svg>
+      <Svg class="testTesttest" svgString={LogoSvg} />
     </div>
   }

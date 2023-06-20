@@ -9,6 +9,7 @@ import vercel from '@astrojs/vercel/static';
 // https://astro.build/config
 export default defineConfig({
   output: "static",
+  site: "https://lukasoppermann.com",
   integrations: [sitemap(), image({
     serviceEntryPoint: "@astrojs/image/sharp"
   })],

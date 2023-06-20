@@ -7,9 +7,9 @@ interface Props extends HTMLAttributes<'svg'> {
   type: IconTypes;
 }
 
-const { type, ...attr } = Astro.props;
+// const { type, ...attr } = Astro.props;
 
-const { attributes: svgAttributes, innerHTML } = await importSvg(`../assets/svgs/icon-${type}.svg?raw`);
+// const { attributes: svgAttributes, innerHTML } = await importSvg(`../assets/svgs/icon-${type}.svg?raw`);
 ---
 <style>
   svg {
@@ -17,4 +17,4 @@ const { attributes: svgAttributes, innerHTML } = await importSvg(`../assets/svgs
   }
 </style>
 
-<svg {...svgAttributes} class:list={[attr.class]} set:html={innerHTML}></svg>
+<!-- <svg {...svgAttributes} class:list={[attr.class]} set:html={innerHTML}></svg> -->

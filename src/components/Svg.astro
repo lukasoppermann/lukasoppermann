@@ -1,0 +1,49 @@
+---
+import { parse } from "node-html-parser";
+import { optimize } from "svgo";
+import type { HTMLAttributes } from "astro/types";
+
+export type importedSvg = {
+  innerHTML: string;
+  attributes: { [key: string]: string };
+};
+
+const cleanSvg = (svgString: string): importedSvg => {
+  const optimizedSvg = optimize(svgString, {
+    plugins: [
+      {
+        name: "cleanupAttrs",
+      },
+      {
+        name: "removeAttrs",
+        params: { attrs: "(stroke|fill)" },
+      },
+    ],
+  });
+  // parse
+  const root = parse(optimizedSvg.data);
+  const svg = root.querySelector("svg");
+  // return
+  // @ts-ignore
+  const { attributes, innerHTML } = svg;
+  return {
+    innerHTML,
+    attributes,
+  };
+};
+
+interface Props extends HTMLAttributes<"svg"> {
+  svgString: string;
+}
+
+const { svgString, ...attr } = Astro.props;
+const { innerHTML, attributes: svgAttributes } = cleanSvg(svgString);
+---
+
+<style>
+  svg {
+    fill: var(--on-background__high-emphasis) !important;
+  }
+</style>
+
+<svg {...svgAttributes} class:list={[attr.class]} set:html={innerHTML} />

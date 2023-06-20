@@ -1,14 +1,25 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import PostPreview from "@src/components/PostPreview.astro";
-import { importSvg } from "@src/utilities/importSvg";
+// import { importSvg } from "@src/utilities/importSvg";
 import { getCollection } from "astro:content";
 
-const { attributes: svgAttributes, innerHTML: svgInnerHTML } = await importSvg(
-  `../assets/svgs/thoughts-&-opinions.svg`
-);
-const { attributes: svgStackedAttributes, innerHTML: svgStackedInnerHTML } =
-  await importSvg(`../assets/svgs/thoughts-&-opinions-stacked.svg`);
+// const { attributes: svgAttributes, innerHTML: svgInnerHTML } = await importSvg(
+//   `../assets/svgs/thoughts-&-opinions.svg`
+// );
+// const { attributes: svgStackedAttributes, innerHTML: svgStackedInnerHTML } =
+//   await importSvg(`../assets/svgs/thoughts-&-opinions-stacked.svg`);
+
+  // <svg
+  //   {...svgAttributes}
+  //   class="svg-title svg-title--default"
+  //   set:html={svgInnerHTML}
+  // />
+  // <svg
+  //   {...svgStackedAttributes}
+  //   class="svg-title svg-title--stacked"
+  //   set:html={svgStackedInnerHTML}
+  // />
 
 const allPosts = (await getCollection("articles")).sort(
   (a, b) =>
@@ -59,16 +70,7 @@ const allPosts = (await getCollection("articles")).sort(
 </style>
 
 <Layout title="My thoughts & opinions">
-  <svg
-    {...svgAttributes}
-    class="svg-title svg-title--default"
-    set:html={svgInnerHTML}
-  />
-  <svg
-    {...svgStackedAttributes}
-    class="svg-title svg-title--stacked"
-    set:html={svgStackedInnerHTML}
-  />
+
   <div>
     {allPosts.map((post) => <PostPreview article={post.data} />)}
   </div>
