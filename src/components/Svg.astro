@@ -8,7 +8,7 @@ export type importedSvg = {
   attributes: { [key: string]: string };
 };
 
-const cleanSvg = (svgString: string): importedSvg => {
+export const cleanSvg = (svgString: string): importedSvg => {
   const optimizedSvg = optimize(svgString, {
     plugins: [
       {

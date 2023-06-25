@@ -1,14 +1,8 @@
 export type HomepageLink = {
-  class: string,
+  class?: string,
   url: string,
-  target?: string,
-  rel?: string,
   title: string,
   subtitle: string,
-  picture: {
-    url: string,
-    alt?: string,
-    width: number,
-    height: number
-  }
+  image: ImageMetadata
+  imageAlt: string
 }

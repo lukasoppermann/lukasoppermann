@@ -13,5 +13,8 @@ export default defineConfig({
   integrations: [sitemap(), image({
     serviceEntryPoint: "@astrojs/image/sharp"
   })],
-  adapter: vercel()
+  adapter: vercel(),
+  experimental: {
+    assets: true
+  }
 });

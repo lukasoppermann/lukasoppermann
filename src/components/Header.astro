@@ -47,10 +47,10 @@ import ToggleButton from './ToggleButton.astro';
   }
 </style>
 
-<script type="module">
-  import {throttle} from "./src/assets/scripts/throttle.ts"
+<script>
+  import {throttle} from "@src/assets/scripts/throttle.ts"
   // detect scroll 
-  const header = document.querySelector('header')
+  const header = document.querySelector('header')!
   document.addEventListener("scroll", throttle(() => {
     if(window.scrollY > 0) {
       header.classList.add('is-scrolled')

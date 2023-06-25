@@ -1,6 +1,7 @@
 ---
 import type { HomepageLink } from '@src/types/HomepageLink';
-import { Image } from '@astrojs/image/components';
+// import { Image } from '@astrojs/image/components';
+import { Image } from "astro:assets";
 import Headline from "../Headline.astro";
 
 export interface Props extends HomepageLink {}
@@ -8,11 +9,10 @@ export interface Props extends HomepageLink {}
 const { 
   class: className, 
   url,
-  target,
-  rel,
   title,
   subtitle,
-  picture,
+  image,
+  imageAlt,
   ...attr } = Astro.props;
 
 ---
@@ -111,15 +111,9 @@ const {
 </style>
 
 <section class:list={[className]} {...attr}>
-  <a class="link Grid" href={url} target={target} rel={rel}>
+  <a class="link Grid" href={url} target="_blank" rel='noopener noreferrer nofollow'>
     <div class="picture">
-      <Image
-        alt={picture.alt || ''}
-        src={`${picture.url}`}
-        aspectRatio={`${picture.width}:${picture.height}`}
-        width={picture.width}
-        height={picture.height}
-      />
+    <Image src={image} alt={imageAlt} />
     </div>
     <div class="details">
       <Headline level="3" style="h5" class="subtitle">{subtitle}</Headline>

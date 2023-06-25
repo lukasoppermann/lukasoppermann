@@ -11,8 +11,31 @@ const articleCollection = defineCollection({
     excerpt: z.string()
   }),
 });
+
+const projectCollection = defineCollection({
+  type: 'content', // v2.5.0 and later
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    client: z.string(),
+    image: image(),
+    imageAlt: z.string(),
+  }),
+});
+
+const HomepageLinkCollection = defineCollection({
+  type: 'content', // v2.5.0 and later
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    subtitle: z.string(),
+    url: z.string().url(),
+    image: image(),
+    imageAlt: z.string(),
+  }),
+});
 // 3. Export a single `collections` object to register your collection(s)
 //    This key should match your collection directory name in "src/content"
 export const collections = {
   'articles': articleCollection,
+  'projects': projectCollection,
+  'homepageLinks': HomepageLinkCollection,
 };

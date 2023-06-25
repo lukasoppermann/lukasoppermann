@@ -20,7 +20,7 @@ import Newsletter from "./Newsletter.astro";
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      & a, & span {
+      & a, & span, & .footer-link {
         display: inline-block;
         color: var(--on-dark__medium-emphasis);
         font-size: var(--font-size--caption);
@@ -71,8 +71,8 @@ import Newsletter from "./Newsletter.astro";
     <a href="https://www.linkedin.com/in/lukasoppermann" rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="LinkedIn">LinkedIn</a>
     <a href='https://twitter.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="Twitter">Twitter</a>
     <a href='https://github.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="GitHub">GitHub</a>
-    <Link href="/impressum">Impressum / imprint</Link>
-    <Link href="/impressum">Datenschutz / privacy policy</Link>
+    <Link class="footer-link" href="/imprint" >Impressum / imprint</Link>
+    <Link class="footer-link" href="/imprint">Datenschutz / privacy policy</Link>
     <span class="copyright">Copyright [[DATE]] &mdash; Lukas Oppermann</span>
   </nav>
 </footer>

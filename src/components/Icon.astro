@@ -1,15 +1,34 @@
 ---
-import { importSvg } from '@src/utilities/importSvg';
 import type { IconTypes } from '@src/types/IconTypes';
-import type { HTMLAttributes } from 'astro/types'
+import Svg from './Svg.astro';
+import menu from '@svgs/icon-menu.svg?raw';
+import arrowRight from '@svgs/icon-arrowRight.svg?raw';
+import mail from '@svgs/icon-mail.svg?raw';
+import close from '@svgs/icon-close.svg?raw';
+import fileDownload from '@svgs/icon-fileDownload.svg?raw';
 
-interface Props extends HTMLAttributes<'svg'> {
+type Props = {
   type: IconTypes;
+  svgString: undefined;
+} | { 
+  type: undefined;
+  svgString: string; 
 }
 
-// const { type, ...attr } = Astro.props;
+const iconStrings = {
+  menu,
+  arrowRight,
+  mail,
+  close,
+  fileDownload,
+}
 
-// const { attributes: svgAttributes, innerHTML } = await importSvg(`../assets/svgs/icon-${type}.svg?raw`);
+let { type = undefined, svgString = undefined, ...attr } = Astro.props;
+
+if(type) {
+  svgString = iconStrings[type]
+}
+
 ---
 <style>
   svg {
@@ -17,4 +36,4 @@ interface Props extends HTMLAttributes<'svg'> {
   }
 </style>
 
-<!-- <svg {...svgAttributes} class:list={[attr.class]} set:html={innerHTML}></svg> -->
+<Svg svgString={svgString as string} class="icon" {...attr}/>

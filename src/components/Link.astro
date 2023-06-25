@@ -4,7 +4,7 @@ import Icon from './Icon.astro';
 import type { IconTypes } from '@src/types/IconTypes';
 
 interface Props extends HTMLAttributes<'a'> {
-  style?: 'link' | 'inline' | 'button',
+  style?: 'link' | 'inline' | 'button' | 'ghost',
   icon?: false | true | IconTypes,
 }
 
@@ -22,6 +22,9 @@ const setRel = (rel?: string | null) => {
 
 <style>
   a {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
     &.inline {
       text-decoration: underline;
       color: var(--on-background__high-emphasis);
@@ -78,6 +81,29 @@ const setRel = (rel?: string | null) => {
         }
       }
     }
+    &.ghost {
+        background: transparent;
+        color: var(--on-background__high-emphasis);
+        padding-bottom: 8px;
+        font: var(--typestyle__button);
+        &::before {
+          display: block;
+          content: "";
+          position: absolute;
+          bottom: 0px; 
+          left: 0;
+          height: 2px;
+          width: 0;
+          background: var(--accent);
+          transition: width 1.25s var(--easeOutQuint);
+        }
+        &:hover {
+          cursor: pointer;
+          &::before {
+            width: 100%;
+          }
+        }
+      }
   }
 </style>
 

@@ -46,6 +46,28 @@ const { class: className, ...attr } = Astro.props;
       grid-column: column 1 / span 4;
     }
   }
+  & .medium-link {
+    grid-row: 4;
+    grid-column: columns;
+    justify-self: self-start;
+    align-self: start;
+    @media (--min-tablet) {
+      grid-row: 2;
+      grid-column: columns / span 5;
+    }
+    @media (--min-desktop) {
+      grid-column: columns / span 4;
+    }
+  }
+  & .description {
+    grid-column: columns;
+    @media (--min-tablet) {
+      grid-column: column 6 / span 7;
+    }
+    @media (--min-desktop) {
+      grid-column: column 6 / span 5;
+    }
+  }
   & form {
     grid-row: 2;
     grid-column: columns;
@@ -108,12 +130,15 @@ const { class: className, ...attr } = Astro.props;
     <Headline level="4" style="h5">Newsletter</Headline>
     <Headline style="h4">Stay in the loop</Headline>
   </div>
-  <form action="https://www.getrevue.co/profile/lukasoppermann/add_subscriber" method="post" id="revue-form" name="revue-form" target="_blank" data-splitbee-event="Newsletter Signup">
+  <Link class="medium-link" style="ghost" icon href="https://lukasoppermann.medium.com/subscribe" target="_blank">Subscribe</Link>
+  <Paragraph class="description" type="small">Subscribe to my medium page to be the first to know about new articles I publish.</Paragraph>
+  <Paragraph class="description" type="small">I write about design with a focus on design systems and tokens.</Paragraph>
+  <!-- <form action="https://www.getrevue.co/profile/lukasoppermann/add_subscriber" method="post" id="revue-form" name="revue-form" target="_blank" data-splitbee-event="Newsletter Signup">
     <div class="input-container">
       <label for="member_email"><Icon type="mail" /></label>
       <input class="revue-form-field" placeholder="your@email.com" type="email" name="member[email]" id="member_email" />
       <Button type="submit" style="ghost" icon>Subscribe</Button>
     </div>
   </form>
-  <Paragraph class="legal-text" type="small">By subscribing, you agree with Revue&rsquo;s <Link target="_blank" href="https://www.getrevue.co/terms">Terms of Service</Link> and <Link target="_blank" href="https://www.getrevue.co/privacy">Privacy Policy</Link>.</Paragraph>
+  <Paragraph class="legal-text" type="small">By subscribing, you agree with Revue&rsquo;s <Link target="_blank" href="https://www.getrevue.co/terms">Terms of Service</Link> and <Link target="_blank" href="https://www.getrevue.co/privacy">Privacy Policy</Link>.</Paragraph> -->
 </div>
