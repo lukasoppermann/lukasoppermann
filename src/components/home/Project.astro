@@ -2,30 +2,29 @@
 import DateTime from "../DateTime.astro";
 import Headline from "../Headline.astro";
 import Link from "../Link.astro";
-import { Image } from '@astrojs/image/components';
+import { Image } from "astro:assets";
 import type { ProjectFrontmatter } from '@src/types/Project';
 import Duration from "../Duration.astro";
 import List from "../List.astro";
 
-export interface Props {
-  frontmatter: ProjectFrontmatter
-  content: string
+export interface Props extends ProjectFrontmatter {
+  Content: any;
 }
-
-const content = Astro.props.content
 
 const { 
   class: className, 
+  Content,
   title,
   client,
-  picture,
+  image,
+  imageAlt,
   buttonLabel,
   buttonTarget,
   url,
   responsibilities,
   startDate,
   endDate
-  } = Astro.props.frontmatter;
+  } = Astro.props;
 
 ---
 <style>
@@ -34,6 +33,7 @@ const {
       --project-color-tint: var(--copra-project-color);
     }
     &.project-lab1886 {
+      --image-offset: -75px;
       --project-color-tint: var(--lab1886-project-color);
     }
     &.project-bosch {
@@ -57,6 +57,8 @@ const {
     & .Picture {
       grid-row: 1;
       grid-column: full-bleed;
+      max-width: 100%;
+      max-height: 100%;
       z-index: 0;
       background-color: var(--project-color-tint, var(--project-default-tint));
       overflow: visible;
@@ -310,12 +312,10 @@ const {
 </style>
 
 <section class:list={['Project-excerpt Project-card Project-card__link Grid', className]} aria-label={`${client} — ${title}`}>
-  <div class="Picture">
+  <div class="Picture" style={`aspect-ratio: ${image.width} / ${image.height};`}>
     <Image
-      alt={picture.alt}
-      src={picture.url}
-      width={picture.width}
-      height={picture.height}
+      alt={imageAlt}
+      src={image}
     />
   </div>
   <div class="Project-excerpt__title">
@@ -329,18 +329,20 @@ const {
       <List items={responsibilities.slice(Math.ceil(responsibilities.length / 2))} />
     }
   </div>
-  <div class="Project-excerpt__approach" set:html={content}></div>
+  <div class="Project-excerpt__approach"><Content /></div>
   <div class="Project-excerpt__data">
     <dl class="Project-excerpt__time">
       <dt><Headline style="h6">Year</Headline></dt>
       <dd>
         <DateTime format="YYYY" from={startDate} to={endDate} />
       </dd>
+      {endDate &&
       <dt><Headline style="h6">Duration</Headline></dt>
       <dd>
         <Duration from={startDate} to={endDate} />
       </dd>
+      }
     </dl>
-    {url && <Link class='project-link' href={url} target={buttonTarget} type="button" icon={true}>{buttonLabel || "Open"}</Link>}
+    {url && <Link class='project-link' href={url} target={buttonTarget} style="button" icon={true}>{buttonLabel || "Open"}</Link>}
   </div>
 </section>

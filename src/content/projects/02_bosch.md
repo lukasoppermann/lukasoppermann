@@ -16,11 +16,8 @@ responsibilities:
   - Prototyping
 startDate: 01.03.2015
 endDate: 30.09.2017
-picture:
-  url: /assets/Nyon_2x.png
-  alt: Bosch eBike
-  width: 1600
-  height: 1280
+image: /src/assets/images/Nyon_2x.png
+imageAlt: Bosch eBike
 ---
 
 ###### Challenge

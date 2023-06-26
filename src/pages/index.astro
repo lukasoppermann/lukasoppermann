@@ -7,6 +7,7 @@ import Project from '@src/components/home/Project.astro';
 // import type { ProjectFrontmatter } from '@src/types/Project';
 import { getCollection } from "astro:content";
 const homepageLinks = await getCollection("homepageLinks");
+const projects = await getCollection("projects");
 
 // const projects: {
 //   frontmatter: ProjectFrontmatter;
@@ -20,7 +21,9 @@ const homepageLinks = await getCollection("homepageLinks");
 <Layout title="Welcome to Astro.">
   <Intro />
   <Resume />
-  <!-- {projects.map((project) => <Project frontmatter={project.frontmatter} content={project.compiledContent()}} />)} -->
+  {projects.map(async (project) => {
+    const { Content}  = await project.render()
+    return <Project {...project.data} Content={Content}} />})}
   {homepageLinks.map(link => <HomepageLink {...link.data} />)}
 </Layout>
 

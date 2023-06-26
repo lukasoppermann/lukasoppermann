@@ -9,10 +9,6 @@ export type ProjectFrontmatter = {
   approach?: { [key: string]: string }[],
   startDate: string,
   endDate: string,
-  picture: {
-    url: string,
-    alt: string,
-    width: number,
-    height: number
-  }
+  image: ImageMetadata,
+  imageAlt: string,
 }

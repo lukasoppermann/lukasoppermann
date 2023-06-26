@@ -28,8 +28,12 @@ if(format === 'YYYY') {
   options.day = undefined
 }
 
+const fromOutput = from.toLocaleString('en-EN', options)
+const toOutput = to?.toLocaleString('en-EN', options)
+
 ---
 
 <p class:list={[attr.class]}>
-  {from.toLocaleString('en-EN', options)}
+  {fromOutput}
+  {fromOutput !== toOutput  && `— ${toOutput}`}
 </p>

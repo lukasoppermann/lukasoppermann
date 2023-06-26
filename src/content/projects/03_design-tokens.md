@@ -11,11 +11,8 @@ responsibilities:
   - Development
 startDate: 01.09.2020
 endDate: 01.10.2020
-picture:
-  url: /assets/Design_Tokens.svg
-  alt: Figma Design Token Plugin
-  width: 1600
-  height: 1280
+image: /src/assets/images/Design_Tokens_2x.jpg
+imageAlt: Figma Design Token Plugin
 ---
 ###### Problem
 If you are building a modern design system in Figma you probably use design tokens. External design token solutions add complexity as they don't sync well with Figma. Using an external tool & Figma to specify tokens means you have two sources of truth — not the idea behind design tokens.

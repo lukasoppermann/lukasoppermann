@@ -17,6 +17,12 @@ const projectCollection = defineCollection({
   schema: ({ image }) => z.object({
     title: z.string(),
     client: z.string(),
+    class: z.string(),
+    buttonLabel: z.string(),
+    url: z.string().url(),
+    responsibilities: z.array(z.string()),
+    startDate: z.string(), //.transform((str) => new Date(str)),
+    endDate: z.string(), //.transform((str) => new Date(str)),
     image: image(),
     imageAlt: z.string(),
   }),

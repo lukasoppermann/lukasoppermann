@@ -16,11 +16,8 @@ responsibilities:
   - Stakeholder management
 startDate: 01.12.2014
 endDate: 01.12.2016
-picture:
-  url: /assets/Copra_2x.png
-  alt: Copra Systems Corporate Identity & Website
-  width: 1600
-  height: 1280
+image: /src/assets/images/Copra_2x.png
+imageAlt: Copra Systems Corporate Identity & Website
 ---
 ###### Challenge
 Both the brand and the patient management software that Copra Software GmbH develops were in dire need of design attention. I was asked to refresh the corporate identity & website to better communicate their values without alienating existing customers.
