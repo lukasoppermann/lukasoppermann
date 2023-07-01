@@ -14,8 +14,8 @@ responsibilities:
   - Leading workshops
   - Usability testing & user research
   - Prototyping
-startDate: 01.03.2015
-endDate: 30.09.2017
+startDate: "2015-03-01"
+endDate: "2017-09-30"
 image: /src/assets/images/Nyon_2x.png
 imageAlt: Bosch eBike
 ---

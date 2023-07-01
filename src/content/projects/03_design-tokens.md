@@ -9,8 +9,8 @@ responsibilities:
   - Concept
   - Design
   - Development
-startDate: 01.09.2020
-endDate: 01.10.2020
+startDate: "2020-09-01"
+endDate: "2020-10-01"
 image: /src/assets/images/Design_Tokens_2x.jpg
 imageAlt: Figma Design Token Plugin
 ---

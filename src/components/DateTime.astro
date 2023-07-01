@@ -20,7 +20,9 @@ if(typeof from === 'string') {
   from = new Date(from)
 }
 if(typeof to === 'string') {
-  to = new Date(to)
+  if (to.toLocaleLowerCase() !== "now") {
+    to = new Date(to)
+  }
 }
 
 if(format === 'YYYY') {
@@ -33,7 +35,7 @@ const toOutput = to?.toLocaleString('en-EN', options)
 
 ---
 
-<p class:list={[attr.class]}>
+<span class:list={[attr.class]}>
   {fromOutput}
   {fromOutput !== toOutput  && `— ${toOutput}`}
-</p>
+</span>

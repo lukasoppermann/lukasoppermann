@@ -14,8 +14,8 @@ responsibilities:
   - Usability testing & user research
   - Leading workshop
   - Stakeholder management
-startDate: 01.12.2014
-endDate: 01.12.2016
+startDate: "2014-12-01"
+endDate: "2016-12-01"
 image: /src/assets/images/Copra_2x.png
 imageAlt: Copra Systems Corporate Identity & Website
 ---
