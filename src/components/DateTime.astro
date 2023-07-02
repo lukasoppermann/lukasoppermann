@@ -32,10 +32,9 @@ if(format === 'YYYY') {
 
 const fromOutput = from.toLocaleString('en-EN', options)
 const toOutput = to?.toLocaleString('en-EN', options)
-
 ---
 
-<span class:list={[attr.class]}>
+<div class:list={[attr.class]}>
   {fromOutput}
-  {fromOutput !== toOutput  && `— ${toOutput}`}
-</span>
+  {fromOutput !== toOutput && toOutput && `— ${toOutput}`}
+</div>

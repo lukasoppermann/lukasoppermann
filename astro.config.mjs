@@ -10,11 +10,14 @@ import vercel from '@astrojs/vercel/static';
 export default defineConfig({
   output: "static",
   site: "https://lukasoppermann.com",
-  integrations: [sitemap(), image({
-    serviceEntryPoint: "@astrojs/image/sharp"
-  })],
+  integrations: [
+    sitemap(),
+    image({
+      serviceEntryPoint: "@astrojs/image/sharp",
+    }),
+  ],
   adapter: vercel(),
   experimental: {
-    assets: true
-  }
+    assets: true,
+  },
 });

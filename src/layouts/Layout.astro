@@ -9,13 +9,14 @@ import Footer from '@src/components/Footer.astro';
 export interface Props {
   title: string;
   description?: string;
+  className?: string;
 }
 
 const titleSuffix = "Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist"
 const defaults = {
   description: "Lukas Oppermann is a design lead and creative director from berlin, germany. He loves creating experiences with a focus on usability."
 }
-const { title, description } = Astro.props;
+const { title, description, className } = Astro.props;
 
 ---
 
@@ -34,7 +35,7 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <Header></Header>
-    <main class="Grid">
+    <main class:list={["Grid", className]}>
       <slot />
     </main>
     <Footer />

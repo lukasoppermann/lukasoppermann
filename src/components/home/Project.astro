@@ -259,9 +259,15 @@ const {
         @media (--min-desktop) {
           justify-content: stretch;
         }
+        line-height: 100%;
+        & dd, & dt {
+          line-height: 20px;
+          display: flex;
+          align-items: center;
+        }
         & dd,
         & dt {
-          display: block;
+          /* display: block; */
           width: calc(((100% - var(--column-gap)) / 2));
           &:nth-child(1n) {
             order: 1;
@@ -286,6 +292,10 @@ const {
             &:nth-child(3n) {
               margin-top: 16px;
             }
+            &:nth-child(4n) {
+              margin-top: 16px;
+            }
+            
           }
           @media (--min-large) {
             width: calc(((100% - var(--column-gap)) / 2));

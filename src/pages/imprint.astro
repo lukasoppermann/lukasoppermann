@@ -1,8 +1,68 @@
 ---
 import Layout from '@layouts/Layout.astro';
+import imprintTitleDefault from "@svgs/imprint.svg?raw";
+import imprintTitleStacked from "@svgs/imprint-stacked.svg?raw";
+import Svg from '@src/components/Svg.astro';
 ---
+<style>
+  .imprint {
+    padding-top: 80px;
+    h1, h2 {
+      margin-top: 32px;
+      margin-bottom: 24px;
+    }
+    h3, h4 {
+      margin-top: 24px;
+      margin-bottom: 16px;
+    }
+    p, ul, ol {
+      color: var(--on-background__medium-emphasis);
+      margin-bottom: 16px;
+    }
+  }
+  .svg-title {
+    grid-column: columns;
+    padding-bottom: 64px;
+    max-width: 100%;
+    display: none;
+    path {
+      fill: var(--on-background__high-emphasis);
+    }
+  }
+  .svg-imprint--default {
+    @media (--max-mobile) {
+      display: block;
+    }
+  }
+  .svg-imprint--stacked {
+    @media (--min-tablet) {
+      display: block;
+    }
+  }
+.imprint__contact-details {
+  grid-area: 2 / columns / auto / columns;
+  h2:first-child {
+    margin-top: 0;
+  }
+  @media (--min-desktop) {
+    grid-area: 2 / 8 column / auto / span 6;
+  }
+}
+.imprint__main-content {
+  grid-area: 3 / columns / auto / columns;
+  @media (--min-desktop) {
+    grid-area: 2 / columns / auto / span 6;
+  }
+  & :first-child {
+    margin-top: 0;
+  }
+}
+</style>
 
-<Layout title="Impressum/Legal Notice & Datenschutzerklaerung/Privacy Policy">
+<Layout title="Impressum/Legal Notice & Datenschutzerklaerung/Privacy Policy" className="imprint">
+  <Svg svgString={imprintTitleDefault} class="svg-title svg-imprint--default" />
+  <Svg svgString={imprintTitleStacked} class="svg-title svg-imprint--stacked" />
+
   <div class="imprint__contact-details">  
     <h2>Impressum / Legal Notice</h2>  
     
