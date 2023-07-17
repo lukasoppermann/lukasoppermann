@@ -6,13 +6,13 @@ import "@fontsource/source-sans-pro"
 import Footer from '@src/components/Footer.astro';
 
 export interface Props {
-  title: string;
+  title?: string
   description?: string;
   className?: string;
 }
 
-const titleSuffix = "Lukas Oppermann — Lead UI/UX Design &amp; Creative Technologist"
 const defaults = {
+  title:"Lukas Oppermann — Lead UI/UX, Design Systems &amp; Creative Technologist",
   description: "Lukas Oppermann is a design lead and creative director from berlin, germany. He loves creating experiences with a focus on usability."
 }
 const { title, description, className } = Astro.props;
@@ -21,9 +21,9 @@ const { title, description, className } = Astro.props;
 
 <html lang='en'>
   <head>
-    <title>{title} | {titleSuffix}</title>
+    <title>{title || defaults.title}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta property="og:title" content={`${title} | ${titleSuffix}`} />
+    <meta property="og:title" content={`${title || defaults.title}`} />
     <meta name="description" content={description || defaults.description} >
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon-veare.svg" />
