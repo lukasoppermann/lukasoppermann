@@ -38,6 +38,6 @@ const { article: {title, url, published, excerpt}, ...attr } = Astro.props
 
 <a class:list={[attr.class]} target="_blank" rel="noreferrer" href={url} data-splitbee-event="Blog Post" data-splitbee-event-article={title}>
   <DateTime class="dateTime" from={published} />
-  <Headline level="3" class="headline">{title}<Icon class="svg-icon" type="arrowRight" /></Headline>
+  <Headline level="3" class="headline">{title}<Icon type="arrowRight" /></Headline>
   <Paragraph>{excerpt}</Paragraph>
 </a>

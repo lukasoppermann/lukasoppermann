@@ -9,10 +9,10 @@ import fileDownload from '@svgs/icon-fileDownload.svg?raw';
 
 type Props = {
   type: IconTypes;
-  svgString: undefined;
+  svgString?: undefined;
 } | { 
   type: undefined;
-  svgString: string; 
+  svgString?: string; 
 }
 
 const iconStrings = {
@@ -26,7 +26,7 @@ const iconStrings = {
 let { type = undefined, svgString = undefined, ...attr } = Astro.props;
 
 if(type) {
-  svgString = iconStrings[type]
+  svgString = iconStrings[type as IconTypes]
 }
 
 ---
