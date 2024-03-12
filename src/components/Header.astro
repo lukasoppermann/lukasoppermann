@@ -20,11 +20,13 @@ import ToggleButton from './ToggleButton.astro';
       box-shadow: 1px 0 15px rgba(0,0,0,.05);
       background: var(--surface);
     }
-    & .Logo {
+    .Logo {
       grid-column: columns / span 2;
       z-index: 2;
+      border: 1px solid red;
     }
-    & .Navigation {
+    .Navigation {
+      border: 1px solid red;
       z-index: 1;
       grid-column: column 6 / span 7;
       @media (--max-tablet) {
@@ -32,7 +34,7 @@ import ToggleButton from './ToggleButton.astro';
         top: var(--header-height) !important;
       }
     }
-    & .NavigationToggle {
+    .NavigationToggle {
       z-index: 2;
       color: var(--on-background__high-emphasis);
       height: 64px;
@@ -48,7 +50,7 @@ import ToggleButton from './ToggleButton.astro';
 </style>
 
 <script>
-  import {throttle} from "@src/assets/scripts/throttle.ts"
+  import {throttle} from "../assets/scripts/throttle.ts"
   // detect scroll 
   const header = document.querySelector('header')!
   document.addEventListener("scroll", throttle(() => {

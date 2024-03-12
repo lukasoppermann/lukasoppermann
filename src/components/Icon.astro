@@ -1,18 +1,24 @@
 ---
-import type { IconTypes } from '@src/types/IconTypes';
 import Svg from './Svg.astro';
-import menu from '@svgs/icon-menu.svg?raw';
-import arrowRight from '@svgs/icon-arrowRight.svg?raw';
-import mail from '@svgs/icon-mail.svg?raw';
-import close from '@svgs/icon-close.svg?raw';
-import fileDownload from '@svgs/icon-fileDownload.svg?raw';
+import menu from '../assets/svgs/icon-menu.svg?raw';
+import arrowRight from '../assets/svgs/icon-arrowRight.svg?raw';
+import mail from '../assets/svgs/icon-mail.svg?raw';
+import close from '../assets/svgs/icon-close.svg?raw';
+import fileDownload from '../assets/svgs/icon-fileDownload.svg?raw';
+
+type IconTypes =
+  'arrowRight' |
+  'close' |
+  'menu' |
+  'mail' |
+  'fileDownload'
 
 type Props = {
   type: IconTypes;
   svgString?: undefined;
 } | { 
   type: undefined;
-  svgString?: string; 
+  svgString: string; 
 }
 
 const iconStrings = {
@@ -36,4 +42,4 @@ if(type) {
   }
 </style>
 
-<Svg svgString={svgString as string} class="icon" {...attr}/>
+<Svg svgString={svgString as string} class="icon" {...attr} />
