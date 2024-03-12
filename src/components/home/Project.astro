@@ -3,9 +3,23 @@ import DateTime from "../DateTime.astro";
 import Headline from "../Headline.astro";
 import Link from "../Link.astro";
 import { Image } from "astro:assets";
-import type { ProjectFrontmatter } from '@src/types/Project';
 import Duration from "../Duration.astro";
 import List from "../List.astro";
+
+export type ProjectFrontmatter = {
+  client: string,
+  title: string,
+  class?: string,
+  buttonLabel?: string
+  buttonTarget?: string
+  url?: string,
+  responsibilities?: string[],
+  approach?: { [key: string]: string }[],
+  startDate: string,
+  endDate: string,
+  image: ImageMetadata,
+  imageAlt: string,
+}
 
 export interface Props extends ProjectFrontmatter {
   Content: any;
