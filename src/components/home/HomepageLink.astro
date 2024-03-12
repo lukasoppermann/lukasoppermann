@@ -1,7 +1,15 @@
 ---
-import type { HomepageLink } from '@src/types/HomepageLink';
 import { Image } from "astro:assets";
 import Headline from "../Headline.astro";
+
+export type HomepageLink = {
+  class?: string,
+  url: string,
+  title: string,
+  subtitle: string,
+  image: ImageMetadata
+  imageAlt: string
+}
 
 export interface Props extends HomepageLink {}
 

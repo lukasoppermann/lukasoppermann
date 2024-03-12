@@ -6,19 +6,12 @@ import mail from '../assets/svgs/icon-mail.svg?raw';
 import close from '../assets/svgs/icon-close.svg?raw';
 import fileDownload from '../assets/svgs/icon-fileDownload.svg?raw';
 
-type IconTypes =
-  'arrowRight' |
-  'close' |
-  'menu' |
-  'mail' |
-  'fileDownload'
+export type IconTypes = 'arrowRight' | 'close' | 'menu' | 'mail' | 'fileDownload'
 
-type Props = {
-  type: IconTypes;
-  svgString?: undefined;
-} | { 
-  type: undefined;
-  svgString: string; 
+
+export type Props = {
+  type?: IconTypes;
+  svgString?: string;
 }
 
 const iconStrings = {
