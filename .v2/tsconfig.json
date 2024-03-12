@@ -1,0 +1,16 @@
+{
+  "extends": "astro/tsconfigs/strictest",
+  "compilerOptions": {
+    "importsNotUsedAsValues": "error",
+    "types": ["astro/client", "@astrojs/image/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@config/*": ["src/config/*"],
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@styles/*": ["src/assets/styles/*"],
+      "@svgs/*": ["src/assets/svgs/*"],
+    }
+  }
+}
