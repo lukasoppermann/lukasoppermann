@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from 'astro/types'
 export interface Props extends HTMLAttributes<'nav'> {}
 
-const attr = Astro.props;
+const {...attr} = Astro.props;
 
 const activePage = Astro.url.pathname.replace(/^\//, '')
 

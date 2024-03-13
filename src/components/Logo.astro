@@ -6,9 +6,10 @@ import Svg from './Svg.astro';
 interface Props extends HTMLAttributes<'a'> {
   href?: string,
   small?: boolean,
+  class?: string
 }
 
-const { href, small, ...attr } = Astro.props;
+const { href, small, class: className } = Astro.props;
 ---
 <style>
   a, div {
@@ -18,18 +19,18 @@ const { href, small, ...attr } = Astro.props;
     &.is-small {
       height: 16px;
     }
-    & svg {
+    svg{
       height: 100%;
     }
   }
 </style>
 
   {href ? 
-    <a class:list={[(small && 'is-small'), attr.class]} aria-label='Go to homepage' href={href} {...attr}>
-      <Svg svgString={LogoSvg} />
+    <a class:list={[(small && 'is-small'), className]} aria-label='Go to homepage' href={href}>
+      <Svg class="svg-logo" svgString={LogoSvg} />
     </a>
   :
-    <div class:list={[(small && 'is-small'), attr.class]}>
-      <Svg svgString={LogoSvg} />
+    <div class:list={[(small && 'is-small'), className]}>
+      <Svg class="svg-logo" svgString={LogoSvg} />
     </div>
   }
