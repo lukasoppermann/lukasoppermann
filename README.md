@@ -2,7 +2,7 @@
 ![me-working](https://user-images.githubusercontent.com/813754/183907598-d18d505d-56fd-4af4-8d9c-0f723bb05e60.gif)
 
 #### I'm Lukas,
-I work at GitHub 🐱🐙 on the [primer](https://primer.style/) team. (Which is great because I love cats and octopi)
+I am a staff design system designer working on GitHub's design system [primer](https://primer.style/). My focus is on design tokens and color but I also work on other design system aspects like components and tooling. I also maintain our Figma libraries.
 
 🔭 I constantly [refresh my portfolio](https://lukasoppermann.com) try out new react stuff and work on my Figma plugins: [design tokens](https://github.com/lukasoppermann/design-tokens) & [elevation scale](https://github.com/lukasoppermann/elevation-scale)
 
