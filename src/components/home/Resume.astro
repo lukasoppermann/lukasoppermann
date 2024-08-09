@@ -30,33 +30,45 @@ import Paragraph from "../Paragraph.astro";
       margin-top: 32px;
       position: relative;
       @media (--min-tablet) {
-        &:nth-child(1) {
-          grid-column-end: span 8;
+        &:is(.resume--intro) {
+          grid-column-end: span 6;
           margin-bottom: 40px;
         }
-        &:nth-child(n+2) {
+        &:is(.resume--item) {
+          grid-column-end: span 6;
+        }
+        &:nth-child(1 of .resume--item) {
           grid-row: 2;
-          grid-column-end: span 4;
+          grid-column-start: column 1;
         }
-        &:nth-child(3) {
-          grid-column-start: column 5;
+        &:nth-child(2 of .resume--item) {
+          grid-row: 2;
+          grid-column-start: column 7;
         }
-        &:nth-child(4) {
-          grid-column-start: column 9;
+        &:nth-child(3 of .resume--item) {
+          grid-row: 3;
+          grid-column-start: column 1;
+        }
+        &:nth-child(4 of .resume--item) {
+          grid-row: 3;
+          grid-column-start: column 7;
         }
       }
       @media (--min-large) {
-        &:nth-child(n) {
-          grid-row: 1;
+        &:is(.resume--item) {
+          grid-column-end: span 3;
+          grid-row: 2 !important;
+        }
+        &:nth-child(1 of .resume--item) {
           grid-column-end: span 3;
         }
-        &:nth-child(2) {
+        &:nth-child(2 of .resume--item) {
           grid-column-start: column 4;
         }
-        &:nth-child(3) {
+        &:nth-child(3 of .resume--item) {
           grid-column-start: column 7;
         }
-        &:nth-child(4) {
+        &:nth-child(4 of .resume--item) {
           grid-column-start: column 10;
         }
       }
@@ -108,23 +120,28 @@ import Paragraph from "../Paragraph.astro";
 
 
 <section class='Grid' role="main" aria-label="Resume">
-  <div>
+  <div class="resume--intro">
     <Headline level="4" margin="none">Hello — I’m Lukas</Headline>
     <Headline level="5">Design Lead & creative technologist</Headline>
     <Paragraph type="small">I love solving problems by combining technology with the aesthetics &amp; human-centered psychology that is UI/UX design.</Paragraph>
   </div>
-  <div>
+  <div class="resume--item">
     <Headline id="resumeTitle" class="title--resume" style="h6" aria-hidden="true">Resumé&hairsp;/&hairsp;recent</Headline>
+    <Headline level="4" margin="none">GitHub</Headline>
+    <Headline style="h5" role="group"><DateTime from="09.08.2022" to="now" toLabel="NOW" format="YYYY"/></Headline>
+    <Paragraph type="small">Staff systems designer working on design tokens, components, tooling and figma stragey for Primer.</Paragraph>
+  </div>
+  <div class="resume--item">
     <Headline level="4" margin="none">Deutsche Telekom</Headline>
-    <Headline style="h5" role="group"><DateTime from="01.10.2021" to="now" toLabel="NOW" format="YYYY"/></Headline>
+    <Headline style="h5" role="group"><DateTime from="01.10.2021" to="08.08.2022" format="YYYY"/></Headline>
     <Paragraph type="small">Leading Scale — the Telekom Design System and working on the future of eCommerce at Deutsche Telekom.</Paragraph>
   </div>
-  <div>
+  <div class="resume--item">
     <Headline level="4" margin="none">Bertelsmann / RTL+</Headline>
     <Headline style="h5" role="group"><DateTime from="01.09.2020" to="01.10.2021" format="YYYY"/></Headline>
     <Paragraph type="small">Invisioning the future digital media platform with a focus on personalised relevance. Building the RTL Design System from the ground up &amp; leading the design team.</Paragraph>
   </div>
-  <div>
+  <div class="resume--item">
     <Headline level="4" margin="none">Daimler innovation lab</Headline>
     <Headline style="h5" role="group"><DateTime from="01.10.2017" to="01.09.2020" format="YYYY"/></Headline>
     <Paragraph type="small">Building out major innovation topics for the future of mobility for Daimler AG. Helping the design team grow &amp; develop.</Paragraph>
