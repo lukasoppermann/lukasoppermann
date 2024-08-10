@@ -1,8 +1,8 @@
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 
 export const parseTime = (fromString: string, toString?: string): {
-  from: Dayjs,
-  to: Dayjs,
+  from: dayjs.Dayjs,
+  to: dayjs.Dayjs,
   isRange: boolean
 } => {
   const validFormats = ['DD.MM.YYYY', 'DD-MM-YYYY', 'YYYY']

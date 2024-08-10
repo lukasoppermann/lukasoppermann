@@ -9,7 +9,7 @@ export interface Props extends HTMLAttributes<'div'> {
   class?: string
 }
 
-let { from, toLabel, to, format, ...attr } = Astro.props
+let { from, toLabel, to, format, class: className, ...attr } = Astro.props
 const options: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "long",
@@ -33,8 +33,7 @@ if(format === 'YYYY') {
 const fromOutput = from.toLocaleString('en-EN', options)
 const toOutput = to?.toLocaleString('en-EN', options)
 ---
-
-<div class:list={[attr.class]}>
+<div class:list={["dateTime", className]}>
   {fromOutput}
   {fromOutput !== toOutput && toOutput && `— ${toOutput}`}
 </div>

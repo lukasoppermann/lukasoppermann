@@ -36,7 +36,7 @@ const { active, ...attr } = Astro.props;
   }
 </style>
 
-<button class:list={[attr.class]} data-enabled={active} {...attr}>
+<button class:list={[attr.class]} data-enabled={active}>
   <div class="enabled"><slot name="enabled"></slot></div>
   <div class="disabled"><slot name="disabled"></slot></div>
 </button>

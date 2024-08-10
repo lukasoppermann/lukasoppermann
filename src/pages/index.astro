@@ -1,18 +1,13 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import Intro from '@src/components/home/Intro.astro';
-import Resume from '@src/components/home/Resume.astro';
-import HomepageLink from '@src/components/home/HomepageLink.astro';
-import Project from '@src/components/home/Project.astro';
-// import type { ProjectFrontmatter } from '@src/types/Project';
+import Layout from '../layouts/Layout.astro';
+import Intro from '../components/home/Intro.astro';
+import Resume from '../components/home/Resume.astro';
+import HomepageLink from '../components/home/HomepageLink.astro';
+import Project from '../components/home/Project.astro';
 import { getCollection } from "astro:content";
 const homepageLinks = await getCollection("homepageLinks");
 const projects = await getCollection("projects");
 
-// const projects: {
-//   frontmatter: ProjectFrontmatter;
-//   compiledContent: () => string;
-// }[] = await Astro.glob('../pages/projects/*.md');
 ---
 <style>
 
