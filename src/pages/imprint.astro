@@ -5,22 +5,22 @@ import imprintTitleStacked from "../assets/svgs/imprint-stacked.svg?raw";
 import Svg from '../components/Svg.astro';
 ---
 <style>
-  .imprint {
+  :global(.imprint) {
     padding-top: 80px;
-    h1, h2 {
+  }
+  h1, h2 {
       margin-top: 32px;
       margin-bottom: 24px;
-    }
-    h3, h4 {
+  }  
+  h3, h4 {
       margin-top: 24px;
       margin-bottom: 16px;
-    }
-    p, ul, ol {
-      color: var(--on-background__medium-emphasis);
-      margin-bottom: 16px;
-    }
   }
-  .svg-title {
+  p, ul, ol {
+    color: var(--on-background__medium-emphasis);
+    margin-bottom: 16px;
+  }
+  :global(.svg-title) {
     grid-column: columns;
     padding-bottom: 64px;
     max-width: 100%;
@@ -29,12 +29,12 @@ import Svg from '../components/Svg.astro';
       fill: var(--on-background__high-emphasis);
     }
   }
-  .svg-imprint--default {
+  :global(.svg-imprint--default) {
     @media (--max-mobile) {
       display: block;
     }
   }
-  .svg-imprint--stacked {
+  :global(.svg-imprint--stacked) {
     @media (--min-tablet) {
       display: block;
     }

@@ -20,31 +20,31 @@ const allPosts = (await getCollection("articles")).sort(
     @media (--min-desktop) {
       grid-column: columns / span 6;
     }
-    & a {
+    & :global(.post-preview) {
       margin-bottom: 32px;
       padding-bottom: 24px;
       border-bottom: 1px solid var(--ui--fair-contrast);
     }
   }
-  .svg-title {
+  :global(.svg-title) {
     padding-top: 120px;
     max-width: 100%;
     fill: var(--on-background__high-emphasis);
-    &.svg-title--default {
+    &:global(.svg-title--default) {
       grid-column: columns / span 12;
       padding-bottom: 96px;
     }
-    &.svg-title--stacked {
+    &:global(.svg-title--stacked) {
       display: none;
       grid-column: columns;
       padding-bottom: 56px;
     }
     @media (--max-mobile) {
       padding-top: 80px;
-      &.svg-title--default {
+      &:global(.svg-title--default) {
         display: none;
       }
-      &.svg-title--stacked {
+      &:global(.svg-title--stacked) {
         display: block;
       }
     }
@@ -58,6 +58,6 @@ const allPosts = (await getCollection("articles")).sort(
   <Svg svgString={svgTitleDefault} class="svg-title svg-title--default" />
   <Svg svgString={svgTitleStacked} class="svg-title svg-title--stacked" />
   <div>
-    {allPosts.map((post) => <PostPreview article={post.data} />)}
+    {allPosts.map((post) => <PostPreview article={post.data} class="post-preview" />)}
   </div>
 </Layout>
