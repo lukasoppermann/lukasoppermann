@@ -1,0 +1,66 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import Svg from "../components/Svg.astro";
+import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
+
+---
+
+<style>
+  .Header--about {
+    --max-grid-rows: 7;
+    margin-top: 64px;
+    grid-template-rows: max-content auto max-content;
+    grid-column: full-bleed;
+    /* ====================================
+      Background
+    ==================================== */
+    & .Header__background {
+      grid-row: 1 / var(--max-grid-rows);
+      grid-column: columns;
+      width: calc(100% + var(--grid-column-gap) * 2);
+      height: 100%;
+      margin-left: calc(-1 * var(--grid-column-gap));
+      background-color: var(--neutrals-1000);
+      --origin-start: right;
+      animation: .75s var(--easeInOutQuint) forwards .5s blockFill;
+      transform: scaleX(0);
+      z-index: 0;
+    }
+  }
+  .profile-picture {
+    vertical-align: bottom;
+    mix-blend-mode: screen;
+    mix-blend-mode: plus-lighter;
+    grid-row: 1 / span 6;
+    z-index: 100;
+    height: auto;
+    grid-column: columns / span 6;
+    @media (--min-desktop) {
+      grid-column: columns / span 12;
+    }
+  }
+  :global(svg.svg-title) {
+    grid-row: 4 / span 2;
+    z-index: 200;
+    grid-column: columns;
+    max-width: 100%;
+    fill: var(--neutrals-0) !important;
+  }
+</style>
+
+<Layout title="About Lukas Oppermann — Design lead, systems designer and design token expert">
+  <!-- <Svg svgString={svgTitleDefault} class="svg-title svg-title--default" />
+  <Svg svgString={svgTitleStacked} class="svg-title svg-title--stacked" /> -->
+  <section class="Header--about Grid">
+    <Svg svgString={svgTitleDefault} class="svg-title svg-about--default" />
+    <Image
+    class="profile-picture"
+    alt="Lukas Oppermann — design system and design token expert, product desiger and design lead"
+    src="/src/assets/images/lukasoppermann_profile.jpg"
+    width={590}
+    height={600}
+    />
+    <div class="Header__background"></div>
+  </section>
+</Layout>
