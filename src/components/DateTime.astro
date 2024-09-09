@@ -5,11 +5,12 @@ export interface Props extends HTMLAttributes<'div'> {
   from: Date | string
   to?: Date | string
   toLabel?: string
-  format?: 'YYYY',
-  class?: string
+  format?: 'YYYY' | 'MMM YYYY',
+  class?: string,
+  inline?: boolean
 }
 
-let { from, toLabel, to, format, class: className, ...attr } = Astro.props
+let { from, toLabel, to, format, class: className, inline, ...attr } = Astro.props
 const options: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "long",
@@ -29,11 +30,20 @@ if(format === 'YYYY') {
   options.month = undefined
   options.day = undefined
 }
+if(format === 'MMM YYYY') {
+  options.month = "short"
+  options.day = undefined
+}
 
 const fromOutput = from.toLocaleString('en-EN', options)
 const toOutput = to?.toLocaleString('en-EN', options)
 ---
-<div class:list={["dateTime", className]}>
+<style>
+  .inline {
+    display: inline-block;
+  }
+</style>
+<div class:list={["dateTime", (inline && 'inline') , className]}>
   {fromOutput}
   {fromOutput !== toOutput && toOutput && `— ${toOutput}`}
 </div>

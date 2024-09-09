@@ -1,0 +1,71 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import DateTime from './DateTime.astro';
+import Link from "./Link.astro";
+
+type talk = {
+  title: string
+  date: string
+  event: string
+}
+
+interface Props extends HTMLAttributes<'ul'> {
+  title?: string
+  items: talk[]
+  moreLink?: string
+}
+
+const { title = "Talks", items, moreLink, ...attr } = Astro.props;
+---
+<style>
+ul {
+  list-style: none;
+  h3 {
+    font: var(--typestyle__h5);
+    color: var(--on-background__low-emphasis);
+    margin-bottom: 24px;
+  }
+  li {
+    margin-bottom: 16px;
+  }
+  .item {
+    h4 {
+      font-family: var(--font-serif);
+      font-weight: var(--font-serif-weight-regular);
+      font-size: var(--ts-size-md);
+      line-height: var(--ts-line-height-md);
+      color: var(--on-background__high-emphasis);
+    }
+    .details {
+      color: var(--on-background__low-emphasis);
+      font: var(--typestyle__caption);
+    }
+    .event {
+      &:before {
+        content: "•";
+        display: inline-block;
+        margin: 0 8px;
+        color: var(--on-background__disabled);
+      }
+    }
+  }
+}
+</style>
+
+<ul class:list={[attr.class]}>
+  <h3>{title}</h3>
+  {items.map(item => (
+    <li class="item">
+      <h4>{item.title}</h4>
+      <div class="details">
+        <DateTime class="date-time" format='MMM YYYY' inline from={item.date} />
+        <span class="event">{item.event}</span>
+      </div>
+    </li>
+  ))}
+  {moreLink && (
+    <li>
+      <Link style="link" icon href={moreLink} target="_blank">All talks</Link>
+    </li>
+  )}
+</ul>

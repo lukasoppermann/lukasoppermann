@@ -1,15 +1,18 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "./Layout.astro";
 import { Image } from "astro:assets";
 import Svg from "../components/Svg.astro";
+import Talks from "../components/Talks.astro";
 import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
+const {frontmatter} = Astro.props;
+
 
 ---
-
 <style>
   .Header--about {
     --max-grid-rows: 7;
     margin-top: 64px;
+    margin-bottom: 64px;
     grid-template-rows: max-content auto max-content;
     grid-column: full-bleed;
     /* ====================================
@@ -22,9 +25,6 @@ import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
       height: 100%;
       margin-left: calc(-1 * var(--grid-column-gap));
       background-color: var(--neutrals-1000);
-      --origin-start: right;
-      animation: .75s var(--easeInOutQuint) forwards .5s blockFill;
-      transform: scaleX(0);
       z-index: 0;
     }
   }
@@ -47,6 +47,12 @@ import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
     max-width: 100%;
     fill: var(--neutrals-0) !important;
   }
+  :global(.talks) {
+    grid-column: columns / span 5;
+  }
+  .main-content {
+    grid-column: column 7 / span 6;
+  }
 </style>
 
 <Layout title="About Lukas Oppermann — Design lead, systems designer and design token expert">
@@ -62,5 +68,9 @@ import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
     height={600}
     />
     <div class="Header__background"></div>
+  </section>
+  <Talks class="talks" items={frontmatter.talks} title="Speaking" moreLink="https://read.cv/lukasoppermann" />
+  <section class="main-content">
+    <slot />
   </section>
 </Layout>
