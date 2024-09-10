@@ -62,8 +62,8 @@ const {frontmatter} = Astro.props;
     <Svg svgString={svgTitleDefault} class="svg-title svg-about--default" />
     <Image
     class="profile-picture"
-    alt="Lukas Oppermann — design system and design token expert, product desiger and design lead"
-    src="/src/assets/images/lukasoppermann_profile.jpg"
+    alt={frontmatter.banner.alt}
+    src={frontmatter.banner.img}
     width={590}
     height={600}
     />
