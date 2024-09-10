@@ -36,9 +36,9 @@ const {frontmatter} = Astro.props;
     grid-row: 1 / span 6;
     z-index: 100;
     height: auto;
-    grid-column: columns / span 6;
+    grid-column: columns;
     @media (--min-desktop) {
-      grid-column: columns / span 12;
+      grid-column: columns / span 6;
     }
   }
   :global(svg.svg-title) {
@@ -49,10 +49,22 @@ const {frontmatter} = Astro.props;
     fill: var(--neutrals-0) !important;
   }
   :global(.talks) {
-    grid-column: columns / span 5;
+    grid-column: columns;
+    grid-row: 3;
+    margin-top: 48px;
+    @media (--min-desktop) {
+      margin-top: 0;
+      grid-row: 2;
+      grid-column: columns / span 5;
+    }
   }
   .main-content {
-    grid-column: column 7 / span 6;
+    grid-column: columns;
+    grid-row: 2;
+    @media (--min-desktop) {
+      grid-row: 2;
+      grid-column: column 7 / span 6;
+    }
   }
 </style>
 
