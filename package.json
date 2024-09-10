@@ -11,6 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^3.1.5",
     "@fontsource/noto-serif": "^5.0.3",
     "@fontsource/source-sans-pro": "^5.0.3",
     "astro": "^4.12.0",
