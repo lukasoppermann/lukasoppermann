@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import Svg from "../components/Svg.astro";
 import Talks from "../components/Talks.astro";
 import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
+import profilePicture from '../assets/images/lukasoppermann_profile_2x.jpg';
 const {frontmatter} = Astro.props;
 
 
@@ -62,8 +63,8 @@ const {frontmatter} = Astro.props;
     <Svg svgString={svgTitleDefault} class="svg-title svg-about--default" />
     <Image
     class="profile-picture"
-    alt={frontmatter.banner.alt}
-    src={frontmatter.banner.img}
+    alt={frontmatter.banner_alt}
+    src={profilePicture}
     width={590}
     height={600}
     />
