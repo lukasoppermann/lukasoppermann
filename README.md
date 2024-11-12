@@ -22,6 +22,8 @@ I am a staff design system designer working on GitHub's design system [primer](h
 
 📫 Reach me on twitter: https://twitter.com/lukasoppermann
 
+🦋 Find me on Bluesky: https://bsky.app/profile/lukasoppermann.com
+
 📚 Read my thoughts on [medium.com/@lukasoppermann](https://medium.com/@lukasoppermann)
 
 🧪 Check out my work: https://lukasoppermann.com
