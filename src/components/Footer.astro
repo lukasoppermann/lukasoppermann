@@ -47,7 +47,7 @@ import Newsletter from "./Newsletter.astro";
       }
       & nav {
         justify-content: center;
-        & a, span {
+        & a, span, .footer-link {
           font-size: var(--font-size--default);
           height: 48px;
           padding: 8px 16px;
@@ -67,11 +67,13 @@ import Newsletter from "./Newsletter.astro";
 <footer class='Grid'>
   <Newsletter class="Newsletter" />
   <nav>
-    <a href='https://dribbble.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="Dribbble">Dribbble</a>
-    <a href="https://www.linkedin.com/in/lukasoppermann" rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="LinkedIn">LinkedIn</a>
-    <a href='https://twitter.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="Twitter">Twitter</a>
-    <a href='https://github.com/lukasoppermann' rel='noreferrer' target="_blank" data-splitbee-event="Social Profile" data-splitbee-event-destination="GitHub">GitHub</a>
-    <Link class="footer-link" href="/imprint" >Impressum / imprint</Link>
+    <a href='https://medium.com/@lukasoppermann' rel='noreferrer' target="_blank">Medium</a>
+    <a href='https://bsky.app/profile/lukasoppermann.com' rel='noreferrer' target="_blank">Bluesky</a>
+    <a href='https://dribbble.com/lukasoppermann' rel='noreferrer' target="_blank">Dribbble</a>
+    <a href="https://www.linkedin.com/in/lukasoppermann" rel='noreferrer' target="_blank">LinkedIn</a>
+    <a href='https://twitter.com/lukasoppermann' rel='noreferrer' target="_blank">Twitter</a>
+    <a href='https://github.com/lukasoppermann' rel='noreferrer' target="_blank">GitHub</a>
+    <Link class="footer-link" href="/imprint">Impressum / imprint</Link>
     <Link class="footer-link" href="/imprint">Datenschutz / privacy policy</Link>
     <span class="copyright">Copyright [[DATE]] &mdash; Lukas Oppermann</span>
   </nav>
