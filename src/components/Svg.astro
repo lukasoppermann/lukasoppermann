@@ -43,6 +43,9 @@ const { innerHTML, attributes: svgAttributes } = cleanSvg(svgString);
 <style>
   svg {
     fill: var(--on-background__high-emphasis) !important;
+    &.isInverted {
+      fill: var(--on-surface-alternative__high-emphasis) !important;
+    }
   }
 </style>
 

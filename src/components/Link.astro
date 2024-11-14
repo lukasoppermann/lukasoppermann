@@ -111,5 +111,5 @@ const setRel = (rel?: string | null) => {
 </style>
 
 <a class:list={[style, className]} href={href} rel={setRel(rel)} {...attr}
-><slot />{icon && <Icon type={icon !== true ? icon as IconTypes : "arrowRight"} />}
+><slot />{icon && <Icon type={icon !== true ? icon as IconTypes : "arrowRight"} inverted={style === "button" ? true : false} />}
 </a>
