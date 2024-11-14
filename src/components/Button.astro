@@ -46,4 +46,4 @@ const { children, style, icon, type, class: className, ...attr } = Astro.props;
 </style>
 
 <button class:list={[style, className]} type={ type ?? `button`} {...attr}
-><slot />{icon && <Icon type={icon !== true ? icon as IconTypes : "arrowRight"} />}</button>
+><slot />{icon && <Icon inverted={style === "ghost" ? false : true} type={icon !== true ? icon as IconTypes : "arrowRight"} />}</button>

@@ -13,6 +13,7 @@ export type Props = {
   type?: IconTypes;
   svgString?: string;
   class?: string;
+  inverted?: boolean;
 }
 
 const iconStrings = {
@@ -23,17 +24,11 @@ const iconStrings = {
   fileDownload,
 }
 
-let { type = undefined, svgString = undefined, class: className, ...attr } = Astro.props;
-
+let { type = undefined, svgString = undefined, inverted = undefined, class: className, ...attr } = Astro.props;
 if(type) {
   svgString = iconStrings[type as IconTypes]
 }
 
 ---
-<style>
-  svg {
-    fill: var(--on-background__high-emphasis) !important;
-  }
-</style>
 
-<Svg svgString={svgString as string} class:list={["icon", className]} {...attr} />
+<Svg svgString={svgString as string} class:list={["icon", className, `${inverted ? 'isInverted' : ""}`]} {...attr} />

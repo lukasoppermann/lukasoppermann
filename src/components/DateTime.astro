@@ -10,7 +10,7 @@ export interface Props extends HTMLAttributes<'div'> {
   inline?: boolean
 }
 
-let { from, toLabel, to, format, class: className, inline, ...attr } = Astro.props
+let { from, toLabel: _toLabel, to, format, class: className, inline } = Astro.props
 const options: Intl.DateTimeFormatOptions = {
   year: "numeric",
   month: "long",

@@ -1,10 +1,20 @@
-import { defineConfig, squooshImageService } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import favicons from "astro-favicons";
 
 // https://astro.build/config
 export default defineConfig({
   image: {
-    service: squooshImageService()
+    service: {
+      entrypoint: 'astro/assets/services/sharp'
+    }
   },
-  integrations: [mdx()]
+  integrations: [
+    mdx(),
+    // favicons({
+    //   masterPicture: "./src/assets/svgs/favicon.svg",
+    //   emitAssets: true,
+    //   faviconsDarkMode: true,
+    // }),
+  ]
 });
