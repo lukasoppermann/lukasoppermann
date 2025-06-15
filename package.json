@@ -11,18 +11,18 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^3.1.9",
+    "@astrojs/mdx": "^4.3.0",
     "@fontsource/noto-serif": "^5.0.3",
     "@fontsource/source-sans-pro": "^5.0.3",
-    "@vercel/analytics": "^1.4.0",
-    "astro": "^4.16.12",
-    "dayjs": "^1.11.10",
-    "typescript": "^5.4.2"
+    "@vercel/analytics": "^1.5.0",
+    "astro": "^5.9.3",
+    "dayjs": "^1.11.13",
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@csstools/postcss-global-data": "^1.0.3",
-    "astro-favicons": "^2.1.8",
+    "astro-favicons": "^3.1.5",
     "node-html-parser": "^6.1.12",
     "postcss": "^8.4.24",
     "postcss-custom-media": "^10.0.0",
