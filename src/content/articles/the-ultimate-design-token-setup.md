@@ -1,5 +1,4 @@
 ---
-layout: '../../layouts/MarkdownPostLayout.astro'
 title: "The ultimate Design Token setup"
 url: "https://medium.com/user-experience-design-1/the-ultimate-design-token-setup-cdf50dc841c8"
 published: "2024-09-25"
