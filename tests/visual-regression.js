@@ -10,14 +10,10 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { createHash } from 'crypto';
 import { spawn } from 'child_process';
-import { createRequire } from 'module';
 import puppeteer from 'puppeteer';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
-
-const require = createRequire(import.meta.url);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -30,13 +26,63 @@ const config = {
   diffDir: join(__dirname, 'screenshots', 'diff'),
   viewport: { width: 1920, height: 1080 },
   distDir: join(dirname(__dirname), 'dist'),
+  serverPort: 4321,
+  serverHost: 'localhost',
   pages: [
-    { path: 'index.html', name: 'homepage' },
-    { path: 'about/index.html', name: 'about' },
-    { path: 'articles/index.html', name: 'articles' },
-    { path: 'imprint/index.html', name: 'imprint' }
+    { path: '/', name: 'homepage' },
+    { path: '/about/', name: 'about' },
+    { path: '/articles/', name: 'articles' },
+    { path: '/imprint/', name: 'imprint' }
   ]
 };
+
+// Start static file server
+function startServer() {
+  return new Promise((resolve, reject) => {
+    const server = spawn('python3', ['-m', 'http.server', '8080'], {
+      cwd: config.distDir,
+      stdio: ['pipe', 'pipe', 'pipe']
+    });
+    
+    const serverUrl = 'http://localhost:8080';
+    
+    const timeout = setTimeout(() => {
+      // If we reach here, assume server started successfully
+      resolve({ server, url: serverUrl });
+    }, 3000); // 3 second timeout - if no errors, assume success
+    
+    server.stdout.on('data', (data) => {
+      const output = data.toString();
+      console.log('Server output:', output);
+      
+      // Look for "Serving HTTP" message which indicates server is ready
+      if (output.includes('Serving HTTP')) {
+        clearTimeout(timeout);
+        resolve({ server, url: serverUrl });
+      }
+    });
+    
+    server.stderr.on('data', (data) => {
+      const error = data.toString();
+      console.error('Server error:', error);
+      // If there's an error starting the server, reject
+      if (error.toLowerCase().includes('error')) {
+        clearTimeout(timeout);
+        reject(new Error(`Server error: ${error}`));
+      }
+    });
+    
+    server.on('error', (error) => {
+      clearTimeout(timeout);
+      reject(error);
+    });
+    
+    server.on('exit', (code) => {
+      clearTimeout(timeout);
+      reject(new Error(`Server exited with code ${code}`));
+    });
+  });
+}
 
 // Ensure directories exist
 function ensureDirectories() {
@@ -48,15 +94,14 @@ function ensureDirectories() {
 }
 
 // Take screenshot of a page
-async function takeScreenshot(browser, filePath, outputPath) {
+async function takeScreenshot(browser, url, outputPath) {
   const page = await browser.newPage();
   
   try {
     await page.setViewport(config.viewport);
     
-    // Use file:// URL to access the local file
-    const fileUrl = `file://${filePath}`;
-    await page.goto(fileUrl, { waitUntil: 'networkidle0', timeout: 30000 });
+    // Navigate to the server URL
+    await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
     
     // Wait a bit more for any animations or lazy loading
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -260,8 +305,23 @@ async function main() {
   ensureDirectories();
   
   let browser = null;
+  let serverProcess = null;
+  let serverUrl = '';
   
   try {
+    // Start the static file server
+    console.log('Starting static file server...');
+    const serverInfo = await startServer();
+    serverProcess = serverInfo.server;
+    serverUrl = serverInfo.url;
+    
+    console.log(`Server started at: ${serverUrl}`);
+    
+    // Wait for server to be ready - just a simple delay
+    console.log('Waiting for server to be ready...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log('Server should be ready now!');
+    
     // Launch browser
     console.log('Launching browser...');
     browser = await puppeteer.launch({
@@ -277,14 +337,35 @@ async function main() {
         '--disable-backgrounding-occluded-windows',
         '--disable-renderer-backgrounding',
         '--disable-web-security',
-        '--allow-file-access-from-files'
+        '--disable-features=VizDisplayCompositor',
+        '--disable-ipc-flooding-protection',
+        '--disable-background-networking',
+        '--disable-sync',
+        '--disable-translate',
+        '--disable-default-apps',
+        '--disable-component-extensions-with-background-pages',
+        '--disable-background-downloads',
+        '--disable-software-rasterizer',
+        '--run-all-compositor-stages-before-draw',
+        '--disable-new-content-rendering-timeout',
+        '--disable-threaded-animation',
+        '--disable-threaded-scrolling',
+        '--disable-checker-imaging',
+        '--disable-image-animation-resync',
+        '--no-first-run',
+        '--no-default-browser-check',
+        '--disable-hang-monitor',
+        '--disable-prompt-on-repost',
+        '--disable-domain-reliability',
+        '--disable-background-media-suspend',
+        '--autoplay-policy=no-user-gesture-required'
       ]
     });
     
     const results = [];
     
     for (const page of config.pages) {
-      const filePath = join(config.distDir, page.path);
+      const url = `${serverUrl}${page.path}`;
       const filename = `${page.name}.png`;
       const currentPath = join(config.currentDir, filename);
       const baselinePath = join(config.baselineDir, filename);
@@ -292,25 +373,9 @@ async function main() {
       
       console.log(`Processing: ${page.name} (${page.path})`);
       
-      // Check if file exists in dist
-      if (!existsSync(filePath)) {
-        results.push({
-          page: page.name,
-          url: `file://${filePath}`,
-          path: page.path,
-          isDifferent: true,
-          message: `File not found: ${filePath}`,
-          currentPath,
-          baselinePath,
-          diffPath
-        });
-        console.log(`❌ ${page.name}: File not found`);
-        continue;
-      }
-      
       try {
         // Take screenshot
-        await takeScreenshot(browser, filePath, currentPath);
+        await takeScreenshot(browser, url, currentPath);
         console.log(`Screenshot taken: ${filename}`);
         
         if (mode === 'baseline') {
@@ -321,7 +386,7 @@ async function main() {
           
           results.push({
             page: page.name,
-            url: `file://${filePath}`,
+            url: url,
             path: page.path,
             isDifferent: false,
             message: 'Baseline created',
@@ -335,7 +400,7 @@ async function main() {
           
           const result = {
             page: page.name,
-            url: `file://${filePath}`,
+            url: url,
             path: page.path,
             ...comparison,
             currentPath,
@@ -355,7 +420,7 @@ async function main() {
         console.error(`Error processing ${page.name}:`, error.message);
         results.push({
           page: page.name,
-          url: `file://${filePath}`,
+          url: url,
           path: page.path,
           isDifferent: true,
           message: `Error: ${error.message}`,
@@ -392,7 +457,21 @@ async function main() {
   } finally {
     // Cleanup
     if (browser) {
+      console.log('Closing browser...');
       await browser.close();
+    }
+    
+    if (serverProcess) {
+      console.log('Stopping server...');
+      serverProcess.kill('SIGTERM');
+      
+      // Wait a bit for graceful shutdown
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Force kill if still running
+      if (!serverProcess.killed) {
+        serverProcess.kill('SIGKILL');
+      }
     }
   }
 }

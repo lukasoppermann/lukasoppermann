@@ -33,8 +33,8 @@ npm run test:visual
 ```
 
 This will:
-1. Build the project (if needed)
-2. Take screenshots of all pages
+1. Start a local static file server to serve the built website
+2. Take screenshots of all pages using Chrome headless
 3. Compare current screenshots with baselines
 4. Generate a detailed report
 5. Exit with error code 1 if differences are found
@@ -89,11 +89,12 @@ tests/
 
 ## How It Works
 
-1. **Build**: The script uses the built static files from `dist/`
-2. **Screenshot**: Takes full-page screenshots using Chrome browser
-3. **Compare**: Uses pixel-perfect comparison with configurable threshold
-4. **Diff**: Generates visual diff images highlighting changes
-5. **Report**: Creates HTML reports with side-by-side comparisons
+1. **Build**: Ensure the website is built with `npm run build` (creates `dist/` directory)
+2. **Server**: Starts a local Python HTTP server to serve the static files
+3. **Screenshot**: Takes full-page screenshots using Chrome headless browser
+4. **Compare**: Uses pixel-perfect comparison with configurable threshold
+5. **Diff**: Generates visual diff images highlighting changes
+6. **Report**: Creates HTML reports with side-by-side comparisons
 
 ## Integration
 
