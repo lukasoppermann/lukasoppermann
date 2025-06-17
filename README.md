@@ -29,3 +29,21 @@ I am a staff design system designer working on GitHub's design system [primer](h
 🧪 Check out my work: https://lukasoppermann.com
  
 😄 Pronouns: he/him
+
+## Development
+
+This repository includes my personal portfolio website built with Astro.
+
+### Testing
+
+The website includes automated visual regression testing to catch unintended changes:
+
+```bash
+# Run visual regression tests
+npm run test:visual
+
+# Update baselines after intentional changes  
+npm run test:visual:update
+```
+
+See [docs/visual-regression-testing.md](docs/visual-regression-testing.md) for detailed information.
