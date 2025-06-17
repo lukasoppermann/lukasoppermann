@@ -1,14 +1,14 @@
 # Visual Regression Testing
 
-This project includes automated visual regression testing to detect unexpected changes in the website's content structure.
+This project includes automated visual regression testing to detect unexpected changes in the website's appearance using screenshot comparisons.
 
 ## Overview
 
 The visual regression testing system:
-- Captures HTML snapshots of all main pages
-- Compares current content against baseline snapshots
-- Detects structural changes in the HTML
-- Generates detailed reports with diffs
+- Captures screenshots of all main pages
+- Compares current screenshots against baseline screenshots
+- Detects visual changes using pixel-level comparison
+- Generates detailed reports with visual diffs
 - Provides an easy way to update baselines
 
 ## Setup
@@ -33,10 +33,11 @@ npm run test:visual
 ```
 
 This will:
-1. Build the project
-2. Compare current HTML snapshots with baselines
-3. Generate a detailed report
-4. Exit with error code 1 if differences are found
+1. Build the project (if needed)
+2. Take screenshots of all pages
+3. Compare current screenshots with baselines
+4. Generate a detailed report
+5. Exit with error code 1 if differences are found
 
 ### Creating Baselines
 
@@ -55,8 +56,8 @@ When tests pass:
 - Exit code 0 (success)
 
 When tests fail:
-- ❌ One or more pages have changed
-- Detailed diff files are generated
+- ❌ One or more pages have visual changes
+- Detailed diff images are generated
 - HTML report is created
 - Exit code 1 (failure)
 
@@ -64,33 +65,35 @@ When tests fail:
 
 After running tests, open the generated report:
 ```
-tests/snapshots/report.html
+tests/screenshots/report.html
 ```
 
 The report includes:
 - Summary of all tests
 - Pass/fail status for each page
-- Content hashes for comparison
-- Links to detailed diff files
+- Side-by-side image comparisons
+- Visual diff highlighting changes
+- Pixel difference statistics
 
 ## Files and Directories
 
 ```
 tests/
-├── visual-regression.js     # Main test script
-└── snapshots/
-    ├── baseline/           # Baseline HTML snapshots (tracked in git)
-    ├── current/            # Current HTML snapshots (ignored by git)
-    ├── diff/               # Diff files (ignored by git)
+├── visual-regression.js      # Main test script
+└── screenshots/
+    ├── baseline/           # Baseline screenshots (tracked in git)
+    ├── current/            # Current screenshots (ignored by git)
+    ├── diff/               # Diff images (ignored by git)
     └── report.html         # Test report (ignored by git)
 ```
 
 ## How It Works
 
-1. **Build**: The script works with the built static files in `dist/`
-2. **Normalize**: HTML content is normalized to ignore formatting differences
-3. **Compare**: Content hashes are compared between baseline and current
-4. **Report**: Differences are logged and detailed diffs are generated
+1. **Build**: The script uses the built static files from `dist/`
+2. **Screenshot**: Takes full-page screenshots using Chrome browser
+3. **Compare**: Uses pixel-perfect comparison with configurable threshold
+4. **Diff**: Generates visual diff images highlighting changes
+5. **Report**: Creates HTML reports with side-by-side comparisons
 
 ## Integration
 
@@ -122,16 +125,26 @@ Run `npm run test:visual:update` to update baselines with your changes.
 ### Build errors
 Ensure `npm run build` completes successfully before running tests.
 
+## Configuration
+
+The test script can be customized by editing `tests/visual-regression.js`:
+
+- **Viewport size**: Default is 1920x1080
+- **Pages to test**: Add/remove pages in the config
+- **Comparison threshold**: Adjust pixel difference sensitivity
+- **Browser options**: Modify Chrome launch arguments
+
 ## Limitations
 
-- Currently tests HTML content structure only (not visual appearance)
+- Tests visual appearance, not functionality
 - Requires manual baseline updates for intentional changes
 - Does not test interactive elements or JavaScript behavior
+- Screenshots are taken in headless Chrome only
 
 ## Future Enhancements
 
 Potential improvements:
-- Screenshot-based visual testing
-- Multiple viewport testing
+- Multiple viewport testing (mobile, tablet, desktop)
+- Cross-browser screenshot testing
 - Automated baseline updates for specific change types
 - Integration with visual diff tools
