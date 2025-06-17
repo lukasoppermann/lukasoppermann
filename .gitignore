@@ -19,3 +19,8 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# visual regression test screenshots (current and diff)
+tests/screenshots/current/
+tests/screenshots/diff/
+tests/screenshots/report.html

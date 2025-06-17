@@ -12,7 +12,10 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:snapshots": "npm run build && vitest run tests/snapshots.test.ts",
-    "test:snapshots:update": "npm run build && vitest run tests/snapshots.test.ts -u"
+    "test:snapshots:update": "npm run build && vitest run tests/snapshots.test.ts -u",
+    "test:visual": "node tests/visual-regression.js test",
+    "test:visual:baseline": "node tests/visual-regression.js baseline",
+    "test:visual:update": "node tests/visual-regression.js baseline"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.9",
@@ -30,11 +33,14 @@
     "astro-favicons": "^2.1.8",
     "jsdom": "^26.1.0",
     "node-html-parser": "^6.1.12",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
     "postcss": "^8.4.24",
     "postcss-custom-media": "^10.0.0",
     "postcss-nesting": "^12.0.0",
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.11.0",
+    "puppeteer": "^24.10.1",
     "sharp": "^0.32.6",
     "svgo": "^3.2.0",
     "vitest": "^3.2.3"
