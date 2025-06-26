@@ -3,6 +3,9 @@
   "type": "module",
   "version": "3.0.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -18,20 +21,18 @@
     "test:visual:update": "node tests/visual-regression.js baseline"
   },
   "dependencies": {
-    "@astrojs/mdx": "^3.1.9",
+    "@astrojs/mdx": "^4.3.0",
     "@fontsource/noto-serif": "^5.0.3",
     "@fontsource/source-sans-pro": "^5.0.3",
-    "@vercel/analytics": "^1.4.0",
-    "astro": "^4.16.12",
-    "dayjs": "^1.11.10",
-    "typescript": "^5.4.2"
+    "@vercel/analytics": "^1.5.0",
+    "astro": "^5.9.3",
+    "dayjs": "^1.11.13",
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@csstools/postcss-global-data": "^1.0.3",
-    "@types/node": "^24.0.1",
-    "astro-favicons": "^2.1.8",
-    "jsdom": "^26.1.0",
+    "astro-favicons": "^3.1.5",
     "node-html-parser": "^6.1.12",
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",
