@@ -3,19 +3,21 @@ import type { HTMLAttributes } from 'astro/types';
 import DateTime from './DateTime.astro';
 import Link from "./Link.astro";
 
-type talk = {
+type workExperience = {
   title: string
-  date: string | Date
-  event: string
+  company: string
+  startDate: string | Date
+  endDate?: string | Date
+  current?: boolean
 }
 
 interface Props extends HTMLAttributes<'ul'> {
   title?: string
-  items: talk[]
+  items: workExperience[]
   moreLink?: string
 }
 
-const { title = "Talks", items, moreLink, ...attr } = Astro.props;
+const { title = "Work Experience", items, moreLink, ...attr } = Astro.props;
 ---
 <style>
 ul {
@@ -40,7 +42,7 @@ ul {
       color: var(--on-background__low-emphasis);
       font: var(--typestyle__caption);
     }
-    .event {
+    .company {
       &:before {
         content: "•";
         display: inline-block;
@@ -58,14 +60,14 @@ ul {
     <li class="item">
       <h4>{item.title}</h4>
       <div class="details">
-        <DateTime class="date-time" format='MMM YYYY' inline from={item.date} />
-        <span class="event">{item.event}</span>
+        <DateTime class="date-time" format='MMM YYYY' inline from={item.startDate} to={item.endDate || (item.current ? "now" : undefined)} />
+        <span class="company">{item.company}</span>
       </div>
     </li>
   ))}
   {moreLink && (
     <li>
-      <Link style="link" icon href={moreLink} target="_blank">All talks</Link>
+      <Link style="link" icon href={moreLink} target="_blank">View full CV</Link>
     </li>
   )}
 </ul>

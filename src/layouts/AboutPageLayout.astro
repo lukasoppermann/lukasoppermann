@@ -3,9 +3,22 @@ import Layout from "./Layout.astro";
 import { Image } from "astro:assets";
 import Svg from "../components/Svg.astro";
 import Talks from "../components/Talks.astro";
+import WorkExperience from "../components/WorkExperience.astro";
+import { getCollection } from "astro:content";
 import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
 import profilePicture from '../assets/images/lukasoppermann_profile_2x.jpg';
+
 const {frontmatter} = Astro.props;
+
+// Fetch collections
+const talks = await getCollection("talks");
+const workExperience = await getCollection("work-experience");
+
+// Sort talks by date (most recent first)
+const sortedTalks = talks.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+// Sort work experience by start date (most recent first)
+const sortedWorkExperience = workExperience.sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime());
 
 
 ---
@@ -58,6 +71,16 @@ const {frontmatter} = Astro.props;
       grid-column: columns / span 5;
     }
   }
+  :global(.work-experience) {
+    grid-column: columns;
+    grid-row: 4;
+    margin-top: 48px;
+    @media (--min-desktop) {
+      margin-top: 48px;
+      grid-row: 3;
+      grid-column: columns / span 5;
+    }
+  }
   .main-content {
     grid-column: columns;
     grid-row: 2;
@@ -82,7 +105,8 @@ const {frontmatter} = Astro.props;
     />
     <div class="Header__background"></div>
   </section>
-  <Talks class="talks" items={frontmatter.talks} title="Speaking" moreLink="https://read.cv/lukasoppermann" />
+  <Talks class="talks" items={sortedTalks.map(talk => talk.data)} title="Speaking" moreLink="https://read.cv/lukasoppermann" />
+  <WorkExperience class="work-experience" items={sortedWorkExperience.map(work => work.data)} title="Work Experience" moreLink="https://read.cv/lukasoppermann" />
   <section class="main-content">
     <slot />
   </section>
