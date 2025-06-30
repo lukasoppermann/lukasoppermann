@@ -6,11 +6,11 @@ import Link from "./Link.astro";
 
 interface Props extends HTMLAttributes<'ul'> {
   title?: string
-  items: CollectionEntry<'talks'>[]
+  items: CollectionEntry<'work-experience'>[]
   moreLink?: string
 }
 
-const { title = "Talks", items, moreLink, ...attr } = Astro.props;
+const { title = "Work Experience", items, moreLink, ...attr } = Astro.props;
 ---
 <style>
 ul {
@@ -42,7 +42,7 @@ ul {
       color: var(--on-background__high-emphasis);
       margin-bottom: 4px;
     }
-    .event {
+    .company {
       color: var(--on-background__low-emphasis);
       font: var(--typestyle__caption);
       margin-bottom: 8px;
@@ -63,11 +63,11 @@ ul {
     return (
       <li class="item">
         <div class="date-column">
-          <DateTime class="date-time" format='MMM YYYY' inline from={item.data.date} />
+          <DateTime class="date-time" format='MMM YYYY' inline from={item.data.startDate} to={item.data.endDate || (item.data.current ? "now" : undefined)} />
         </div>
         <div class="content-column">
           <h4>{item.data.title}</h4>
-          <div class="event">{item.data.event}</div>
+          <div class="company">{item.data.company}</div>
           <div class="description">
             <Content />
           </div>
@@ -77,7 +77,7 @@ ul {
   })}
   {moreLink && (
     <li>
-      <Link style="link" icon href={moreLink} target="_blank">All talks</Link>
+      <Link style="link" icon href={moreLink} target="_blank">View full CV</Link>
     </li>
   )}
 </ul>
