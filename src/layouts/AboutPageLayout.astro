@@ -63,30 +63,18 @@ const sortedWorkExperience = workExperience.sort((a, b) => new Date(b.data.start
   }
   :global(.talks) {
     grid-column: columns;
-    grid-row: 3;
     margin-top: 48px;
-    @media (--min-desktop) {
-      margin-top: 0;
-      grid-row: 2;
-      grid-column: columns / span 5;
-    }
   }
   :global(.work-experience) {
     grid-column: columns;
-    grid-row: 4;
     margin-top: 48px;
-    @media (--min-desktop) {
-      margin-top: 48px;
-      grid-row: 3;
-      grid-column: columns / span 5;
-    }
   }
   .main-content {
     grid-column: columns;
     grid-row: 2;
     @media (--min-desktop) {
       grid-row: 2;
-      grid-column: column 7 / span 6;
+      grid-column: columns;
     }
   }
 </style>
@@ -105,9 +93,9 @@ const sortedWorkExperience = workExperience.sort((a, b) => new Date(b.data.start
     />
     <div class="Header__background"></div>
   </section>
-  <Talks class="talks" items={sortedTalks.map(talk => talk.data)} title="Speaking" moreLink="https://read.cv/lukasoppermann" />
-  <WorkExperience class="work-experience" items={sortedWorkExperience.map(work => work.data)} title="Work Experience" moreLink="https://read.cv/lukasoppermann" />
   <section class="main-content">
     <slot />
   </section>
+  <Talks class="talks" items={sortedTalks} title="Speaking" moreLink="https://www.linkedin.com/in/lukasoppermann/" />
+  <WorkExperience class="work-experience" items={sortedWorkExperience} title="Work Experience" moreLink="https://www.linkedin.com/in/lukasoppermann/" />
 </Layout>

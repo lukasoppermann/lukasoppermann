@@ -1,19 +1,12 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import type { CollectionEntry } from 'astro:content';
 import DateTime from './DateTime.astro';
 import Link from "./Link.astro";
 
-type workExperience = {
-  title: string
-  company: string
-  startDate: string | Date
-  endDate?: string | Date
-  current?: boolean
-}
-
 interface Props extends HTMLAttributes<'ul'> {
   title?: string
-  items: workExperience[]
+  items: CollectionEntry<'work-experience'>[]
   moreLink?: string
 }
 
@@ -28,27 +21,36 @@ ul {
     margin-bottom: 24px;
   }
   li {
-    margin-bottom: 16px;
+    margin-bottom: 32px;
+    &.item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
   }
-  .item {
+  .date-column {
+    color: var(--on-background__low-emphasis);
+    font: var(--typestyle__caption);
+  }
+  .content-column {
     h4 {
       font-family: var(--font-serif);
       font-weight: var(--font-serif-weight-regular);
       font-size: var(--ts-size-md);
       line-height: var(--ts-line-height-md);
       color: var(--on-background__high-emphasis);
-    }
-    .details {
-      color: var(--on-background__low-emphasis);
-      font: var(--typestyle__caption);
+      margin-bottom: 4px;
     }
     .company {
-      &:before {
-        content: "•";
-        display: inline-block;
-        margin: 0 8px;
-        color: var(--on-background__disabled);
-      }
+      color: var(--on-background__low-emphasis);
+      font: var(--typestyle__caption);
+      margin-bottom: 8px;
+    }
+    .description {
+      color: var(--on-background__medium-emphasis);
+      font: var(--typestyle__body-2);
+      line-height: 1.5;
     }
   }
 }
@@ -56,15 +58,23 @@ ul {
 
 <ul class:list={[attr.class]}>
   <h3>{title}</h3>
-  {items.map(item => (
-    <li class="item">
-      <h4>{item.title}</h4>
-      <div class="details">
-        <DateTime class="date-time" format='MMM YYYY' inline from={item.startDate} to={item.endDate || (item.current ? "now" : undefined)} />
-        <span class="company">{item.company}</span>
-      </div>
-    </li>
-  ))}
+  {items.map(async (item) => {
+    const { Content } = await item.render();
+    return (
+      <li class="item">
+        <div class="date-column">
+          <DateTime class="date-time" format='MMM YYYY' inline from={item.data.startDate} to={item.data.endDate || (item.data.current ? "now" : undefined)} />
+        </div>
+        <div class="content-column">
+          <h4>{item.data.title}</h4>
+          <div class="company">{item.data.company}</div>
+          <div class="description">
+            <Content />
+          </div>
+        </div>
+      </li>
+    );
+  })}
   {moreLink && (
     <li>
       <Link style="link" icon href={moreLink} target="_blank">View full CV</Link>
