@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'astro/types';
 import type { CollectionEntry } from 'astro:content';
 import DateTime from './DateTime.astro';
 import Link from "./Link.astro";
+import AboutItem from './AboutItem.astro';
 
 interface Props extends HTMLAttributes<'ul'> {
   title?: string
@@ -13,71 +14,26 @@ interface Props extends HTMLAttributes<'ul'> {
 const { title = "Talks", items, moreLink, ...attr } = Astro.props;
 ---
 <style>
-ul {
-  list-style: none;
   h3 {
     font: var(--typestyle__h5);
     color: var(--on-background__low-emphasis);
     margin-bottom: 24px;
   }
-  li {
-    margin-bottom: 32px;
-    &.item {
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-  }
-  .date-column {
-    color: var(--on-background__low-emphasis);
-    font: var(--typestyle__caption);
-  }
-  .content-column {
-    h4 {
-      font-family: var(--font-serif);
-      font-weight: var(--font-serif-weight-regular);
-      font-size: var(--ts-size-md);
-      line-height: var(--ts-line-height-md);
-      color: var(--on-background__high-emphasis);
-      margin-bottom: 4px;
-    }
-    .event {
-      color: var(--on-background__low-emphasis);
-      font: var(--typestyle__caption);
-      margin-bottom: 8px;
-    }
-    .description {
-      color: var(--on-background__medium-emphasis);
-      font: var(--typestyle__body-2);
-      line-height: 1.5;
-    }
-  }
-}
 </style>
 
-<ul class:list={[attr.class]}>
+<div class:list={[attr.class]}>
   <h3>{title}</h3>
   {items.map(async (item) => {
     const { Content } = await item.render();
-    return (
-      <li class="item">
-        <div class="date-column">
-          <DateTime class="date-time" format='MMM YYYY' inline from={item.data.date} />
-        </div>
-        <div class="content-column">
-          <h4>{item.data.title}</h4>
-          <div class="event">{item.data.event}</div>
-          <div class="description">
-            <Content />
-          </div>
-        </div>
-      </li>
-    );
+    return <AboutItem
+      from={item.data.date}
+      title={item.data.title}
+      event={item.data.event}
+      ><Content /></AboutItem>
   })}
   {moreLink && (
-    <li>
+    <div>
       <Link style="link" icon href={moreLink} target="_blank">All talks</Link>
-    </li>
+    </div>
   )}
-</ul>
+</div>
