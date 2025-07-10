@@ -1,0 +1,66 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Icon from "./Icon.astro";
+import type { IconTypes } from "./Icon.astro";
+import DateTime from "./DateTime.astro";
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+
+export interface Props {
+  from: Date | string;
+  to?: string;
+  title: string;
+  event?: string;
+  org?: string;
+  class?: string;
+}
+
+const { from, to, title, event, org, class: className, ...attr } = Astro.props;
+---
+
+<style>
+    .item {
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    :global(.date-time) {
+      color: var(--on-background__low-emphasis);
+      font: var(--typestyle__caption);
+    }
+    .content {
+      h4 {
+        font-family: var(--font-serif);
+        font-weight: var(--font-serif-weight-regular);
+        font-size: var(--ts-size-md);
+        line-height: var(--ts-line-height-md);
+        color: var(--on-background__high-emphasis);
+        margin-bottom: 0;
+        margin-top: 0;
+      }
+      .eventOrOrg {
+        color: var(--on-background__low-emphasis);
+        font: var(--typestyle__caption);
+      }
+      .description {
+        color: var(--on-background__medium-emphasis);
+        font: var(--typestyle__body-2);
+        line-height: 1.5;
+        & > :global(:first-child) {
+          margin-top: 8px;
+        }
+      }
+    }
+</style>
+
+<div class="item">
+  <DateTime class="date-time" format="MMM YYYY" inline from={from} to={to} />
+  <div class="content">
+    <h4>{title}</h4>
+    <div class="eventOrOrg">{event || org}</div>
+    <div class="description">
+      <slot />
+    </div>
+  </div>
+</div>
