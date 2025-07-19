@@ -6,18 +6,23 @@ import Talks from "../components/Talks.astro";
 import WorkExperience from "../components/WorkExperience.astro";
 import { getCollection } from "astro:content";
 import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
-import profilePicture from '../assets/images/lukasoppermann_profile_2x.jpg';
-import Paragraph from '../components/Paragraph.astro';
+import profilePicture from "../assets/images/lukasoppermann_profile_2x.jpg";
+import Paragraph from "../components/Paragraph.astro";
 
 // Fetch collections
 const talks = await getCollection("talks");
 const workExperience = await getCollection("work-experience");
 
 // Sort talks by date (most recent first)
-const sortedTalks = talks.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const sortedTalks = talks.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
 
 // Sort work experience by start date (most recent first)
-const sortedWorkExperience = workExperience.sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime());
+const sortedWorkExperience = workExperience.sort(
+  (a, b) =>
+    new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime()
+);
 ---
 
 <style>
@@ -62,41 +67,69 @@ const sortedWorkExperience = workExperience.sort((a, b) => new Date(b.data.start
   :global(.talks) {
     grid-column: columns;
     margin-top: 48px;
+    @media (--min-desktop) {
+      grid-column: 4 / 12;
+    }
   }
   :global(.work-experience) {
     grid-column: columns;
     margin-top: 48px;
+    @media (--min-desktop) {
+      grid-column: 4 / 12;
+    }
   }
   .main-content {
     grid-column: columns;
     grid-row: 2;
     @media (--min-desktop) {
       grid-row: 2;
-      grid-column: columns;
+      grid-column: 4 / 12;
     }
   }
 </style>
 
-<Layout title="About Lukas Oppermann — Design lead, systems designer and design token expert">
-<section class="Header--about Grid">
+<Layout
+  title="About Lukas Oppermann — Design lead, systems designer and design token expert"
+>
+  <section class="Header--about Grid">
     <Svg svgString={svgTitleDefault} class="svg-title svg-about--default" />
     <Image
-    class="profile-picture"
-    alt="Lukas Oppermann — design system and design token expert, product desiger and design lead"
-    src={profilePicture}
-    width={590}
-    height={600}
+      class="profile-picture"
+      alt="Lukas Oppermann — design system and design token expert, product desiger and design lead"
+      src={profilePicture}
+      width={590}
+      height={600}
     />
     <div class="Header__background"></div>
   </section>
   <section class="main-content">
-    <Paragraph type="intro">Hi, I’m Lukas, a lead product designer and creative technologist working on design systems.</Paragraph>
-  
-<Paragraph type="default">I believe that a simple solution is often the best for a complex problem. However, anybody who works in design knows, that simple and easy are two very different things.</Paragraph>
+    <Paragraph type="intro">
+      Hi, I’m Lukas, a lead product designer and creative technologist working
+      on design systems.
+    </Paragraph>
 
-<Paragraph type="default">Solving problems is my passion. It’s what gets me up in the morning and keeps me up at night — nothing gets me more excited than working on something I’ve never done before.</Paragraph>
+    <Paragraph type="default">
+      I believe that a simple solution is often the best for a complex problem.
+      However, anybody who works in design knows, that simple and easy are two
+      very different things.
+    </Paragraph>
+
+    <Paragraph type="default">
+      Solving problems is my passion. It’s what gets me up in the morning and
+      keeps me up at night — nothing gets me more excited than working on
+      something I’ve never done before.
+    </Paragraph>
   </section>
-  <Talks class="talks" items={sortedTalks} title="Speaking" moreLink="https://www.linkedin.com/in/lukasoppermann/" />
-  <WorkExperience class="work-experience" items={sortedWorkExperience} title="Work Experience" moreLink="https://www.linkedin.com/in/lukasoppermann/" />
-
+  <!-- <Talks
+    class="talks"
+    items={sortedTalks}
+    title="Speaking"
+    moreLink="https://www.linkedin.com/in/lukasoppermann/"
+  /> -->
+  <WorkExperience
+    class="work-experience"
+    items={sortedWorkExperience}
+    title="Work Experience"
+    moreLink="https://www.linkedin.com/in/lukasoppermann/"
+  />
 </Layout>

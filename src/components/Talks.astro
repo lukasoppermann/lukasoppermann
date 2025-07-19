@@ -1,39 +1,67 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
-import type { CollectionEntry } from 'astro:content';
-import DateTime from './DateTime.astro';
+import type { HTMLAttributes } from "astro/types";
+import type { CollectionEntry } from "astro:content";
+import DateTime from "./DateTime.astro";
 import Link from "./Link.astro";
-import AboutItem from './AboutItem.astro';
+import AboutItem from "./AboutItem.astro";
 
-interface Props extends HTMLAttributes<'ul'> {
-  title?: string
-  items: CollectionEntry<'talks'>[]
-  moreLink?: string
+interface Props extends HTMLAttributes<"ul"> {
+  title?: string;
+  items: CollectionEntry<"talks">[];
+  moreLink?: string;
 }
 
 const { title = "Talks", items, moreLink, ...attr } = Astro.props;
 ---
+
 <style>
   h3 {
     font: var(--typestyle__h5);
     color: var(--on-background__low-emphasis);
     margin-bottom: 24px;
   }
+  .more-link-container {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: start;
+    :global(.more-link) {
+      grid-column: 2;
+      justify-self: start;
+      width: auto;
+    }
+  }
 </style>
 
 <div class:list={[attr.class]}>
   <h3>{title}</h3>
-  {items.map(async (item) => {
-    const { Content } = await item.render();
-    return <AboutItem
-      from={item.data.date}
-      title={item.data.title}
-      event={item.data.event}
-      ><Content /></AboutItem>
-  })}
-  {moreLink && (
-    <div>
-      <Link style="link" icon href={moreLink} target="_blank">All talks</Link>
-    </div>
-  )}
+  {
+    items.map(async (item) => {
+      const { Content } = await item.render();
+      return (
+        <AboutItem
+          from={item.data.date}
+          title={item.data.title}
+          event={item.data.event}
+        >
+          <Content />
+        </AboutItem>
+      );
+    })
+  }
+  {
+    moreLink && (
+      <div class="more-link-container">
+        <Link
+          style="link"
+          class="more-link"
+          icon
+          href={moreLink}
+          target="_blank"
+        >
+          All talks
+        </Link>
+      </div>
+    )
+  }
 </div>
