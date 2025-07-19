@@ -1,9 +1,5 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import Icon from "./Icon.astro";
-import type { IconTypes } from "./Icon.astro";
 import DateTime from "./DateTime.astro";
-import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 
 export interface Props {
   from: Date | string;
@@ -49,6 +45,9 @@ const { from, to, title, event, org, class: className, ...attr } = Astro.props;
         line-height: 1.5;
         & > :global(:first-child) {
           margin-top: 8px;
+        }
+        & > :global(ul) {
+          padding-inline-start: 16px;
         }
       }
     }
