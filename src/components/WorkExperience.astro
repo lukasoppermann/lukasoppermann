@@ -36,8 +36,6 @@ const { title = "Work Experience", items, moreLink, ...attr } = Astro.props;
 <div class:list={[attr.class]}>
   <h3>{title}</h3>
   {items.map(async (item) => {
-    console.log(item.data);
-    
     const { Content } = await item.render();
     return <AboutItem
       from={item.data.startDate}
