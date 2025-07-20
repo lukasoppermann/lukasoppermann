@@ -54,7 +54,6 @@ const workExperienceCollection = defineCollection({
     company: z.string(),
     startDate: z.coerce.date(),
     endDate: z.coerce.date().optional(),
-    current: z.boolean().optional(),
   }),
 });
 
