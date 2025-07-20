@@ -6,7 +6,7 @@ const {...attr} = Astro.props;
 
 const activePage = Astro.url.pathname.replace(/^\//, '')
 
-import { email } from '../config';
+import { email, resumePdfLink } from '../config';
 const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20hear%20from%20you,%20how%20can%20I%20help?`
 ---
 <style>
@@ -117,7 +117,7 @@ const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20
   <a href="/" class:list={[(activePage === "" && 'is-active')]}><span>Home</span></a>
   <a href="/about" class:list={[(activePage === "about" && 'is-active')]}><span>About</span></a>
   <a
-    href='/resume_lukas_oppermann_01.8.pdf'
+    href={resumePdfLink}
     target='_blank'
     rel='noreferrer'
   ><span>Resume</span></a>
