@@ -25,7 +25,7 @@
     "@fontsource/noto-serif": "^5.0.3",
     "@fontsource/source-sans-pro": "^5.0.3",
     "@vercel/analytics": "^1.5.0",
-    "astro": "^5.9.3",
+    "astro": "^5.15.9",
     "dayjs": "^1.11.13",
     "typescript": "^5.8.3"
   },
