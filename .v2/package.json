@@ -14,7 +14,7 @@
     "@astrojs/image": "^0.14.1",
     "@astrojs/mdx": "^0.16.0",
     "@astrojs/sitemap": "^1.0.0",
-    "@astrojs/vercel": "^3.5.0",
+    "@astrojs/vercel": "^9.0.4",
     "@fontsource/noto-serif": "^5.0.3",
     "@fontsource/source-sans-pro": "^5.0.3",
     "astro": "^2.6.4",
