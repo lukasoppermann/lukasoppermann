@@ -44,6 +44,33 @@ describe('Medium Article Sync', () => {
       const articles = parseMediumRSS(emptyFeed);
       expect(articles).toHaveLength(0);
     });
+    
+    it('should extract excerpt from description without sentence ending', () => {
+      const feedWithoutPeriod = `<?xml version="1.0"?>
+        <rss><channel><item>
+          <title><![CDATA[Test]]></title>
+          <link>https://example.com/test</link>
+          <pubDate>Mon, 01 Jan 2024 12:00:00 GMT</pubDate>
+          <description><![CDATA[This is text without ending punctuation]]></description>
+        </item></channel></rss>`;
+      const articles = parseMediumRSS(feedWithoutPeriod);
+      expect(articles).toHaveLength(1);
+      // Should fall back to 150 char limit
+      expect(articles[0].excerpt).toBe('This is text without ending punctuation');
+    });
+    
+    it('should handle descriptions with only whitespace', () => {
+      const feedWithWhitespace = `<?xml version="1.0"?>
+        <rss><channel><item>
+          <title><![CDATA[Test]]></title>
+          <link>https://example.com/test</link>
+          <pubDate>Mon, 01 Jan 2024 12:00:00 GMT</pubDate>
+          <description><![CDATA[   ]]></description>
+        </item></channel></rss>`;
+      const articles = parseMediumRSS(feedWithWhitespace);
+      expect(articles).toHaveLength(1);
+      expect(articles[0].excerpt).toBe('');
+    });
   });
   
   describe('createSlug', () => {

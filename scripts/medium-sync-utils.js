@@ -35,7 +35,7 @@ export function parseMediumRSS(xmlText) {
       // Try to get first sentence, fallback to first 150 chars
       // Note: This is a simple heuristic that works for most cases but may not handle
       // complex punctuation (e.g., '...', 'Dr.', etc.) perfectly
-      const firstSentence = cleanText.match(/^[^.!?]+[.!?]/);
+      const firstSentence = cleanText.match(/^.*?[.!?](?=\s|$)/);
       excerpt = firstSentence ? firstSentence[0] : cleanText.substring(0, 150);
     }
     
