@@ -1,7 +1,8 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { parseMediumRSS, createSlug } from '../scripts/medium-sync-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,57 +26,6 @@ const mockRSSFeed = `<?xml version="1.0" encoding="UTF-8"?>
     </item>
   </channel>
 </rss>`;
-
-/**
- * Parse Medium RSS feed XML (copied from sync script for testing)
- */
-function parseMediumRSS(xmlText) {
-  const articles = [];
-  
-  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
-  const items = [...xmlText.matchAll(itemRegex)];
-  
-  for (const [, itemContent] of items) {
-    const titleMatch = itemContent.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
-    const title = titleMatch ? titleMatch[1] : null;
-    
-    const linkMatch = itemContent.match(/<link>(.*?)<\/link>/);
-    const url = linkMatch ? linkMatch[1].trim() : null;
-    
-    const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/);
-    const pubDate = pubDateMatch ? new Date(pubDateMatch[1]) : null;
-    
-    const descMatch = itemContent.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/);
-    let excerpt = '';
-    if (descMatch) {
-      const cleanText = descMatch[1].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-      const firstSentence = cleanText.match(/^[^.!?]+[.!?]/);
-      excerpt = firstSentence ? firstSentence[0] : cleanText.substring(0, 150);
-    }
-    
-    if (title && url && pubDate) {
-      articles.push({
-        title,
-        url,
-        published: pubDate.toISOString().split('T')[0],
-        excerpt,
-      });
-    }
-  }
-  
-  return articles;
-}
-
-/**
- * Create a slug from title (copied from sync script for testing)
- */
-function createSlug(title) {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .substring(0, 50);
-}
 
 describe('Medium Article Sync', () => {
   describe('parseMediumRSS', () => {
