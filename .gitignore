@@ -24,3 +24,6 @@ pnpm-debug.log*
 tests/screenshots/current/
 tests/screenshots/diff/
 tests/screenshots/report.html
+
+# Medium RSS feed cache
+scripts/medium-feed-cache.xml

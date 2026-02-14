@@ -14,9 +14,11 @@ const __dirname = path.dirname(__filename);
 
 const MEDIUM_FEED_URL = 'https://lukasoppermann.medium.com/feed';
 const ARTICLES_DIR = path.join(__dirname, '../src/content/articles');
+const CACHE_FILE = path.join(__dirname, 'medium-feed-cache.xml');
 
 /**
  * Fetch and parse Medium RSS feed
+ * Falls back to cached file if network fetch fails
  */
 async function fetchMediumFeed() {
   try {
@@ -28,10 +30,29 @@ async function fetchMediumFeed() {
     }
     
     const feedText = await response.text();
+    
+    // Save to cache file for future offline use
+    try {
+      await fs.writeFile(CACHE_FILE, feedText, 'utf-8');
+      console.log('✓ Cached feed for offline use\n');
+    } catch (e) {
+      // Non-critical error, continue
+    }
+    
     return parseMediumRSS(feedText);
   } catch (error) {
     console.error('Error fetching Medium feed:', error.message);
-    throw error;
+    
+    // Try to use cached file
+    try {
+      console.log('Attempting to use cached feed...');
+      const cachedFeed = await fs.readFile(CACHE_FILE, 'utf-8');
+      console.log('✓ Using cached feed\n');
+      return parseMediumRSS(cachedFeed);
+    } catch (cacheError) {
+      console.error('No cached feed available.');
+      throw error;
+    }
   }
 }
 
