@@ -18,7 +18,8 @@
     "test:snapshots:update": "npm run build && vitest run tests/snapshots.test.ts -u",
     "test:visual": "node tests/visual-regression.js test",
     "test:visual:baseline": "node tests/visual-regression.js baseline",
-    "test:visual:update": "node tests/visual-regression.js baseline"
+    "test:visual:update": "node tests/visual-regression.js baseline",
+    "sync-articles": "node scripts/sync-medium-articles.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
@@ -33,6 +34,7 @@
     "@astrojs/check": "^0.9.4",
     "@csstools/postcss-global-data": "^1.0.3",
     "astro-favicons": "^3.1.5",
+    "jsdom": "^28.0.0",
     "node-html-parser": "^6.1.12",
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",
