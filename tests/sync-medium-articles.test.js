@@ -71,6 +71,20 @@ describe('Medium Article Sync', () => {
       expect(articles).toHaveLength(1);
       expect(articles[0].excerpt).toBe('');
     });
+    
+    it('should handle special characters in titles and excerpts', () => {
+      const feedWithSpecialChars = `<?xml version="1.0"?>
+        <rss><channel><item>
+          <title><![CDATA[Test "Quotes" and \\Backslashes\\]]></title>
+          <link>https://example.com/test</link>
+          <pubDate>Mon, 01 Jan 2024 12:00:00 GMT</pubDate>
+          <description><![CDATA[Testing "quotes" and \\backslashes\\ in text.]]></description>
+        </item></channel></rss>`;
+      const articles = parseMediumRSS(feedWithSpecialChars);
+      expect(articles).toHaveLength(1);
+      expect(articles[0].title).toBe('Test "Quotes" and \\Backslashes\\');
+      expect(articles[0].excerpt).toBe('Testing "quotes" and \\backslashes\\ in text.');
+    });
   });
   
   describe('createSlug', () => {

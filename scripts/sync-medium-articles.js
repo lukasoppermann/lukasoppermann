@@ -103,10 +103,10 @@ async function createArticleFile(article) {
   }
   
   const frontmatter = `---
-title: "${article.title.replace(/"/g, '\\"')}"
+title: "${article.title.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"
 url: "${article.url}"
 published: "${article.published}"
-excerpt: "${article.excerpt.replace(/"/g, '\\"')}"
+excerpt: "${article.excerpt.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"
 ---`;
   
   await fs.writeFile(filePath, frontmatter, 'utf-8');
