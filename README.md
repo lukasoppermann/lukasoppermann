@@ -34,6 +34,22 @@ I am a staff design system designer working on GitHub's design system [primer](h
 
 This repository includes my personal portfolio website built with Astro.
 
+### Syncing Medium Articles
+
+To automatically fetch and add new articles from Medium to the website:
+
+```bash
+npm run sync-articles
+```
+
+This script:
+- Fetches articles from the Medium RSS feed at https://lukasoppermann.medium.com/feed
+- Compares them with existing articles in `src/content/articles/`
+- Creates markdown files for any new articles not already present
+- Preserves existing article files
+
+The script is idempotent - it's safe to run multiple times and will only add articles that don't already exist.
+
 ### Testing
 
 The website includes automated visual regression testing to catch unintended changes:

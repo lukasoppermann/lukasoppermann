@@ -34,6 +34,9 @@ const { article: {title, url, published, excerpt}, ...attr } = Astro.props
       .headline {
         margin-bottom: 0 !important;
       }
+      :global(p) {
+        margin-top: 4px;
+      }
     }
   }
 </style>

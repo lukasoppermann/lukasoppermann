@@ -1,0 +1,156 @@
+#!/usr/bin/env node
+
+/**
+ * Script to fetch articles from Medium RSS feed and create markdown files for articles
+ * that are not already present in the src/content/articles directory.
+ */
+
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { parseMediumRSS, createSlug } from './medium-sync-utils.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const MEDIUM_FEED_URL = 'https://lukasoppermann.medium.com/feed';
+const ARTICLES_DIR = path.join(__dirname, '../src/content/articles');
+const CACHE_FILE = path.join(__dirname, 'medium-feed-cache.xml');
+
+/**
+ * Fetch and parse Medium RSS feed
+ * Falls back to cached file if network fetch fails
+ */
+async function fetchMediumFeed() {
+  try {
+    console.log('Fetching Medium RSS feed...');
+    const response = await fetch(MEDIUM_FEED_URL);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch feed: ${response.status} ${response.statusText}`);
+    }
+    
+    const feedText = await response.text();
+    
+    // Save to cache file for future offline use
+    try {
+      await fs.writeFile(CACHE_FILE, feedText, 'utf-8');
+      console.log('✓ Cached feed for offline use\n');
+    } catch (e) {
+      // Non-critical error, continue
+    }
+    
+    return parseMediumRSS(feedText);
+  } catch (error) {
+    console.error('Error fetching Medium feed:', error.message);
+    
+    // Try to use cached file
+    try {
+      console.log('Attempting to use cached feed...');
+      const cachedFeed = await fs.readFile(CACHE_FILE, 'utf-8');
+      console.log('✓ Using cached feed\n');
+      return parseMediumRSS(cachedFeed);
+    } catch (cacheError) {
+      console.error('No cached feed available.');
+      throw error;
+    }
+  }
+}
+
+/**
+ * Get existing article URLs from markdown files
+ */
+async function getExistingArticleUrls() {
+  const existingUrls = new Set();
+  
+  try {
+    const files = await fs.readdir(ARTICLES_DIR);
+    
+    for (const file of files) {
+      if (!file.endsWith('.md')) continue;
+      
+      const filePath = path.join(ARTICLES_DIR, file);
+      const content = await fs.readFile(filePath, 'utf-8');
+      
+      // Extract URL from frontmatter
+      const urlMatch = content.match(/^url:\s*["']([^"']+)["']/m);
+      if (urlMatch) {
+        existingUrls.add(urlMatch[1]);
+      }
+    }
+  } catch (error) {
+    console.error('Error reading existing articles:', error.message);
+  }
+  
+  return existingUrls;
+}
+
+/**
+ * Create markdown file for an article
+ */
+async function createArticleFile(article) {
+  const slug = createSlug(article.title);
+  const filename = `${slug}.md`;
+  const filePath = path.join(ARTICLES_DIR, filename);
+  
+  // Check if file already exists
+  try {
+    await fs.access(filePath);
+    console.log(`  Skipping ${filename} (file already exists)`);
+    return false;
+  } catch {
+    // File doesn't exist, proceed to create it
+  }
+  
+  const frontmatter = `---
+title: "${article.title.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"
+url: "${article.url}"
+published: "${article.published}"
+excerpt: "${article.excerpt.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"
+---`;
+  
+  await fs.writeFile(filePath, frontmatter, 'utf-8');
+  console.log(`  ✓ Created ${filename}`);
+  return true;
+}
+
+/**
+ * Main execution
+ */
+async function main() {
+  console.log('Starting Medium article sync...\n');
+  
+  try {
+    // Fetch articles from Medium
+    const mediumArticles = await fetchMediumFeed();
+    console.log(`Found ${mediumArticles.length} articles on Medium\n`);
+    
+    // Get existing article URLs
+    const existingUrls = await getExistingArticleUrls();
+    console.log(`Found ${existingUrls.size} existing articles\n`);
+    
+    // Filter new articles
+    const newArticles = mediumArticles.filter(article => !existingUrls.has(article.url));
+    
+    if (newArticles.length === 0) {
+      console.log('✓ All Medium articles are already present. Nothing to do!');
+      return;
+    }
+    
+    console.log(`Found ${newArticles.length} new articles to add:\n`);
+    
+    // Create files for new articles
+    let created = 0;
+    for (const article of newArticles) {
+      const wasCreated = await createArticleFile(article);
+      if (wasCreated) created++;
+    }
+    
+    console.log(`\n✓ Successfully synced ${created} new articles!`);
+  } catch (error) {
+    console.error('\n✗ Error:', error.message);
+    process.exit(1);
+  }
+}
+
+main();
