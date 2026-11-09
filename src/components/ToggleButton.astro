@@ -1,13 +1,25 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
 
-export interface Props extends HTMLAttributes<'div'> {
+export interface Props extends HTMLAttributes<'button'> {
 	active?: boolean;
 }
 
 const { active, ...attr } = Astro.props;
 
 ---
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.NavigationToggle').forEach(button => {
+    const paths = button.querySelectorAll<SVGPathElement>('.menu-icon path');
+    paths.forEach(path => {
+      const length = path.getTotalLength();
+      const closedLength = Number(path.dataset.closedLength);
+      path.style.setProperty('--closed-dash', `${closedLength} ${length}`);
+      path.style.setProperty('--open-dash', `22 ${length}`);
+      path.style.setProperty('--open-offset', String(-(length - 22)));
+    });
+  });
+</script>
 <style>
   button {
     cursor: pointer;
@@ -15,28 +27,40 @@ const { active, ...attr } = Astro.props;
     width: 40px;
     background: transparent;
     border: none;
-    display: block;
+    display: grid;
     color: var(--on-background__high-emphasis);
     & * {
       pointer-events: none;
     }
-    & .disabled, & .enabled {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      width: 100%;
+    & .menu-icon {
+      grid-area: 1 / 1;
+      align-self: center;
+      justify-self: center;
     }
-    &:not(.is-active) .disabled {
-      display: none;
+  }
+
+  .menu-icon {
+    overflow: visible;
+    & path {
+      stroke-dasharray: var(--closed-dash, 24 100);
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset .8s ease-in-out, stroke-dasharray .8s ease-in-out;
     }
-    &.is-active .enabled {
-      display: none;
+    & .lower {
+      stroke-dasharray: var(--closed-dash, 16 100);
+    }
+  }
+  .is-active .menu-icon {
+    & path {
+      stroke-dasharray: var(--open-dash, 22 100);
+      stroke-dashoffset: var(--open-offset, 0);
     }
   }
 </style>
 
-<button class:list={[attr.class]} data-enabled={active}>
-  <div class="enabled"><slot name="enabled"></slot></div>
-  <div class="disabled"><slot name="disabled"></slot></div>
+<button {...attr} class:list={[attr.class, { 'is-active': active }]} type="button" aria-label="Menu" aria-expanded={active ?? false}>
+  <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path class="upper" data-closed-length="24" d="M0 9H24C28 9 28 1 24 1C22 1 21.5 2.5 19.778175 4.221825L4.221825 19.778175" />
+    <path class="lower" data-closed-length="16" d="M8 15H24C28 15 28 23 24 23C22 23 21.5 21.5 19.778175 19.778175L4.221825 4.221825" />
+  </svg>
 </button>
