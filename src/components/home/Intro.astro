@@ -239,6 +239,20 @@ import solvingProblemsSvg from '../../assets/svgs/solving-problems-is-my-passion
         grid-row: 4;
       }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      & .Header--intro__info,
+      & .Header--intro__headline,
+      & .Header--intro__slogan,
+      & .Header--intro__roles {
+        opacity: 1;
+        transform: none;
+      }
+
+      & .Header__background {
+        transform: none;
+      }
+    }
   }
 </style>
 
