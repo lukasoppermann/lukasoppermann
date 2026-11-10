@@ -193,7 +193,7 @@ describe('Homepage motion and experience link', () => {
       expect(crossed[0].end[1] - crossed[0].start[1]).toBeGreaterThan(0);
       expect(crossed[1].end[1] - crossed[1].start[1]).toBeLessThan(0);
       await page.click('.NavigationToggle');
-      expect(await page.$eval('nav', element => getComputedStyle(element).transitionDelay)).toBe('0.5s');
+      expect(await page.$eval('nav', element => getComputedStyle(element).transitionDelay)).toBe('0.32s');
       await page.waitForFunction(() =>
         getComputedStyle(document.querySelector('.menu-icon path')!).strokeDashoffset === '0px',
       );
@@ -204,6 +204,98 @@ describe('Homepage motion and experience link', () => {
         getComputedStyle(document.querySelector('.menu-icon path')!).strokeDashoffset === '0px',
       );
       expect(await sampleIcon()).toEqual(closed);
+    } finally {
+      await page.close();
+    }
+  });
+
+  it('closes text bottom-to-top with a quick fade before collapsing the panel', async () => {
+    const page = await browser.newPage();
+    try {
+      await page.setViewport({ width: 390, height: 844 });
+      await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'no-preference' }]);
+      await page.goto(url, { waitUntil: 'load' });
+      await page.click('.NavigationToggle');
+      await page.waitForFunction(() =>
+        [...document.querySelectorAll('nav.Navigation a')].every(link =>
+          getComputedStyle(link).opacity === '1'),
+      );
+      await page.click('.NavigationToggle');
+      const closing = await page.$$eval('nav.Navigation a', links => links.map(link => {
+        const style = getComputedStyle(link);
+        return { duration: style.transitionDuration, delay: style.transitionDelay };
+      }));
+      expect(closing.map(link => link.duration)).toEqual(Array(5).fill('0.12s, 0.2s, 0.25s'));
+      expect(closing.map(link => link.delay)).toEqual(['0.12s', '0.09s', '0.06s', '0.03s', '0s']);
+      await page.waitForFunction(() =>
+        [...document.querySelectorAll('nav.Navigation a')].every(link =>
+          getComputedStyle(link).opacity === '0'),
+      );
+      await page.waitForFunction(() =>
+        getComputedStyle(document.querySelector('nav.Navigation')!).transform === 'matrix(1, 0, 0, 0, 0, 0)',
+      );
+      await page.click('.NavigationToggle');
+      await page.click('.NavigationToggle');
+      await page.click('.NavigationToggle');
+      await page.waitForFunction(() =>
+        [...document.querySelectorAll('nav.Navigation a')].every(link =>
+          getComputedStyle(link).opacity === '1'),
+      );
+      expect(await page.$eval('nav.Navigation', nav => getComputedStyle(nav).transform))
+        .toBe('matrix(1, 0, 0, 1, 0, 0)');
+    } finally {
+      await page.close();
+    }
+  });
+
+  it.each([
+    [320, 568], [390, 844], [390, 1200], [768, 1024], [1023, 768], [667, 375], [320, 240],
+  ])('fits grouped mobile menu rows at %ix%i', async (width, height) => {
+    const page = await browser.newPage();
+    try {
+      await page.setViewport({ width, height });
+      await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+      await page.goto(url, { waitUntil: 'load' });
+      await page.evaluate(() => document.fonts.ready);
+      await page.click('.NavigationToggle');
+      const layout = await page.$eval('nav', nav => {
+        const bounds = nav.getBoundingClientRect();
+        return {
+          height: bounds.height,
+          scrollWidth: nav.scrollWidth,
+          clientWidth: nav.clientWidth,
+          scrollHeight: nav.scrollHeight,
+          links: [...nav.querySelectorAll('a')].map(link => {
+            const rect = link.getBoundingClientRect();
+            const span = link.querySelector('span')!.getBoundingClientRect();
+            return { top: rect.top - bounds.top, bottom: rect.bottom - bounds.top,
+              height: rect.height, textLeft: span.left, textRight: span.right,
+              textHeight: span.height, fontSize: parseFloat(getComputedStyle(link).fontSize) };
+          }),
+        };
+      });
+      expect(layout.height).toBeCloseTo(height - 64, 0);
+      expect(layout.scrollWidth).toBe(layout.clientWidth);
+      expect(layout.links).toHaveLength(5);
+      layout.links.forEach((link, index) => {
+        expect(link.height).toBeGreaterThanOrEqual(48);
+        expect(link.height).toBeLessThanOrEqual(112);
+        expect(link.textLeft).toBeGreaterThanOrEqual(16);
+        expect(link.textRight).toBeLessThanOrEqual(width - 16);
+        expect(link.textHeight).toBeLessThanOrEqual(link.height);
+        if (index) expect(link.top).toBeCloseTo(layout.links[index - 1].bottom, 1);
+      });
+      expect(layout.links[0].top).toBeCloseTo(24, 1);
+      if (height >= 844) {
+        expect(layout.height - layout.links[4].bottom).toBeGreaterThan(100);
+      }
+      if (height === 240) {
+        expect(layout.scrollHeight).toBeGreaterThan(layout.height);
+        await page.$eval('nav', nav => { nav.scrollTop = nav.scrollHeight; });
+        expect(await page.$eval('nav a:last-child', link =>
+          link.getBoundingClientRect().bottom <= window.innerHeight,
+        )).toBe(true);
+      }
     } finally {
       await page.close();
     }
