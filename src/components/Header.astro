@@ -1,13 +1,12 @@
 ---
 import Logo from './Logo.astro';
 import Navigation from './Navigation.astro';
-import Icon from './Icon.astro';
 import ToggleButton from './ToggleButton.astro';
 ---
 <style>
   header {
     --header-height: 64px;
-    --mobile-menu-height: calc(100vh - var(--header-height));
+    --mobile-menu-height: calc(100dvh - var(--header-height));
     height: var(--header-height);
     align-items: center;
     position: -webkit-sticky;
@@ -66,14 +65,12 @@ import ToggleButton from './ToggleButton.astro';
     navigationToggle.addEventListener('click', () => {
       navigationToggle.classList.toggle('is-active')
       nav.classList.toggle('is-open')
+      navigationToggle.setAttribute('aria-expanded', String(nav.classList.contains('is-open')))
     })
 </script>
 
 <header class="Grid">
   <Logo class="Logo" href="/" />
   <Navigation class="Navigation" />
-  <ToggleButton class="NavigationToggle">
-    <Icon slot="enabled" type="menu" />
-    <Icon slot="disabled" type="close" />
-  </ToggleButton>
+  <ToggleButton class="NavigationToggle" />
 </header>
