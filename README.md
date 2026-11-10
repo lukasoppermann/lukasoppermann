@@ -34,6 +34,23 @@ I am a staff design system designer working on GitHub's design system [primer](h
 
 This repository includes my personal portfolio website built with Astro.
 
+### Homepage project summaries
+
+Projects in `src/content/projects/` appear in filename order under Selected work,
+before the resume. Each project's frontmatter includes `challenge`, `role`, and
+`outcome` summaries that remain visible on mobile and desktop. Keep these short
+and use only supported outcome claims.
+
+The Markdown body contains the deeper process story and responsibilities under
+"Project details". Below 1024px this is a disclosure, initially collapsed when
+JavaScript is available. On desktop it is always visible with no collapse control.
+Resizing preserves the mobile disclosure state. Without JavaScript, details start
+open so all content remains available. The project link is always visible.
+Opening and closing animate height and content opacity over 420ms, with a
+rotating plus/minus stroke. The disclosure label stays fully visible.
+Reduced-motion preferences disable both animations. Process subheadings use
+level-five Markdown headings (`#####`) beneath the Project details heading.
+
 ### Syncing Medium Articles
 
 To automatically fetch and add new articles from Medium to the website:
