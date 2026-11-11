@@ -60,17 +60,37 @@ import ToggleButton from './ToggleButton.astro';
 
   // open nav on click
   const nav = document.querySelector('nav.Navigation')
-  const navigationToggle = document.querySelector('.NavigationToggle')
-  if (navigationToggle && nav)
+  const navigationToggle = document.querySelector<HTMLButtonElement>('.NavigationToggle')
+  if (navigationToggle && nav) {
+    const setMenuOpen = (isOpen: boolean) => {
+      nav.classList.toggle('is-open', isOpen)
+      navigationToggle.classList.toggle('is-active', isOpen)
+      navigationToggle.setAttribute('aria-expanded', String(isOpen))
+    }
+
     navigationToggle.addEventListener('click', () => {
-      navigationToggle.classList.toggle('is-active')
-      nav.classList.toggle('is-open')
-      navigationToggle.setAttribute('aria-expanded', String(nav.classList.contains('is-open')))
+      setMenuOpen(!nav.classList.contains('is-open'))
     })
+
+    document.addEventListener('keydown', (event: Event) => {
+      if (event instanceof KeyboardEvent && event.key === 'Escape' && nav.classList.contains('is-open')) {
+        setMenuOpen(false)
+        navigationToggle.focus()
+      }
+    })
+
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.matchMedia('(max-width: 1023px)').matches) {
+          setMenuOpen(false)
+        }
+      })
+    })
+  }
 </script>
 
 <header class="Grid">
   <Logo class="Logo" href="/" />
   <Navigation class="Navigation" />
-  <ToggleButton class="NavigationToggle" />
+  <ToggleButton class="NavigationToggle" aria-controls="site-navigation" />
 </header>

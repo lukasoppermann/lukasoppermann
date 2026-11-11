@@ -1,36 +1,6 @@
 ---
-import { parse } from "node-html-parser";
-import { optimize } from "svgo";
 import type { HTMLAttributes } from "astro/types";
-
-export type importedSvg = {
-  innerHTML: string;
-  attributes: { [key: string]: string };
-};
-
-export const cleanSvg = (svgString: string): importedSvg => {
-  const optimizedSvg = optimize(svgString, {
-    plugins: [
-      {
-        name: "cleanupAttrs",
-      },
-      {
-        name: "removeAttrs",
-        params: { attrs: "(stroke|fill)" },
-      },
-    ],
-  });
-  // parse
-  const root = parse(optimizedSvg.data);
-  const svg = root.querySelector("svg");
-  // return
-  // @ts-ignore
-  const { attributes, innerHTML } = svg;
-  return {
-    innerHTML,
-    attributes,
-  };
-};
+import { cleanSvg } from '../utilities/cleanSvg';
 
 interface Props extends HTMLAttributes<"svg"> {
   svgString: string;

@@ -7,7 +7,7 @@ const document = new DOMParser().parseFromString(html, 'text/html');
 const projects = [...document.querySelectorAll('#selected-work .Project')];
 
 describe('Selected work', () => {
-  it('shows the resume before selected work without a section heading or introduction links', () => {
+  it('shows the resume before selected work without restoring its removed heading section', () => {
     const work = document.querySelector('#selected-work')!;
     const resume = document.querySelector('#about-me')!;
     expect(resume.compareDocumentPosition(work) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();

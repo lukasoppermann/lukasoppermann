@@ -4,7 +4,8 @@ export interface Props extends HTMLAttributes<'nav'> {}
 
 const {...attr} = Astro.props;
 
-const activePage = Astro.url.pathname.replace(/^\//, '')
+const activePage = Astro.url.pathname.replace(/\/+$/, '') || '/'
+const isActive = (path: string) => activePage === path
 
 import { email, resumePdfLink } from '../config';
 const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20hear%20from%20you,%20how%20can%20I%20help?`
@@ -62,7 +63,8 @@ const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20
       overflow-x: hidden;
       overflow-y: auto;
       background: var(--background);
-      transition: transform .25s ease .32s;
+      visibility: hidden;
+      transition: transform .25s ease .32s, visibility 0s linear .57s;
       transform-origin: top;
       display: flex;
       justify-content: flex-start;
@@ -112,7 +114,8 @@ const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20
       }
       &.is-open {
         transform: scaleY(1);
-        transition: transform .75s ease 0s;
+        visibility: visible;
+        transition: transform .75s ease 0s, visibility 0s;
         & a {
           opacity: 1;
           transform: translate(0, 0);
@@ -135,15 +138,15 @@ const mailto = `mailto:${email.raw}?subject=Hey,%20what's up?&body=Great%20to%20
   }
 </style>
 
-<nav class:list={[attr.class]}>
-  <a href="/" class:list={[(activePage === "" && 'is-active')]}><span>Home</span></a>
-  <a href="/about" class:list={[(activePage === "about" && 'is-active')]}><span>About</span></a>
+<nav id="site-navigation" aria-label="Primary" class:list={[attr.class]}>
+  <a href="/" aria-current={isActive('/') ? 'page' : undefined} class:list={[isActive('/') && 'is-active']}><span>Home</span></a>
+  <a href="/about" aria-current={isActive('/about') ? 'page' : undefined} class:list={[isActive('/about') && 'is-active']}><span>About</span></a>
   <a
     href={resumePdfLink}
     target='_blank'
     rel='noreferrer'
   ><span>Resume</span></a>
-  <a href='/articles' class:list={[(activePage === "/articles" && 'is-active')]}><span>Writing</span></a>
+  <a href='/articles' aria-current={isActive('/articles') ? 'page' : undefined} class:list={[isActive('/articles') && 'is-active']}><span>Writing</span></a>
   <a
     href={mailto}
     target='_blank'

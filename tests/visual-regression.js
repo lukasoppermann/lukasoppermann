@@ -8,9 +8,10 @@
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
-import { join, dirname } from 'path';
+import { createServer } from 'http';
+import { extname, join, dirname, resolve, sep } from 'path';
 import { fileURLToPath } from 'url';
-import { spawn } from 'child_process';
+import { readFile } from 'fs/promises';
 import puppeteer from 'puppeteer';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
@@ -26,8 +27,7 @@ const config = {
   diffDir: join(__dirname, 'screenshots', 'diff'),
   viewport: { width: 1920, height: 1080 },
   distDir: join(dirname(__dirname), 'dist'),
-  serverPort: 4321,
-  serverHost: 'localhost',
+  serverHost: '127.0.0.1',
   pages: [
     { path: '/', name: 'homepage' },
     { path: '/about/', name: 'about' },
@@ -36,53 +36,63 @@ const config = {
   ]
 };
 
-// Start static file server
+// Start an isolated static server on an operating-system-selected port.
 function startServer() {
+  const server = createServer(async (request, response) => {
+    let pathname;
+    try {
+      pathname = decodeURIComponent(new URL(request.url ?? '/', 'http://localhost').pathname);
+    } catch {
+      response.writeHead(400).end('Invalid request path');
+      return;
+    }
+
+    const relativePath = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
+    const filePath = resolve(config.distDir, `.${relativePath}`);
+    if (filePath !== config.distDir && !filePath.startsWith(`${config.distDir}${sep}`)) {
+      response.writeHead(403).end('Forbidden');
+      return;
+    }
+
+    try {
+      const content = await readFile(filePath);
+      const contentTypes = {
+        '.css': 'text/css',
+        '.html': 'text/html',
+        '.js': 'text/javascript',
+        '.svg': 'image/svg+xml',
+        '.webp': 'image/webp',
+        '.woff': 'font/woff',
+        '.woff2': 'font/woff2',
+      };
+      response.writeHead(200, {
+        'Content-Type': contentTypes[extname(filePath)] ?? 'application/octet-stream',
+      }).end(content);
+    } catch {
+      response.writeHead(404).end('Not found');
+    }
+  });
+
   return new Promise((resolve, reject) => {
-    const server = spawn('python3', ['-m', 'http.server', '8080'], {
-      cwd: config.distDir,
-      stdio: ['pipe', 'pipe', 'pipe']
-    });
-    
-    const serverUrl = 'http://localhost:8080';
-    
-    const timeout = setTimeout(() => {
-      // If we reach here, assume server started successfully
-      resolve({ server, url: serverUrl });
-    }, 3000); // 3 second timeout - if no errors, assume success
-    
-    server.stdout.on('data', (data) => {
-      const output = data.toString();
-      console.log('Server output:', output);
-      
-      // Look for "Serving HTTP" message which indicates server is ready
-      if (output.includes('Serving HTTP')) {
-        clearTimeout(timeout);
-        resolve({ server, url: serverUrl });
+    server.once('error', reject);
+    server.listen(0, config.serverHost, () => {
+      const address = server.address();
+      if (!address || typeof address === 'string') {
+        reject(new Error('Expected the static server to bind to a TCP port'));
+        return;
       }
-    });
-    
-    server.stderr.on('data', (data) => {
-      const error = data.toString();
-      console.error('Server error:', error);
-      // If there's an error starting the server, reject
-      if (error.toLowerCase().includes('error')) {
-        clearTimeout(timeout);
-        reject(new Error(`Server error: ${error}`));
-      }
-    });
-    
-    server.on('error', (error) => {
-      clearTimeout(timeout);
-      reject(error);
-    });
-    
-    server.on('exit', (code) => {
-      clearTimeout(timeout);
-      reject(new Error(`Server exited with code ${code}`));
+      resolve({ server, url: `http://${config.serverHost}:${address.port}` });
     });
   });
 }
+
+const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+})[character]);
 
 // Ensure directories exist
 function ensureDirectories() {
@@ -241,29 +251,29 @@ function generateReport(results) {
         ${results.map(result => `
         <div class="test-case ${result.isDifferent ? 'fail' : 'pass'}">
             <div class="test-header">
-                <h3>${result.page}</h3>
+                <h3>${escapeHtml(result.page)}</h3>
                 <p><strong>Status:</strong> <span class="${result.isDifferent ? 'status-fail' : 'status-pass'}">${result.isDifferent ? '❌ FAILED' : '✅ PASSED'}</span></p>
-                <p><strong>Message:</strong> ${result.message}</p>
+                <p><strong>Message:</strong> ${escapeHtml(result.message)}</p>
                 ${result.pixelsDifferent ? `<p><strong>Pixels Different:</strong> ${result.pixelsDifferent} / ${result.totalPixels} (${result.percentDifferent}%)</p>` : ''}
             </div>
             <div class="test-content">
-                <p><strong>URL:</strong> <code>${result.url}</code></p>
+                <p><strong>URL:</strong> <code>${escapeHtml(result.url)}</code></p>
                 ${result.currentPath && existsSync(result.currentPath) ? `
                 <div class="image-comparison ${result.isDifferent && result.baselinePath && existsSync(result.baselinePath) ? (result.diffPath && existsSync(result.diffPath) ? '' : 'double') : 'single'}">
                     ${result.baselinePath && existsSync(result.baselinePath) ? `
                     <div class="image-section">
                         <h4>Baseline</h4>
-                        <img src="${result.baselinePath.replace(process.cwd(), '.')}" alt="Baseline screenshot" />
+                        <img src="${escapeHtml(result.baselinePath.replace(process.cwd(), '.'))}" alt="Baseline screenshot" />
                     </div>
                     ` : ''}
                     <div class="image-section">
                         <h4>Current</h4>
-                        <img src="${result.currentPath.replace(process.cwd(), '.')}" alt="Current screenshot" />
+                        <img src="${escapeHtml(result.currentPath.replace(process.cwd(), '.'))}" alt="Current screenshot" />
                     </div>
                     ${result.isDifferent && result.diffPath && existsSync(result.diffPath) ? `
                     <div class="image-section">
                         <h4>Diff</h4>
-                        <img src="${result.diffPath.replace(process.cwd(), '.')}" alt="Diff screenshot" />
+                        <img src="${escapeHtml(result.diffPath.replace(process.cwd(), '.'))}" alt="Diff screenshot" />
                     </div>
                     ` : ''}
                 </div>
@@ -296,71 +306,32 @@ async function main() {
   console.log('Visual Regression Testing (Screenshot Mode)');
   console.log('==========================================');
   
-  // Check if dist directory exists
+  if (mode !== 'test' && mode !== 'baseline') {
+    throw new Error(`Unknown visual regression mode: ${mode}`);
+  }
+
   if (!existsSync(config.distDir)) {
-    console.error('❌ dist directory not found. Please run "npm run build" first.');
-    process.exit(1);
+    throw new Error('dist directory not found. Please run "npm run build" first.');
   }
   
   ensureDirectories();
   
   let browser = null;
-  let serverProcess = null;
+  let server = null;
   let serverUrl = '';
   
   try {
     // Start the static file server
     console.log('Starting static file server...');
     const serverInfo = await startServer();
-    serverProcess = serverInfo.server;
+    server = serverInfo.server;
     serverUrl = serverInfo.url;
     
     console.log(`Server started at: ${serverUrl}`);
     
-    // Wait for server to be ready - just a simple delay
-    console.log('Waiting for server to be ready...');
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('Server should be ready now!');
-    
     // Launch browser
     console.log('Launching browser...');
-    browser = await puppeteer.launch({
-      executablePath: '/usr/bin/google-chrome',
-      headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-extensions',
-        '--disable-plugins',
-        '--disable-background-timer-throttling',
-        '--disable-backgrounding-occluded-windows',
-        '--disable-renderer-backgrounding',
-        '--disable-web-security',
-        '--disable-features=VizDisplayCompositor',
-        '--disable-ipc-flooding-protection',
-        '--disable-background-networking',
-        '--disable-sync',
-        '--disable-translate',
-        '--disable-default-apps',
-        '--disable-component-extensions-with-background-pages',
-        '--disable-background-downloads',
-        '--disable-software-rasterizer',
-        '--run-all-compositor-stages-before-draw',
-        '--disable-new-content-rendering-timeout',
-        '--disable-threaded-animation',
-        '--disable-threaded-scrolling',
-        '--disable-checker-imaging',
-        '--disable-image-animation-resync',
-        '--no-first-run',
-        '--no-default-browser-check',
-        '--disable-hang-monitor',
-        '--disable-prompt-on-repost',
-        '--disable-domain-reliability',
-        '--disable-background-media-suspend',
-        '--autoplay-policy=no-user-gesture-required'
-      ]
-    });
+    browser = await puppeteer.launch({ headless: true });
     
     const results = [];
     
@@ -449,31 +420,36 @@ async function main() {
       console.log('Now you can run "npm run test:visual" to compare against these baselines.');
     } else if (failed > 0) {
       console.log('❌ Visual regression tests failed!');
-      process.exit(1);
+      process.exitCode = 1;
     } else {
       console.log('✅ All visual regression tests passed!');
     }
     
   } finally {
-    // Cleanup
+    const cleanupTasks = [];
     if (browser) {
       console.log('Closing browser...');
-      await browser.close();
+      cleanupTasks.push(browser.close());
     }
     
-    if (serverProcess) {
+    if (server?.listening) {
       console.log('Stopping server...');
-      serverProcess.kill('SIGTERM');
-      
-      // Wait a bit for graceful shutdown
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Force kill if still running
-      if (!serverProcess.killed) {
-        serverProcess.kill('SIGKILL');
-      }
+      cleanupTasks.push(new Promise((resolve, reject) => {
+        server.close(error => error ? reject(error) : resolve());
+      }));
+    }
+
+    const cleanupResults = await Promise.allSettled(cleanupTasks);
+    const cleanupErrors = cleanupResults
+      .filter(result => result.status === 'rejected')
+      .map(result => result.reason);
+    if (cleanupErrors.length > 0) {
+      throw new AggregateError(cleanupErrors, 'Failed to clean up visual regression test resources');
     }
   }
 }
 
-main().catch(console.error);
+main().catch(error => {
+  console.error(error);
+  process.exitCode = 1;
+});

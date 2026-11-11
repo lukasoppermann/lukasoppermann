@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { parseMediumRSS, createSlug } from '../scripts/medium-sync-utils.js';
+import { createArticleFilename, parseMediumRSS, createSlug } from '../scripts/medium-sync-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -71,6 +71,34 @@ describe('Medium Article Sync', () => {
       expect(articles).toHaveLength(1);
       expect(articles[0].excerpt).toBe('');
     });
+
+    it('should parse escaped XML text and strip unsafe description markup', () => {
+      const feed = `<?xml version="1.0"?>
+        <rss><channel><item>
+          <title><![CDATA[Design &amp; tokens]]></title>
+          <link>https://example.com/article?a=1&amp;b=2</link>
+          <pubDate>Mon, 01 Jan 2024 12:00:00 GMT</pubDate>
+          <description><![CDATA[<p>A &amp; B.</p><script>doNotInclude()</script>]]></description>
+        </item></channel></rss>`;
+
+      expect(parseMediumRSS(feed)).toEqual([{
+        title: 'Design &amp; tokens',
+        url: 'https://example.com/article?a=1&b=2',
+        published: '2024-01-01',
+        excerpt: 'A & B.',
+      }]);
+    });
+
+    it('should reject malformed XML and skip invalid article URLs and dates', () => {
+      expect(() => parseMediumRSS('<rss><channel>')).toThrow(/Invalid RSS XML/);
+
+      const feed = `<?xml version="1.0"?>
+        <rss><channel>
+          <item><title>Unsafe</title><link>javascript:alert(1)</link><pubDate>Mon, 01 Jan 2024 12:00:00 GMT</pubDate></item>
+          <item><title>Bad date</title><link>https://example.com/bad-date</link><pubDate>not a date</pubDate></item>
+        </channel></rss>`;
+      expect(parseMediumRSS(feed)).toEqual([]);
+    });
     
     it('should handle special characters in titles and excerpts', () => {
       const feedWithSpecialChars = `<?xml version="1.0"?>
@@ -93,7 +121,7 @@ describe('Medium Article Sync', () => {
       expect(createSlug('Design Systems vs. AI')).toBe('design-systems-vs-ai');
       expect(createSlug('WCAG 2.1: Color Contrast!')).toBe('wcag-2-1-color-contrast');
     });
-    
+
     it('should handle special characters', () => {
       expect(createSlug('Article with "quotes" and \'apostrophes\'')).toBe('article-with-quotes-and-apostrophes');
       expect(createSlug('Article — with em-dash')).toBe('article-with-em-dash');
@@ -103,6 +131,21 @@ describe('Medium Article Sync', () => {
       const longTitle = 'This is a very long article title that should be truncated to a reasonable length for the filename';
       const slug = createSlug(longTitle);
       expect(slug.length).toBeLessThanOrEqual(50);
+    });
+  });
+
+  describe('createArticleFilename', () => {
+    it('should disambiguate colliding article titles without overwriting files', () => {
+      const usedFilenames = new Set(['same-title.md']);
+      const filename = createArticleFilename('Same title', 'https://example.com/second', usedFilenames);
+
+      expect(filename).toMatch(/^same-title-[a-f0-9]{8}\.md$/);
+      expect(usedFilenames.has(filename)).toBe(true);
+    });
+
+    it('should fail clearly when a title cannot produce a filename', () => {
+      expect(() => createArticleFilename('💡', 'https://example.com/article', new Set()))
+        .toThrow(/Cannot create an article filename/);
     });
   });
   

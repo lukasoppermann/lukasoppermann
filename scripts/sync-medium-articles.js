@@ -8,7 +8,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { parseMediumRSS, createSlug } from './medium-sync-utils.js';
+import { createArticleFilename, parseMediumRSS } from './medium-sync-utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,7 +24,7 @@ const CACHE_FILE = path.join(__dirname, 'medium-feed-cache.xml');
 async function fetchMediumFeed() {
   try {
     console.log('Fetching Medium RSS feed...');
-    const response = await fetch(MEDIUM_FEED_URL);
+    const response = await fetch(MEDIUM_FEED_URL, { signal: AbortSignal.timeout(15_000) });
     
     if (!response.ok) {
       throw new Error(`Failed to fetch feed: ${response.status} ${response.statusText}`);
@@ -37,12 +37,12 @@ async function fetchMediumFeed() {
       await fs.writeFile(CACHE_FILE, feedText, 'utf-8');
       console.log('✓ Cached feed for offline use\n');
     } catch (e) {
-      // Non-critical error, continue
+      console.warn('Could not cache the Medium feed:', e.message);
     }
     
     return parseMediumRSS(feedText);
   } catch (error) {
-    console.error('Error fetching Medium feed:', error.message);
+    console.error('Error fetching Medium feed:', error instanceof Error ? error.message : String(error));
     
     // Try to use cached file
     try {
@@ -51,7 +51,7 @@ async function fetchMediumFeed() {
       console.log('✓ Using cached feed\n');
       return parseMediumRSS(cachedFeed);
     } catch (cacheError) {
-      console.error('No cached feed available.');
+      console.error('No cached feed available:', cacheError.message);
       throw error;
     }
   }
@@ -60,56 +60,40 @@ async function fetchMediumFeed() {
 /**
  * Get existing article URLs from markdown files
  */
-async function getExistingArticleUrls() {
+async function getExistingArticles() {
   const existingUrls = new Set();
-  
-  try {
-    const files = await fs.readdir(ARTICLES_DIR);
-    
-    for (const file of files) {
-      if (!file.endsWith('.md')) continue;
-      
-      const filePath = path.join(ARTICLES_DIR, file);
-      const content = await fs.readFile(filePath, 'utf-8');
-      
-      // Extract URL from frontmatter
-      const urlMatch = content.match(/^url:\s*["']([^"']+)["']/m);
-      if (urlMatch) {
-        existingUrls.add(urlMatch[1]);
-      }
+  const files = await fs.readdir(ARTICLES_DIR);
+
+  for (const file of files) {
+    if (!file.endsWith('.md')) continue;
+
+    const filePath = path.join(ARTICLES_DIR, file);
+    const content = await fs.readFile(filePath, 'utf-8');
+    const urlMatch = content.match(/^url:\s*["']([^"']+)["']/m);
+    if (urlMatch) {
+      existingUrls.add(urlMatch[1]);
     }
-  } catch (error) {
-    console.error('Error reading existing articles:', error.message);
   }
-  
-  return existingUrls;
+
+  return { urls: existingUrls, filenames: new Set(files) };
 }
 
 /**
  * Create markdown file for an article
  */
-async function createArticleFile(article) {
-  const slug = createSlug(article.title);
-  const filename = `${slug}.md`;
+async function createArticleFile(article, usedFilenames) {
+  const filename = createArticleFilename(article.title, article.url, usedFilenames);
   const filePath = path.join(ARTICLES_DIR, filename);
-  
-  // Check if file already exists
-  try {
-    await fs.access(filePath);
-    console.log(`  Skipping ${filename} (file already exists)`);
-    return false;
-  } catch {
-    // File doesn't exist, proceed to create it
-  }
-  
+
+  // JSON-quoted strings are valid YAML scalars and correctly escape feed content.
   const frontmatter = `---
-title: "${article.title.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"
-url: "${article.url}"
-published: "${article.published}"
-excerpt: "${article.excerpt.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"
+title: ${JSON.stringify(article.title)}
+url: ${JSON.stringify(article.url)}
+published: ${JSON.stringify(article.published)}
+excerpt: ${JSON.stringify(article.excerpt)}
 ---`;
-  
-  await fs.writeFile(filePath, frontmatter, 'utf-8');
+
+  await fs.writeFile(filePath, frontmatter, { encoding: 'utf-8', flag: 'wx' });
   console.log(`  ✓ Created ${filename}`);
   return true;
 }
@@ -126,11 +110,15 @@ async function main() {
     console.log(`Found ${mediumArticles.length} articles on Medium\n`);
     
     // Get existing article URLs
-    const existingUrls = await getExistingArticleUrls();
-    console.log(`Found ${existingUrls.size} existing articles\n`);
+    const existingArticles = await getExistingArticles();
+    console.log(`Found ${existingArticles.urls.size} existing articles\n`);
     
     // Filter new articles
-    const newArticles = mediumArticles.filter(article => !existingUrls.has(article.url));
+    const newArticles = mediumArticles.filter(article => {
+      if (existingArticles.urls.has(article.url)) return false;
+      existingArticles.urls.add(article.url);
+      return true;
+    });
     
     if (newArticles.length === 0) {
       console.log('✓ All Medium articles are already present. Nothing to do!');
@@ -142,13 +130,13 @@ async function main() {
     // Create files for new articles
     let created = 0;
     for (const article of newArticles) {
-      const wasCreated = await createArticleFile(article);
+      const wasCreated = await createArticleFile(article, existingArticles.filenames);
       if (wasCreated) created++;
     }
     
     console.log(`\n✓ Successfully synced ${created} new articles!`);
   } catch (error) {
-    console.error('\n✗ Error:', error.message);
+    console.error('\n✗ Error:', error instanceof Error ? error.message : String(error));
     process.exit(1);
   }
 }
