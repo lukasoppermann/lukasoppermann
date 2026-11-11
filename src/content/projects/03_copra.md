@@ -1,6 +1,9 @@
 ---
 title: Rebranding digital patient management
 client: COPRA SYSTEMS
+challenge: Modernize a healthcare software brand and product without alienating existing customers.
+role: Led creative direction, the brand refresh, UX/UI, and the design system.
+outcome: A relaunched brand and a shared design system, with faster development cycles and a more coherent product experience.
 class: project-copra
 buttonLabel: View case study
 buttonTarget: _blank
@@ -19,10 +22,8 @@ endDate: "2016-12-01"
 image: /src/assets/images/Copra_2x.png
 imageAlt: Copra Systems Corporate Identity & Website
 ---
-###### Challenge
-Both the brand and the patient management software that Copra Software GmbH develops were in dire need of design attention. I was asked to refresh the corporate identity & website to better communicate their values without alienating existing customers.
-###### Solution
-After working closely together with the stakeholders from Copra to define the brand values & personality, I developed a new brand experience transforming the brand to be a state-of-the-art, honest & professional health software company. With this done I developed a design system to bring the new brand into the software as well.
-###### Results
-I successfully relaunch the brand with both, existing customers and potential clients, unanimously describing the new design as modern, friendly, reliable & professional. The implementation of the design systems improve the usability and user experience of the software and resulted in faster development cycles and a more coherent visual language.
+##### Defining the brand together
+I worked with Copra's stakeholders to define the brand's values and personality before refreshing the identity and website. The direction needed to communicate a modern, honest, and professional healthcare software company while remaining familiar to existing customers.
 
+##### Connecting brand and product
+I translated the new identity into a design system for the patient management software. Existing customers and potential clients described the refreshed brand as modern, friendly, reliable, and professional.

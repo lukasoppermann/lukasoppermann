@@ -6,20 +6,48 @@ import HomepageLink from '../components/home/HomepageLink.astro';
 import Project from '../components/home/Project.astro';
 import { getCollection } from "astro:content";
 const homepageLinks = await getCollection("homepageLinks");
-const projects = await getCollection("projects");
+const projects = (await getCollection("projects")).sort((a, b) => a.id.localeCompare(b.id));
 
 ---
-<style>
-
-</style>
-
 <Layout>
   <Intro />
+  <section class="Selected-work Grid" id="selected-work" aria-labelledby="selected-work-title">
+    <header>
+      <h2 id="selected-work-title">Selected work</h2>
+      <p>Design systems, digital products, and the teams behind them.</p>
+    </header>
+    <div class="Selected-work-projects">
+      {projects.map(async (project) => {
+        const { Content } = await project.render();
+        return <Project {...project.data} id={project.slug} Content={Content} />;
+      })}
+    </div>
+  </section>
   <Resume />
-  {projects.map(async (project) => {
-    const { Content}  = await project.render()
-    return <Project {...project.data} Content={Content}} />})}
   {homepageLinks.map(link => <HomepageLink {...link.data} />)}
 </Layout>
 
-
+<style>
+  .Selected-work {
+    grid-column: full-bleed;
+    margin-top: 56px;
+    scroll-margin-top: 96px;
+  }
+  .Selected-work > header,
+  .Selected-work-projects { grid-column: columns; min-width: 0; }
+  .Selected-work > header { margin-bottom: 24px; }
+  h2 {
+    margin: 0 0 8px;
+    font: var(--typestyle__h2);
+    color: var(--on-background__highest-emphasis);
+  }
+  header p {
+    margin: 0;
+    font: var(--typestyle__body--small);
+    color: var(--on-background__medium-emphasis);
+  }
+  @media (--min-tablet) {
+    .Selected-work { margin-top: 80px; }
+    .Selected-work > header { margin-bottom: 32px; }
+  }
+</style>

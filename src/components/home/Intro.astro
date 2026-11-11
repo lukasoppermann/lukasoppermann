@@ -1,11 +1,12 @@
 ---
 import Svg from '../Svg.astro';
+import Link from '../Link.astro';
 import solvingProblemsSvg from '../../assets/svgs/solving-problems-is-my-passion.svg?raw';
 ---
 
 <style>
   .Header--intro {
-    --max-grid-rows: 7;
+    --max-grid-rows: 8;
     grid-template-rows: auto;
     padding-bottom: 32px;
     grid-column: full-bleed;
@@ -225,6 +226,19 @@ import solvingProblemsSvg from '../../assets/svgs/solving-problems-is-my-passion
         grid-column: column 5 / span 4;
       }
     }
+    & .Header--intro__links {
+      grid-column: columns;
+      grid-row: 7;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 32px;
+      margin-top: 24px;
+      @media (--min-large) {
+        grid-row: 4;
+      }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       & .Header--intro__info,
@@ -264,5 +278,9 @@ import solvingProblemsSvg from '../../assets/svgs/solving-problems-is-my-passion
   <figure class="Header--intro__headline">
     <Svg svgString={solvingProblemsSvg} />
   </figure>
+  <nav class="Header--intro__links" aria-label="On this page">
+    <Link href="#selected-work" icon={true}>Selected work</Link>
+    <Link href="#about-me">About me</Link>
+  </nav>
   <div class="Header__background"></div>
 </section>

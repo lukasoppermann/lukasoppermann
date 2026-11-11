@@ -12,6 +12,7 @@ import Paragraph from "../Paragraph.astro";
     position: relative;
     margin-bottom: 80px;
     margin-top: 32px;
+    scroll-margin-top: 96px;
     &::after {
       position: absolute;
       content: "";
@@ -119,7 +120,7 @@ import Paragraph from "../Paragraph.astro";
 </style>
 
 
-<section class='Grid' role="main" aria-label="Resume">
+<section class='Grid' id="about-me" aria-label="About me and recent experience">
   <div class="resume--intro">
     <Headline level="4" margin="none">Hello — I’m Lukas</Headline>
     <Headline level="5">Design Lead & creative technologist</Headline>

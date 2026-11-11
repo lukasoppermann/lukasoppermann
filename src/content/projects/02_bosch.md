@@ -1,6 +1,9 @@
 ---
 title: Bringing biking into the future
 client: BOSCH
+challenge: Make fragmented eBike products easier to use without slowing down experienced riders.
+role: Led design direction, UX/UI, and the design system.
+outcome: 30% more weekly recurring web logins and a 2-star increase in app-store ratings.
 class: project-bosch
 buttonLabel: View case study
 buttonTarget: _blank
@@ -20,10 +23,8 @@ image: /src/assets/images/Nyon_2x.png
 imageAlt: Bosch eBike
 ---
 
-###### Challenge
-The digital products for the Bosch eBike had huge inconsistencies in their user experience. My research showed that especially new and occasional users had difficulties using them. My goal was to improve usability & consistency without negatively impacting power users.
-###### Solution
-In order to start shipping improvements quickly & iteratively I built a design system. This allowed to improve the user experience one element at a time. It also allowed to develop new features faster and with fewer bugs. Before implementing new features & changes I built prototypes to test with users. I then applied the learnings to my designs, before handing them to the developers.
-###### Results
-I successfully built a design system and developed new features with it. Additionally I refreshed all products with the design system, making them visually consistent and easy to use. This resulted in a 30% increase of weekly recurring web logins and a 2 star rating increase in the app stores.
+##### Improving the experience incrementally
+Research showed that new and occasional users struggled with inconsistencies across Bosch's digital eBike products. Rather than wait for a complete redesign, I built a design system that let us improve the experience one element at a time while supporting new features.
 
+##### Testing before implementation
+I prototyped changes and tested them with users before developer handoff. Those findings shaped the designs, helping us preserve familiar workflows for experienced riders while making the products more approachable for everyone else.

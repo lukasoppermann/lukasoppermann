@@ -1,372 +1,313 @@
 ---
-import DateTime from "../DateTime.astro";
-import Headline from "../Headline.astro";
-import Link from "../Link.astro";
+import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
-import Duration from "../Duration.astro";
-import List from "../List.astro";
+import DateTime from "../DateTime.astro";
+import Link from "../Link.astro";
 
-export type ProjectFrontmatter = {
-  client: string,
-  title: string,
-  class?: string,
-  buttonLabel?: string
-  buttonTarget?: string
-  url?: string,
-  responsibilities?: string[],
-  approach?: { [key: string]: string }[],
-  startDate: string,
-  endDate: string,
-  image: ImageMetadata,
-  imageAlt: string,
-}
+type Props = CollectionEntry<"projects">["data"] & {
+  id: string;
+  Content: Awaited<ReturnType<CollectionEntry<"projects">["render"]>>["Content"];
+};
 
-export interface Props extends ProjectFrontmatter {
-  Content: any;
-}
-
-const { 
-  class: className, 
-  Content,
-  title,
-  client,
-  image,
-  imageAlt,
-  buttonLabel,
-  buttonTarget,
-  url,
-  responsibilities,
-  startDate,
-  endDate
-  } = Astro.props;
-
+const {
+  id, class: className, title, client, challenge, role, outcome,
+  image, imageAlt, buttonLabel, buttonTarget, url,
+  responsibilities, startDate, endDate, Content,
+} = Astro.props;
 ---
+
+<article class:list={["Project", className]} aria-labelledby={`${id}-title`}>
+  <div class="Project-summary">
+    <div class="Project-meta">
+      <span>{client}</span>
+      <DateTime format="YYYY" from={startDate} to={endDate} />
+    </div>
+    <h3 id={`${id}-title`}>{title}</h3>
+    <dl class="Project-facts">
+      <div>
+        <dt>Challenge</dt>
+        <dd>{challenge}</dd>
+      </div>
+      <div>
+        <dt>My role</dt>
+        <dd>{role}</dd>
+      </div>
+      <div class="Project-outcome">
+        <dt>Outcome</dt>
+        <dd>{outcome}</dd>
+      </div>
+    </dl>
+  </div>
+  <div class="Project-image">
+    <Image src={image} alt={imageAlt} widths={[400, 800, 1200]} sizes="(min-width: 1024px) 50vw, 100vw" />
+  </div>
+  <div class="Project-story">
+    <h4 class="Project-details-heading">Project details</h4>
+    <details class="Project-details" open>
+      <summary>
+        Project details<span class="sr-only">: {client}</span>
+        <span class="Project-toggle" aria-hidden="true"></span>
+      </summary>
+      <div class="Project-process">
+        <div class="Project-narrative"><Content /></div>
+        <aside aria-label={`${client} responsibilities`}>
+          <h5>Responsibilities</h5>
+          <ul>{responsibilities.map(item => <li>{item}</li>)}</ul>
+        </aside>
+      </div>
+    </details>
+    <div class="Project-link">
+      <Link href={url} target={buttonTarget} icon={true}>{buttonLabel}</Link>
+    </div>
+  </div>
+</article>
+
+<script>
+  const desktop = window.matchMedia("(min-width: 1024px)");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  document.querySelectorAll<HTMLDetailsElement>(".Project-details").forEach(details => {
+    const summary = details.querySelector<HTMLElement>("summary")!;
+    const content = details.querySelector<HTMLElement>(".Project-process")!;
+    let mobileOpen = false;
+    let animation: Animation | undefined;
+    let contentAnimation: Animation | undefined;
+
+    const sync = () => {
+      animation?.cancel();
+      contentAnimation?.cancel();
+      animation = undefined;
+      contentAnimation = undefined;
+      delete details.dataset.animating;
+      details.open = desktop.matches || mobileOpen;
+      details.dataset.expanded = String(details.open);
+    };
+
+    summary.addEventListener("click", event => {
+      event.preventDefault();
+      if (desktop.matches) return;
+
+      mobileOpen = !mobileOpen;
+      if (reducedMotion.matches) {
+        sync();
+        return;
+      }
+
+      const startHeight = details.getBoundingClientRect().height;
+      const startOpacity = details.open ? getComputedStyle(content).opacity : "0";
+      animation?.cancel();
+      contentAnimation?.cancel();
+      details.open = true;
+      details.dataset.expanded = String(mobileOpen);
+      details.dataset.animating = "true";
+      const endHeight = mobileOpen
+        ? details.getBoundingClientRect().height
+        : summary.getBoundingClientRect().height;
+
+      animation = details.animate(
+        [{ height: `${startHeight}px` }, { height: `${endHeight}px` }],
+        { duration: 420, easing: "cubic-bezier(0.2, 0, 0, 1)" },
+      );
+      contentAnimation = content.animate(
+        [{ opacity: startOpacity }, { opacity: mobileOpen ? 1 : 0 }],
+        { duration: 420, easing: "ease-in-out", fill: "both" },
+      );
+      animation.onfinish = sync;
+    });
+
+    details.addEventListener("toggle", () => {
+      if (animation) return;
+      if (desktop.matches) {
+        if (!details.open) details.open = true;
+      } else {
+        mobileOpen = details.open;
+      }
+      details.dataset.expanded = String(details.open);
+    });
+    desktop.addEventListener("change", sync);
+    reducedMotion.addEventListener("change", sync);
+    sync();
+  });
+</script>
+
 <style>
-  section {
-    &.project-copra {
-      --project-color-tint: var(--copra-project-color);
+  .Project {
+    display: grid;
+    gap: 24px;
+    padding-block: 32px;
+    border-top: 1px solid var(--ui--medium-contrast);
+    color: var(--on-background__high-emphasis);
+  }
+  .Project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 20px;
+    margin: 0 0 12px;
+    font: var(--typestyle__body--small);
+    color: var(--on-background__medium-emphasis);
+  }
+  .Project-meta span {
+    font-weight: var(--font-weight--bold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  h3 {
+    margin: 0 0 24px;
+    max-width: 18ch;
+    font: var(--typestyle__h3);
+    text-wrap: balance;
+    color: var(--on-background__highest-emphasis);
+  }
+  .Project-facts {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+  }
+  dt {
+    margin-bottom: 4px;
+    font: var(--typestyle__h5);
+  }
+  dd {
+    margin: 0;
+    max-width: 48ch;
+    font: var(--typestyle__body--small);
+    color: var(--on-background__medium-emphasis);
+  }
+  .Project-outcome {
+    padding-left: 16px;
+    border-left: 3px solid var(--accent);
+  }
+  .Project-outcome dd {
+    font: var(--typestyle__body--bold);
+    color: var(--on-background__highest-emphasis);
+  }
+  .Project-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: var(--project-color-tint, var(--project-default-tint));
+  }
+  .Project-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .project-lab1886 { --project-color-tint: var(--lab1886-project-color); }
+  .project-lab1886 .Project-image {
+    background: linear-gradient(
+      to bottom,
+      transparent clamp(16px, 2.5vw, 32px),
+      var(--project-color-tint) 0
+    );
+  }
+  .project-bosch { --project-color-tint: var(--bosch-project-color); }
+  .project-copra { --project-color-tint: var(--copra-project-color); }
+  .project-figma { --project-color-tint: var(--design-tokens-project-color); }
+  .Project-story {
+    border-top: 1px solid var(--ui--fair-contrast);
+  }
+  .Project-details-heading { display: none; }
+  .Project-details[data-animating] { overflow: clip; }
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 52px;
+    cursor: pointer;
+    list-style: none;
+    font: var(--typestyle__h4);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { color: var(--on-background__highest-emphasis); }
+  summary:focus-visible {
+    outline: 2px solid var(--on-background__highest-emphasis);
+    outline-offset: 4px;
+  }
+  .Project-toggle {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+  }
+  .Project-toggle::before,
+  .Project-toggle::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+  }
+  .Project-toggle::before { width: 16px; height: 2px; top: 7px; }
+  .Project-toggle::after {
+    width: 2px;
+    height: 16px;
+    left: 7px;
+    transition: transform 420ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  details[open]:not([data-expanded="false"]) .Project-toggle::after {
+    transform: rotate(90deg);
+  }
+  .Project-process {
+    display: grid;
+    gap: 24px;
+    padding-block: 16px 24px;
+    font: var(--typestyle__body--small);
+    color: var(--on-background__medium-emphasis);
+  }
+  .Project-process :global(h5) {
+    margin: 0 0 8px;
+    font: var(--typestyle__h5);
+    color: var(--on-background__high-emphasis);
+  }
+  .Project-process :global(p) {
+    margin: 0 0 20px;
+    max-width: 65ch;
+  }
+  .Project-process :global(p:last-child) { margin-bottom: 0; }
+  .Project-process :global(a) { color: inherit; text-decoration: underline; }
+  .Project-process ul { margin: 0; padding-left: 20px; }
+  .Project-process li + li { margin-top: 6px; }
+  .Project-link { padding-top: 8px; }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .Project-toggle::after { transition: none; }
+  }
+  @media (--min-tablet) {
+    .Project { gap: 32px; padding-block: 48px; }
+    .Project-facts { grid-template-columns: 1fr 1fr; gap: 24px; }
+    .Project-outcome { grid-column: 1 / -1; }
+    .Project-image { aspect-ratio: 16 / 9; }
+    .Project-process { grid-template-columns: 2fr 1fr; gap: 48px; }
+  }
+  @media (--min-desktop) {
+    .Project {
+      grid-template-columns: 5fr 6fr;
+      column-gap: clamp(40px, 5vw, 80px);
+      align-items: center;
+      padding-block: 56px;
     }
-    &.project-lab1886 {
-      --image-offset: -75px;
-      --project-color-tint: var(--lab1886-project-color);
+    h3 { font: var(--typestyle__h2); margin-bottom: 28px; }
+    .Project-facts { grid-template-columns: 1fr; gap: 20px; }
+    .Project-image { aspect-ratio: 4 / 3; }
+    .Project-story { grid-column: 1 / -1; }
+    .Project-details-heading {
+      display: block;
+      margin: 20px 0 0;
+      font: var(--font-sans-style-normal) var(--font-sans-weight-bold)
+        var(--ts-size-lg) / var(--ts-line-height-lg) var(--font-sans);
     }
-    &.project-bosch {
-      --project-color-tint: var(--bosch-project-color);
-    }
-    &.project-figma {
-      --project-color-tint: var(--design-tokens-project-color);
-    }
-    padding-top: var(--image-offset, 0);
-    grid-column: full-bleed;
-    &:not(:first-child) {
-      margin-top: 40px;
-      @media (--min-tablet) {
-        margin-top: 64px;
-      }
-    }
-    & .Project-excerpt__info {
-      grid-column: full-bleed;
-      grid-row: 1;
-    }
-    & .Picture {
-      grid-row: 1;
-      grid-column: full-bleed;
-      max-width: 100%;
-      max-height: 100%;
-      z-index: 0;
-      background-color: var(--project-color-tint, var(--project-default-tint));
-      overflow: visible;
-      padding-top: var(--image-offset, 0);
-      @media (--min-tablet) {
-        grid-column: columns;
-        grid-row: 1;
-      }
-      @media (--min-desktop) {
-        grid-column: column 4 / column -1;
-        grid-row: 1 / 3;
-        & > span {
-          width: calc(100% - var(--column-gap)) !important;
-          margin-left: var(--column-gap) !important;
-        }
-      }
-      @media (--min-large) {
-        grid-column: column 3 / column -1;
-        grid-row: 1 / 3;
-      }
-      & > span {
-        overflow: visible !important;
-      }
-      & img {
-        margin-top: var(--image-offset, 0) !important;
-      }
-    }
-    & .Project-excerpt__title {
-      z-index: 100;
-      margin-top: 32px;
-      grid-row: 3;
-      grid-column: columns;
-      color: var(--on-background__highest-emphasis);
-      @media (--min-desktop) {
-        grid-row: 1;
-        grid-column: column / span 4;
-        width: calc(100% + var(--column-gap));
-      }
-      & .Project-card__client {
-        margin-top: 0;
-      }
-      & .h5 {
-        text-transform: uppercase;
-        letter-spacing: 0.2px;
-        &::before {
-          content: "";
-          display: inline-block;
-          position: relative;
-          flex: 0 0 auto;
-          align-self: center;
-          height: 2px;
-          width: 40px;
-          transform: translateY(-5px);
-          background: currentColor;
-          margin-right: 8px;
-        }
-      }
-    }
-    /* ====================================
-     * Responsibilities
-     */
-    & .Project-excerpt__responsibilities {
-      --list-indicator-color: var(--project-card--list-indicator-color, var(--on-surface-alternative__low-emphasis));
-      grid-row: 2;
-      grid-column: columns;
-      z-index: 50;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      background: var(--project-card--background, var(--surface-alternative));
-      color: var(--project-card--text-high-emphasis, var(--on-surface-alternative__high-emphasis));
-      padding: var(--column-gap);
-      margin: 0 0 32px calc(-0.5 * var(--column-gap));
-      width: calc(100% + var(--column-gap));
-      @media (--min-tablet) {
-        margin: 24px 0 32px;
-        width: 100%;
-      }
-      @media (--min-desktop) {
-        --list-font-style: var(--typestyle__body--small);
-        align-self: start;
-        flex-direction: column;
-        justify-content: stretch;
-        margin-left: 0;
-        grid-row: 2;
-        grid-column: column 1 / span 4;
-        padding: 32px;
-      }
-      @media (--min-large) {
-        --list-font-style: var(--typestyle__body);
-        padding: var(--column-gap);
-        margin-left: calc(-1 * var(--column-gap));
-        grid-column: column 1 / span 3;
-        width: calc(100% + var(--column-gap));
-      }
-      & .h6 {
-        width: 100%;
-        margin: 0;
-        margin-bottom: 8px;
-        color: var(--project-card--text-low-emphasis, --on-surface-alternative__low-emphasis);
-        &:not(::first-child) {
-          margin-top: 24px;
-        }
-      }
-      & .List {
-        width: 100%;
-        @media (--min-tablet) {
-          width: calc((100% - var(--column-gap)) / 2);
-        }
-        @media (--min-desktop) {
-          width: 100%;
-        }
-      }
-    }
-    /* ====================================
-     * Details
-     * challenge & solution
-     */
-    & .Project-excerpt__approach {
-      grid-row: 4;
-      grid-column: columns;
-      font: var(--typestyle__body);
-      color: var(--on-background__medium-emphasis);
-      margin-bottom: 8px;
-      & :global(h6) {
-        font: var(--typestyle__h6);
-        text-transform: uppercase;
-        color: var(--on-background__medium-emphasis);
-        margin: 0;
-        margin-bottom: 8px;
-        &:not(:first-child) {
-          margin-top: 24px;
-        }
-      }
-      @media (--min-desktop) {
-        margin-top: 32px;
-        grid-row: 3;
-        grid-column: column 7 / span 6;
-        & :global(p) {
-          padding-left: 8px;
-        }
-      }
-      @media (--min-large) {
-        grid-column: column 7 / span 6;
-      }
-    }
-    /* ==================================== */
-    & .Project-excerpt__approach,
-    & .Project-excerpt__time {
-      & .h5,
-      & h6 {
-        margin: 0;
-        &:not(:first-child) {
-          margin-top: 24px;
-        }
-      }
-      & :not(li) > p {
-        margin-top: 8px;
-      }
-    }
-    /* ====================================
-     * Data
-     */
-    & .Project-excerpt__data {
-      grid-row: 5;
-      border-bottom: 1px solid var(--ui--fair-contrast);
-      margin: 0;
-      margin-top: 40px;
-      padding-bottom: 32px;
-      display: flex;
-      flex-direction: column;
-      grid-column: columns;
-      @media (--min-tablet) {
-        justify-content: space-between;
-        flex-direction: row;
-      }
-      @media (--min-desktop) {
-        border-bottom: 0;
-        margin-top: 32px;
-        grid-row: 3;
-        grid-column: column 4 / span 3;
-        flex-direction: column;
-        justify-content: stretch;
-      }
-      @media (--min-large) {
-        padding-left: 8px;
-        grid-column: column 3 / span 4;
-      }
-      & .Project-excerpt__time {
-        display: flex;
-        align-items: stretch;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin: 0;
-        margin-bottom: 32px;
-        @media (--min-desktop) {
-          justify-content: stretch;
-        }
-        line-height: 100%;
-        & dd, & dt {
-          line-height: 20px;
-          display: flex;
-          align-items: center;
-        }
-        & dd,
-        & dt {
-          /* display: block; */
-          width: calc(((100% - var(--column-gap)) / 2));
-          &:nth-child(1n) {
-            order: 1;
-          }
-          &:nth-child(2n) {
-            order: 3;
-          }
-          &:nth-child(3n) {
-            order: 2;
-          }
-          &:nth-child(4n) {
-            order: 4;
-          }
-          @media (--min-desktop) {
-            width: 100%;
-            &:nth-child(1n) {
-              order: 1;
-            }
-            &:nth-child(2n) {
-              order: 1;
-            }
-            &:nth-child(3n) {
-              margin-top: 16px;
-            }
-            &:nth-child(4n) {
-              margin-top: 16px;
-            }
-            
-          }
-          @media (--min-large) {
-            width: calc(((100% - var(--column-gap)) / 2));
-          }
-        }
-        & dt {
-          & h6 {
-            color: var(--on-background__medium-emphasis);
-          }
-        }
-        & dd {
-          margin-left: 0;
-          font: var(--typestyle__body--bold);
-          color: var(--on-background__high-emphasis);
-        }
-      }
-      & .project-link {
-        align-self: flex-start;
-        justify-content: space-between;
-        min-width: 120px;
-      }
-    }
+    summary { display: none; }
+    .Project-link { padding-top: 4px; }
   }
 </style>
-
-<section class:list={['Project-excerpt Project-card Project-card__link Grid', className]} aria-label={`${client} — ${title}`}>
-  <div class="Picture" style={`aspect-ratio: ${image.width} / ${image.height};`}>
-    <Image
-      alt={imageAlt}
-      src={image}
-    />
-  </div>
-  <div class="Project-excerpt__title">
-    <Headline level="2" style="h5" class="Project-card__client">{client}</Headline>
-    <Headline level="3" style="h2" class="Project-card__title">{title}</Headline>
-  </div>
-  <div class="Project-excerpt__responsibilities">
-    <Headline style="h6">Responsibilities</Headline>
-    {responsibilities && 
-      <List items={responsibilities.slice(0, Math.ceil(responsibilities.length / 2))} />
-      <List items={responsibilities.slice(Math.ceil(responsibilities.length / 2))} />
-    }
-  </div>
-  <div class="Project-excerpt__approach"><Content /></div>
-  <div class="Project-excerpt__data">
-    <dl class="Project-excerpt__time">
-      <dt><Headline style="h6">Year</Headline></dt>
-      <dd>
-        <DateTime format="YYYY" from={startDate} to={endDate} />
-      </dd>
-      {endDate &&
-      <dt><Headline style="h6">Duration</Headline></dt>
-      <dd>
-        <Duration from={startDate} to={endDate} />
-      </dd>
-      }
-    </dl>
-    {url && <Link class='project-link' href={url} target={buttonTarget} style="button" icon={true}>{buttonLabel || "Open"}</Link>}
-  </div>
-</section>
