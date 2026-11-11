@@ -7,12 +7,14 @@ const document = new DOMParser().parseFromString(html, 'text/html');
 const projects = [...document.querySelectorAll('#selected-work .Project')];
 
 describe('Selected work', () => {
-  it('links from the introduction to work before the resume', () => {
-    expect(document.querySelector('.Header--intro a[href="#selected-work"]')).not.toBeNull();
+  it('shows the resume before selected work without a section heading or introduction links', () => {
     const work = document.querySelector('#selected-work')!;
     const resume = document.querySelector('#about-me')!;
-    expect(work.compareDocumentPosition(resume) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(document.querySelector('.Header--intro a[href="#about-me"]')).not.toBeNull();
+    expect(resume.compareDocumentPosition(work) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(work.getAttribute('aria-label')).toBe('Selected work');
+    expect(work.querySelector('header')).toBeNull();
+    expect(document.querySelector('.Header--intro a[href="#selected-work"]')).toBeNull();
+    expect(document.querySelector('.Header--intro a[href="#about-me"]')).toBeNull();
   });
 
   it('shows challenge, role, outcome, and a single image for every project', () => {

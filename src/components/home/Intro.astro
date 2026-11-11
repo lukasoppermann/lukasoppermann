@@ -1,6 +1,5 @@
 ---
 import Svg from '../Svg.astro';
-import Link from '../Link.astro';
 import solvingProblemsSvg from '../../assets/svgs/solving-problems-is-my-passion.svg?raw';
 ---
 
@@ -133,14 +132,14 @@ import solvingProblemsSvg from '../../assets/svgs/solving-problems-is-my-passion
       @media (--min-tablet) {
         grid-row: 2;
         margin-top: 64px;
-        &::before {
-          display: none;
-        }
       }
       @media (--min-desktop) {
         /* grid-row: 2; */
         grid-column: columns / span 11;
         margin-top: 96px;
+        &::before {
+          display: none;
+        }
       }
       @media (--min-large) {
         grid-column: columns / span 9;
@@ -226,20 +225,6 @@ import solvingProblemsSvg from '../../assets/svgs/solving-problems-is-my-passion
         grid-column: column 5 / span 4;
       }
     }
-    & .Header--intro__links {
-      grid-column: columns;
-      grid-row: 7;
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px 32px;
-      margin-top: 24px;
-      @media (--min-large) {
-        grid-row: 4;
-      }
-    }
-
     @media (prefers-reduced-motion: reduce) {
       & .Header--intro__info,
       & .Header--intro__headline,
@@ -278,9 +263,5 @@ import solvingProblemsSvg from '../../assets/svgs/solving-problems-is-my-passion
   <figure class="Header--intro__headline">
     <Svg svgString={solvingProblemsSvg} />
   </figure>
-  <nav class="Header--intro__links" aria-label="On this page">
-    <Link href="#selected-work" icon={true}>Selected work</Link>
-    <Link href="#about-me">About me</Link>
-  </nav>
   <div class="Header__background"></div>
 </section>
