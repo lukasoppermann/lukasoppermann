@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import DateTime from '../../components/DateTime.astro';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+
+  return articles
+    .filter((article) => article.body?.trim())
+    .map((article) => ({
+      params: { slug: article.slug },
+      props: { article },
+    }));
+}
+
+const { article } = Astro.props;
+const { Content } = await article.render();
+---
+
+<style>
+  .article {
+    grid-column: columns / span 6;
+    padding-top: 80px;
+    padding-bottom: 120px;
+    @media (--min-desktop) {
+      grid-column: columns / span 7;
+      padding-top: 120px;
+    }
+  }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 32px;
+  }
+  h1 {
+    margin: 0 0 16px;
+    color: var(--on-background__high-emphasis);
+    font: var(--typestyle__h1);
+  }
+  .published {
+    margin-bottom: 40px;
+    color: var(--on-background__low-emphasis);
+    font-size: var(--font-size--caption);
+  }
+  .article-content {
+    color: var(--on-background__high-emphasis);
+    font: var(--typestyle__body);
+    & :global(p),
+    & :global(ul),
+    & :global(ol),
+    & :global(blockquote),
+    & :global(pre) {
+      margin: 0 0 24px;
+    }
+    & :global(h2),
+    & :global(h3),
+    & :global(h4) {
+      margin: 40px 0 16px;
+      color: var(--on-background__high-emphasis);
+      font: var(--typestyle__h2);
+    }
+    & :global(img) {
+      max-width: 100%;
+      height: auto;
+    }
+    & :global(a) {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+  }
+  .original-link {
+    margin-top: 48px;
+    color: var(--on-background__medium-emphasis);
+  }
+</style>
+
+<Layout
+  title={`${article.data.title} — Lukas Oppermann`}
+  description={article.data.excerpt}
+  canonicalUrl={article.data.url}
+  ogType="article"
+>
+  <article class="article">
+    <a class="back-link" href="/articles">All articles</a>
+    <h1>{article.data.title}</h1>
+    <DateTime class="published" from={article.data.published} />
+    <div class="article-content">
+      <Content />
+    </div>
+    <p class="original-link">
+      Originally published on <a href={article.data.url} target="_blank" rel="noreferrer">Medium</a>.
+    </p>
+  </article>
+</Layout>
