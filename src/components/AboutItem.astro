@@ -7,10 +7,9 @@ export interface Props {
   title: string;
   event?: string;
   org?: string;
-  class?: string;
 }
 
-const { from, to, title, event, org, class: className, ...attr } = Astro.props;
+const { from, to, title, event, org } = Astro.props;
 ---
 
 <style>

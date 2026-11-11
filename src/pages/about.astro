@@ -2,7 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import Svg from "../components/Svg.astro";
-import Talks from "../components/Talks.astro";
 import WorkExperience from "../components/WorkExperience.astro";
 import { getCollection } from "astro:content";
 import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
@@ -10,13 +9,7 @@ import profilePicture from "../assets/images/lukasoppermann_profile_2x.jpg";
 import Paragraph from "../components/Paragraph.astro";
 
 // Fetch collections
-const talks = await getCollection("talks");
 const workExperience = await getCollection("work-experience");
-
-// Sort talks by date (most recent first)
-const sortedTalks = talks.sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-);
 
 // Sort work experience by start date (most recent first)
 const sortedWorkExperience = workExperience.sort(

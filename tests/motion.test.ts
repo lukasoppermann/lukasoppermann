@@ -14,7 +14,9 @@ describe('Homepage motion and experience link', () => {
     browser = await puppeteer.launch({ headless: true });
     server = createServer(async (request, response) => {
       const pathname = new URL(request.url ?? '/', 'http://localhost').pathname;
-      const path = join(process.cwd(), 'dist', pathname === '/' ? 'index.html' : pathname);
+      const relativePath = pathname === '/' ? 'index.html' :
+        pathname.endsWith('/') ? `${pathname}index.html` : pathname;
+      const path = join(process.cwd(), 'dist', relativePath);
       const contentTypes: Record<string, string> = {
         '.html': 'text/html',
         '.css': 'text/css',
@@ -69,6 +71,8 @@ describe('Homepage motion and experience link', () => {
       expect(intro.every(style => style.join(',') === '1,none,none')).toBe(true);
       expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
       expect(await page.$eval('main a[href="/about"]', link => link.textContent?.trim())).toBe('Experience');
+      expect(await page.$$('main')).toHaveLength(1);
+      expect(await page.$eval('nav a[href="/"]', link => link.getAttribute('aria-current'))).toBe('page');
       expect(await page.$$eval('nav a', links => links.some(
         link => link.textContent?.trim() === 'Resume' && link.getAttribute('href') !== '/about',
       ))).toBe(true);
@@ -76,6 +80,7 @@ describe('Homepage motion and experience link', () => {
       if (width === 390) {
         const menuTransform = () => page.$eval('nav', nav => getComputedStyle(nav).transform);
         const closedTransform = await menuTransform();
+        expect(await page.$eval('nav a', link => getComputedStyle(link).visibility)).toBe('hidden');
         await page.click('.NavigationToggle');
         expect(await menuTransform()).toBe('matrix(1, 0, 0, 1, 0, 0)');
         expect(await page.$$eval('nav a', links => links.every(link => {
@@ -94,6 +99,10 @@ describe('Homepage motion and experience link', () => {
         expect(await page.$$eval('.menu-icon path', paths =>
           paths.map(path => getComputedStyle(path).strokeDashoffset),
         )).toEqual(['0px', '0px']);
+        await page.click('.NavigationToggle');
+        await page.keyboard.press('Escape');
+        expect(await page.$eval('.NavigationToggle', button => button.getAttribute('aria-expanded'))).toBe('false');
+        expect(await page.$eval('.NavigationToggle', button => document.activeElement === button)).toBe(true);
       }
 
       const link = await page.$('main a[href="/about"]');
@@ -107,8 +116,24 @@ describe('Homepage motion and experience link', () => {
           linkWidth: element.getBoundingClientRect().width,
         };
       });
+
       expect(underline.duration).toBe('0s');
       expect(underline.width).toBeCloseTo(underline.linkWidth, 2);
+    } finally {
+      await page.close();
+    }
+  });
+
+  it.each([
+    ['/about/', '/about'],
+    ['/articles/', '/articles'],
+  ])('marks %s as the current navigation page', async (path, activeHref) => {
+    const page = await browser.newPage();
+    try {
+      await page.goto(`${url}${path}`, { waitUntil: 'load' });
+      expect(await page.$eval(`nav a[href="${activeHref}"]`, link =>
+        link.getAttribute('aria-current'),
+      )).toBe('page');
     } finally {
       await page.close();
     }
@@ -193,7 +218,8 @@ describe('Homepage motion and experience link', () => {
       expect(crossed[0].end[1] - crossed[0].start[1]).toBeGreaterThan(0);
       expect(crossed[1].end[1] - crossed[1].start[1]).toBeLessThan(0);
       await page.click('.NavigationToggle');
-      expect(await page.$eval('nav', element => getComputedStyle(element).transitionDelay)).toBe('0.32s');
+      expect(await page.$eval('nav', element => getComputedStyle(element).transitionDelay))
+        .toBe('0.32s, 0.57s');
       await page.waitForFunction(() =>
         getComputedStyle(document.querySelector('.menu-icon path')!).strokeDashoffset === '0px',
       );
@@ -233,6 +259,9 @@ describe('Homepage motion and experience link', () => {
       );
       await page.waitForFunction(() =>
         getComputedStyle(document.querySelector('nav.Navigation')!).transform === 'matrix(1, 0, 0, 0, 0, 0)',
+      );
+      await page.waitForFunction(() =>
+        getComputedStyle(document.querySelector('nav.Navigation')!).visibility === 'hidden',
       );
       await page.click('.NavigationToggle');
       await page.click('.NavigationToggle');

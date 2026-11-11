@@ -13,7 +13,9 @@ The visual regression testing system:
 
 ## Setup
 
-The testing system is already configured and ready to use. No additional setup is required.
+The test runner uses Puppeteer's installed Chrome browser. If the browser was not
+downloaded during dependency installation, install it with
+`npx puppeteer browsers install chrome`.
 
 ### Tested Pages
 
@@ -33,8 +35,8 @@ npm run test:visual
 ```
 
 This will:
-1. Start a local static file server to serve the built website
-2. Take screenshots of all pages using Chrome headless
+1. Start an isolated Node static server on an operating-system-selected loopback port
+2. Take screenshots of all pages using Puppeteer's headless Chrome
 3. Compare current screenshots with baselines
 4. Generate a detailed report
 5. Exit with error code 1 if differences are found
@@ -90,8 +92,8 @@ tests/
 ## How It Works
 
 1. **Build**: Ensure the website is built with `npm run build` (creates `dist/` directory)
-2. **Server**: Starts a local Python HTTP server to serve the static files
-3. **Screenshot**: Takes full-page screenshots using Chrome headless browser
+2. **Server**: Serves files from `dist/` through a local Node HTTP server; paths are constrained to the build directory
+3. **Screenshot**: Takes full-page screenshots using Puppeteer's headless Chrome
 4. **Compare**: Uses pixel-perfect comparison with configurable threshold
 5. **Diff**: Generates visual diff images highlighting changes
 6. **Report**: Creates HTML reports with side-by-side comparisons
@@ -133,7 +135,7 @@ The test script can be customized by editing `tests/visual-regression.js`:
 - **Viewport size**: Default is 1920x1080
 - **Pages to test**: Add/remove pages in the config
 - **Comparison threshold**: Adjust pixel difference sensitivity
-- **Browser options**: Modify Chrome launch arguments
+- **Browser**: Puppeteer selects its configured Chrome executable; avoid disabling browser security
 
 ## Limitations
 

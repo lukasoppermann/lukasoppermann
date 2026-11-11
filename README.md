@@ -61,13 +61,21 @@ npm run sync-articles
 
 This script:
 - Fetches articles from the Medium RSS feed at https://lukasoppermann.medium.com/feed
+- Parses and validates the RSS XML, HTTPS URLs, and publication dates
 - Compares them with existing articles in `src/content/articles/`
-- Creates markdown files for any new articles not already present
+- Creates safely escaped Markdown frontmatter for new articles and disambiguates filename collisions
 - Preserves existing article files
 
 The script is idempotent - it's safe to run multiple times and will only add articles that don't already exist.
 
 ### Testing
+
+Run the unit, build-snapshot, and browser behavior tests with:
+
+```bash
+npm run build
+npm run test:run
+```
 
 The website includes automated visual regression testing to catch unintended changes:
 
