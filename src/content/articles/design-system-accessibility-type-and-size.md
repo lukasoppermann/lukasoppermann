@@ -85,15 +85,15 @@ There are different approaches to line height, either based on a grid like the `
 
 ![](https://cdn-images-1.medium.com/max/1600/1*XDpFMgjiGkAyMwtdl8fFsg.png)
 
-**Multiplier
-**A good multiplier is roughly `1.35`–`1.5` for desktop¹⁸ and up to `1.6` or `1.7` on mobile¹⁸.
+**Multiplier**
+A good multiplier is roughly `1.35`–`1.5` for desktop¹⁸ and up to `1.6` or `1.7` on mobile¹⁸.
 
 Note that the optimal line height depends on the specific font. In most tools you can directly use the multiplier as a line-height. Otherwise calculate the pixel line-height by multiplying it `[font size in px] * [multiplier]`. The line-height may be a float value like `58.8px` this is fine. You can also round to the closest integer value `59px` in this case.
 
 While there is a lot of debate about the perfect line height, there is no such thing. Within a “acceptable” range it comes down to personal preference.
 
-**Grid
-**Within a baseline grid choose the line-height that is within your grid and closest to your desired multiplier¹⁹. Let’s assume you have an `8px` grid, a font size of `40px` and a desired modifier of `1.3`.
+**Grid**
+Within a baseline grid choose the line-height that is within your grid and closest to your desired multiplier¹⁹. Let’s assume you have an `8px` grid, a font size of `40px` and a desired modifier of `1.3`.
 `40px * 1.3 = 52px` so we can either use a line-height of `8px * 6 = 48px` or `8px * 7 = 56px`.
 
 For a headline `1.2` is still fine so you can choose which ever fits bet in your typographic system.

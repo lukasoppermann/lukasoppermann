@@ -279,14 +279,14 @@ Once merged packages for all other consumers will be generated.
 
 While this is an easy approach it has a few downsides:
 
-**Changes can’t be done via a PR outside of Figma
-**If somebody creates a PR on your repo without having changed the token in Figma first, you get out of sync. But updating Figma first is hard to enforce. You probably need to make sure PRs are approved by a designer who checks that the change was in Figma first.
+**Changes can’t be done via a PR outside of Figma**
+If somebody creates a PR on your repo without having changed the token in Figma first, you get out of sync. But updating Figma first is hard to enforce. You probably need to make sure PRs are approved by a designer who checks that the change was in Figma first.
 
-**Release coordination
-**This may not be a problem for you, but you need to make sure to publish the Figma changes and release the new package version at the same time. Otherwise, designers may use tokens that are not available to the developers yet.
+**Release coordination**
+This may not be a problem for you, but you need to make sure to publish the Figma changes and release the new package version at the same time. Otherwise, designers may use tokens that are not available to the developers yet.
 
-**Figma is neither the source of truth nor a real consumer
-**In this scenario Figma is in a weird position. While changes are made in Figma first, the real source of truth is still your git repo. But Figma is not integrated into the token flow either, as changes can never move from code to Figma.
+**Figma is neither the source of truth nor a real consumer**
+In this scenario Figma is in a weird position. While changes are made in Figma first, the real source of truth is still your git repo. But Figma is not integrated into the token flow either, as changes can never move from code to Figma.
 
 ### Code first
 
@@ -298,8 +298,8 @@ Once merged the packages will be generated and Figma as a consumer can import th
 
 I prefer the code first approach. In it Figma is just another consumer and has no special role in the process. It is very clean and robust with little that can go wrong. But it still comes with its own downside:
 
-**Changes must be imported into Figma
-**In the code first approach, you need to bring changes into Figma manually if you don’t use the API. While this is a quick process, it is easy to forget. This is especially true if someone else makes the changes to the repository.
+**Changes must be imported into Figma**
+In the code first approach, you need to bring changes into Figma manually if you don’t use the API. While this is a quick process, it is easy to forget. This is especially true if someone else makes the changes to the repository.
 
 The plugin I created at my job (internal) to import tokens stores the latest installed version in Figma. Every time you open it, it checks against the latest package on NPM. This way it shows you if an update is available. While this is not fool proof either, since you still need to run the plugin, at least it tells you if there is an update or not.
 

@@ -19,6 +19,20 @@ const isExternal = href.startsWith('http')
   a {
     color: var(--on-background__high-emphasis);
     display: block;
+    &:is(:hover, :focus-visible) {
+      .preview-title {
+        background-size: 100% 2px;
+      }
+    }
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 6px;
+    }
+    .preview-title {
+      background: linear-gradient(currentColor, currentColor) no-repeat left bottom;
+      background-size: 0% 2px;
+      transition: background-size 300ms var(--easeOutQuint);
+    }
     & {
       :global(.date-time) {
         margin-bottom: 0;
@@ -46,6 +60,6 @@ const isExternal = href.startsWith('http')
 
 <a class:list={[attr.class]} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noreferrer' : undefined} href={href}>
   <DateTime class="date-time" from={published} />
-  <Headline level="3" class="headline">{title}<Icon class="svg-icon" type="arrowRight" /></Headline>
+  <Headline level="3" class="headline"><span class="preview-title">{title}</span><Icon class="svg-icon" type="arrowRight" /></Headline>
   <Paragraph>{excerpt}</Paragraph>
 </a>
