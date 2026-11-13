@@ -5,8 +5,6 @@ published: "2022-10-27"
 excerpt: "Actionable tips on how to nail WCAG 2.1 color compliance"
 ---
 
----
-
 ![Cover illustration showing abstract mountains and a sunrise.](https://cdn-images-1.medium.com/max/1600/1*EMeNAt-OAwGVUSB0HicRCg.jpeg)
 
 ## What is WCAG

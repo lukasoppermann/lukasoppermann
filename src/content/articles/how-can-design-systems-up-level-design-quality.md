@@ -5,8 +5,6 @@ published: "2025-10-14"
 excerpt: "Exploring the role of design systems in achieving high-quality designs."
 ---
 
----
-
 ![](https://cdn-images-1.medium.com/max/2400/1*6Rh0zGDTf4qngoz-KGoOAg.png)
 
 Before we dive in, if you haven’t read my introductory post about design quality, you may want to do this first.

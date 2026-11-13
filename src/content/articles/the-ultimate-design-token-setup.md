@@ -5,8 +5,6 @@ published: "2024-09-25"
 excerpt: "Learn how to best set up design tokens to be a reliable tool for designers and developers in your company."
 ---
 
----
-
 Before we dive into this, let me tell you that there is no one right or perfect way to do design tokens. If what you are doing works for you — great. No need to change it. However, I do feel that one can learn from others and there are always things to improve.
 
 ![](https://cdn-images-1.medium.com/max/2400/1*hvX92Rptkd39EMm8GqU6Tg.jpeg)

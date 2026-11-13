@@ -5,8 +5,6 @@ published: "2023-06-28"
 excerpt: "How to use Figma variables to implement different design token strategies"
 ---
 
----
-
 ![Screenshot of Figma showing a complex component in light and dark mode using variables.](https://cdn-images-1.medium.com/max/2400/1*p2VfyhIuXeNL-ahEpJpk0A.jpeg)
 
 ## What are design tokens anyway?
@@ -71,7 +69,7 @@ At the moment styles have little unique use cases. I suggest using variables for
 
 For now, only simple tokens can be created, composite tokens are not available in Figma.
 
-You will also not be able to replicate tokens if you stray away from the `[w3c design token draft](https://lukasoppermann.medium.com/w3c-design-tokens-with-style-dictionary-f7ff5f2ba98c)`⁶ ⁵.
+You will also not be able to replicate tokens if you stray away from the [`w3c design token draft`](https://lukasoppermann.medium.com/w3c-design-tokens-with-style-dictionary-f7ff5f2ba98c)⁶ ⁵.
 
 That being said, tokens should still most of your needs for color, and size base values.
 

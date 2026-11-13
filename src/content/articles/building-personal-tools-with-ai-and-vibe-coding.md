@@ -5,8 +5,6 @@ published: "2025-11-04"
 excerpt: "Finding the pragmatic middle ground in tool development."
 ---
 
----
-
 ![A person programming a scrappy robot](https://cdn-images-1.medium.com/max/2400/1*18MPQsbCPPxaCqr5ahLmnA.jpeg)
 
 ## Personal Tools — Small, Useful, Disposable

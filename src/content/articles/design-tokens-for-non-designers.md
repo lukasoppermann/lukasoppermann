@@ -5,8 +5,6 @@ published: "2025-04-23"
 excerpt: "Understanding tokens from the perspective of developers, product owners, and project managers."
 ---
 
----
-
 ![](https://cdn-images-1.medium.com/max/2400/1*Nce0Ff_pkzGnkGBUOvZj0w.jpeg)
 
 Design tokens represent a fundamental shift in how we manage design decisions in modern software development. They serve as the smallest building blocks of visual design, storing and distributing design decisions across platforms and teams¹.

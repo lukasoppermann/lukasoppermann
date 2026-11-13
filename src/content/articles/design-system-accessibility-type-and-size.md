@@ -5,8 +5,6 @@ published: "2023-02-14"
 excerpt: "If you can’t see it, you can’t use it."
 ---
 
----
-
 Presbyopia¹ is a physiological condition which makes it harder to focus on close objects. This is a side-effect of your eyes ageing and currently effects about a quarter of the worlds population¹.
 
 According to some sources everyones eyesight worsens after the age of 4⁰². This is why it is important for us to design experiences that are accessible for people with farsightedness³. They are a huge part of nearly everybody’s audience.

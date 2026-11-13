@@ -5,8 +5,6 @@ published: "2023-06-01"
 excerpt: "Design tokens for data visualization and more"
 ---
 
----
-
 ![Cover illustration of two color collections](https://cdn-images-1.medium.com/max/2400/1*iufZJo352u2MWSrK7ig3sg.jpeg)
 
 Presentational tokens bring the color into data visualisation¹ and customizable UI elements. They are the colors used for labels or folders and similar elements. What makes them specific in design token terms is, that they don’t have a semantic meaning. Unlike *danger* and *success* color tokens, presentational color tokens are used for anything.

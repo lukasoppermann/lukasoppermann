@@ -5,8 +5,6 @@ published: "2023-08-24"
 excerpt: "The success of a design system depends more on stakeholder management than on the quality of its components."
 ---
 
----
-
 ![Cover picture with title and abstract shapes](https://cdn-images-1.medium.com/max/2400/1*tmRrq0iWplY5Gg44j8sMWA.jpeg)
 
 > ***Stakeholder management*** (also project stakeholder management) is a ***critical component*** in the ***successful delivery of any project***, program or activity.

@@ -5,8 +5,6 @@ published: "2024-01-05"
 excerpt: "Will artificial intelligence (AI) will take over design systems? And will AI have a place in a human-led design system workflow at all."
 ---
 
----
-
 ![source: https://starwars.fandom.com/wiki/C-series_protocol_droid](https://cdn-images-1.medium.com/max/2400/1*Ejunxc29KiyB1KFkowbdEA.jpeg)
 
 I first discussed this topic in a [meetup at dayone](https://www.linkedin.com/posts/dayone-gmbh_designsysteme-ki-grenzen-ugcPost-7115690926248742912-VPM1) together with [Sarrah Vesselov](https://www.linkedin.com/in/sarrahvesselov/). If you want, you can [view a recording of the talks](https://www.instagram.com/reel/Cx_MOE0MDrA/?igshid=MzRlODBiNWFlZA%3D%3D&utm_content=169623798). Due to the amount of interest, I decided to write some more about it. In this post, I will discuss whether artificial intelligence (AI) will take over design systems. I will also consider if AI has a place in a human-led design system workflow at all.

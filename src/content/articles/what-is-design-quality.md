@@ -5,8 +5,6 @@ published: "2025-07-28"
 excerpt: "A closer look at what designers should strive for and why it matters."
 ---
 
----
-
 ![Design quality: Aesthetics vs. Functionality](https://cdn-images-1.medium.com/max/2400/1*EMXncnpkwEqP84XiOsFfAQ.jpeg)
 
 I’ve been thinking about how we might define design quality in a way that’s clear and actionable. Without a tangible definition, it’s tough to evaluate or improve design objectively. So, let’s dive in and explore what design quality really means.

@@ -73,6 +73,13 @@ in `src/content/articles/`. Astro then creates `/articles/<slug>/`, and the
 index links to that page. Local copies identify Medium as the canonical source
 and link back to the original.
 
+Article pages use a centered reading column on desktop and the full content
+width on smaller screens. Write links as `[label](url)` (or ``[`code`](url)``),
+not with backticks around the entire link. Fenced code blocks must contain
+plain code, not Medium's editor HTML or syntax-highlighting markup.
+Section dividers use the site's subtle gray border style; do not start an
+article body with a divider beneath the publication date.
+
 The sync script is idempotent and preserves existing article files.
 
 ### Testing

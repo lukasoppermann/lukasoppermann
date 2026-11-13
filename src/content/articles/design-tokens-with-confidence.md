@@ -5,8 +5,6 @@ published: "2026-01-19"
 excerpt: "Why the W3C design token standard is your new foundation."
 ---
 
----
-
 ![Cover: Design Tokens with confidence](https://cdn-images-1.medium.com/max/2400/1*lECNuPy3Z-7fP4OwXUS2dA.jpeg)
 
 In this article you’ll learn why aligning with the official standard make your tokens work across the entire product spectrum and how you set up design tokens that follow the new standard.
@@ -320,7 +318,7 @@ I just released the latest version of my [style-dictionary-utils](https://github
 You need to install both style dictionary and [style-dictionary-utils](https://github.com/lukasoppermann/style-dictionary-utils).
 
 ```bash
-<span class="pre--content">npm i -D style-dictionary-utils style-dictionary</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">Bash<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+npm i -D style-dictionary-utils style-dictionary
 ```
 
 **Create the build process**
@@ -330,13 +328,56 @@ The build process is the same that you may already know from style dictionary, w
 Below is the full script for a simple process. We will run through the individual parts afterwards.
 
 ```typescript
-<span class="pre--content"><span class="hljs-comment">// file ./scripts/buildTokens.ts</span><br><span class="hljs-keyword">import</span> { <span class="hljs-title class_">StyleDictionary</span> <span class="hljs-keyword">as</span> <span class="hljs-variable constant_">SD</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"style-dictionary-utils"</span>;<br><span class="hljs-comment">// create a new style dictionary instance</span><br><span class="hljs-keyword">const</span> <span class="hljs-title class_">StyleDictionary</span> = <span class="hljs-keyword">new</span> <span class="hljs-title function_">SD</span>();<br><span class="hljs-comment">// extend with the transforms you need</span><br><span class="hljs-keyword">const</span> extendSd = <span class="hljs-keyword">await</span> <span class="hljs-title class_">StyleDictionary</span>.<span class="hljs-title function_">extend</span>({<br>  <span class="hljs-attr">source</span>: [<span class="hljs-string">"./src/tokens/**/*.json5"</span>, <span class="hljs-string">"./src/tokens/**/*.json"</span>],<br>  <span class="hljs-attr">platforms</span>: {<br>    <span class="hljs-attr">cssAdvanced</span>: {<br>      <span class="hljs-attr">prefix</span>: <span class="hljs-string">"PREFIX"</span>,<br>      <span class="hljs-attr">buildPath</span>: <span class="hljs-string">"./dist/css/"</span>,<br>      <span class="hljs-attr">preprocessors</span>: [<span class="hljs-string">"extract-letterSpacing-preprocessor"</span>],<br>      <span class="hljs-attr">transforms</span>: [<br>        <span class="hljs-string">"name/kebab"</span>,<br>        <span class="hljs-string">"w3c-color/css"</span>,<br>        <span class="hljs-string">"w3c-border/css"</span>,<br>        <span class="hljs-string">"dimension/css"</span>,<br>        <span class="hljs-string">"duration/css"</span>,<br>        <span class="hljs-string">"cubicBezier/css"</span>,<br>        <span class="hljs-string">"transition/css"</span>,<br>        <span class="hljs-string">"fontWeight/css"</span>,<br>        <span class="hljs-string">"fontFamily/css"</span>,<br>        <span class="hljs-string">"typography/css"</span>,<br>        <span class="hljs-string">"gradient/css"</span>,<br>        <span class="hljs-string">"shadow/css"</span>,<br>        <span class="hljs-string">"strokeStyle/css"</span>,<br>      ],<br>      <span class="hljs-attr">files</span>: [<br>        {<br>          <span class="hljs-attr">format</span>: <span class="hljs-string">"css/advanced"</span>,<br>          <span class="hljs-attr">destination</span>: <span class="hljs-string">"variables.css"</span>,<br>          <span class="hljs-attr">options</span>: {<br>            <span class="hljs-attr">outputReferences</span>: <span class="hljs-literal">true</span>,<br>          },<br>        },<br>      ],<br>    },<br>  },<br>});<br><span class="hljs-comment">// run the build</span><br>extendSd.<span class="hljs-title function_">cleanAllPlatforms</span>();<br>extendSd.<span class="hljs-title function_">buildAllPlatforms</span>();</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">TypeScript<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+// file ./scripts/buildTokens.ts
+import { StyleDictionary as SD } from "style-dictionary-utils";
+// create a new style dictionary instance
+const StyleDictionary = new SD();
+// extend with the transforms you need
+const extendSd = await StyleDictionary.extend({
+  source: ["./src/tokens/**/*.json5", "./src/tokens/**/*.json"],
+  platforms: {
+    cssAdvanced: {
+      prefix: "PREFIX",
+      buildPath: "./dist/css/",
+      preprocessors: ["extract-letterSpacing-preprocessor"],
+      transforms: [
+        "name/kebab",
+        "w3c-color/css",
+        "w3c-border/css",
+        "dimension/css",
+        "duration/css",
+        "cubicBezier/css",
+        "transition/css",
+        "fontWeight/css",
+        "fontFamily/css",
+        "typography/css",
+        "gradient/css",
+        "shadow/css",
+        "strokeStyle/css",
+      ],
+      files: [
+        {
+          format: "css/advanced",
+          destination: "variables.css",
+          options: {
+            outputReferences: true,
+          },
+        },
+      ],
+    },
+  },
+});
+// run the build
+extendSd.cleanAllPlatforms();
+extendSd.buildAllPlatforms();
 ```
 
 Create a style dictionary with the utils loaded by first importing `StyleDictionary` from the `style-dictionary-utils` package and run `new` to initialize an instance.
 
 ```typescript
-<span class="pre--content"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">StyleDictionary</span> <span class="hljs-keyword">as</span> <span class="hljs-variable constant_">SD</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"style-dictionary-utils"</span>;<br><span class="hljs-comment">// create a new style dictionary instance</span><br><span class="hljs-keyword">const</span> <span class="hljs-title class_">StyleDictionary</span> = <span class="hljs-keyword">new</span> <span class="hljs-title function_">SD</span>();</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">TypeScript<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+import { StyleDictionary as SD } from "style-dictionary-utils";
+// create a new style dictionary instance
+const StyleDictionary = new SD();
 ```
 
 The `prefix` is added before every token name in a css variable this would look like `--PREFIX-fgColor-link` for the token `fgColor.link`.
@@ -344,7 +385,12 @@ The `prefix` is added before every token name in a css variable this would look 
 The `buildPath` is where your converted files will be saved.
 
 ```typescript
-<span class="pre--content">{<br>  <span class="hljs-comment">//...</span><br>   <span class="hljs-attr">prefix</span>: <span class="hljs-string">"PREFIX"</span>, <span class="hljs-comment">// e.g. --blue-500 -> --PREFIX-blue-500</span><br>   <span class="hljs-attr">buildPath</span>: <span class="hljs-string">"./dist/css/"</span>,<br>  <span class="hljs-comment">//...</span><br>}</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">TypeScript<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+{
+  //...
+   prefix: "PREFIX", // e.g. --blue-500 -> --PREFIX-blue-500
+   buildPath: "./dist/css/",
+  //...
+}
 ```
 
 Afterwards you must extend the StyleDictionary with some or all of the transformers from the `style-dictionary-utils` package.
@@ -371,13 +417,21 @@ Lastly you need to define the output files. In our case, it is a single file cal
 By setting `outputReferences` to true, we will keep references to css variables (e.g. `var(--blue-500)`) that are part of our output. If set to false, all references will be flattened to raw values, like a hex code for colors.
 
 ```typescript
-<span class="pre--content"><span class="hljs-attr">files</span>: [<br> {<br>  <span class="hljs-attr">format</span>: “css/advanced”,<br>  <span class="hljs-attr">destination</span>: “variables.<span class="hljs-property">css</span>”,<br>  <span class="hljs-attr">options</span>: {<br>   <span class="hljs-attr">outputReferences</span>: <span class="hljs-literal">true</span>,<br>  },<br> },<br>],</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">TypeScript<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+files: [
+ {
+  format: “css/advanced”,
+  destination: “variables.css”,
+  options: {
+   outputReferences: true,
+  },
+ },
+],
 ```
 
 With this done, you should be able to convert all valid w3c tokens in `./src/tokens` by running the script:
 
 ```bash
-<span class="pre--content">node scripts/buildTokens.ts</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">Auto (Bash)<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+node scripts/buildTokens.ts
 ```
 
 ## Conclusion: The End of Fragmented Workflows

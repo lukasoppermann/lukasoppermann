@@ -5,10 +5,6 @@ published: "2024-06-27"
 excerpt: "Learn how to build a flexible and responsive design system in Figma using tokens and components."
 ---
 
----
-
----
-
 Our goal is to build a design library that represents our code components as closely as possible. We also want users to be able to change between themes and viewport sizes without having to manually set the properties on every component.
 
 ## Approach

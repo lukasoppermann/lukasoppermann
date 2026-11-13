@@ -5,8 +5,6 @@ published: "2023-11-06"
 excerpt: "A step-by-step guide to bring a design system into your company without losing your mind."
 ---
 
----
-
 ![Cover showing the title and a crane lifting a container](https://cdn-images-1.medium.com/max/2400/1*zg1-lY8CwARl-p_5yu1DEQ.jpeg)
 
 A design system can solve your problems with quality, speed, maintainability, and more. It is seen as a drop-in solution that everyone should have. But is this actually true?

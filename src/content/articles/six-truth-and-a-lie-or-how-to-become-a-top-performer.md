@@ -5,8 +5,6 @@ published: "2024-02-26"
 excerpt: "How to really make an impact at your job."
 ---
 
----
-
 ![Cover showing the title and a hand with fingers crossed](https://cdn-images-1.medium.com/max/2400/1*GpVKcUZTdIFp4uOt9qTmVA.jpeg)
 
 While I am not old yet, I am also not young anymore. I worked as a freelancer, a contractor, a consultant, a small business owner, and a full-time employee for years and in many different companies. Through this I gained experience in different work environments and company cultures.

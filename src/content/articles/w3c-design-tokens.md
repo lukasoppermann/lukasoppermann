@@ -5,8 +5,6 @@ published: "2022-12-07"
 excerpt: "Building your w3c standard design tokens with style dictionary"
 ---
 
----
-
 ![](https://cdn-images-1.medium.com/max/1600/1*3IaluWlBSuCJKMdz_YPm2w.jpeg)
 
 ## Who is the w3c and who is working on design tokens?
@@ -41,7 +39,9 @@ When storing design tokens in a file, you MUST use `json` notation (syntax). The
 > ***TIP:**** If you use vs code you can make it threat *`*.tokens*`* files like *`*json*`* files by adding the following line to you *`*settings.json*`
 
 ```json
-<span class="pre--content"><span class="hljs-attr">"files.associations"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"*.tokens"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"json"</span><br>  <span class="hljs-punctuation">}</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">Auto (JSON)<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+"files.associations": {
+    "*.tokens": "json"
+  }
 ```
 
 When sending tokens via `https` e.g. from an api you SHOULD use the MIME type `application/design-tokens+json`. If this is not possible you MAY use `application/json`.
@@ -51,7 +51,11 @@ When sending tokens via `https` e.g. from an api you SHOULD use the MIME type `a
 Every w3c design token MUST consist of at least a *name* and a *value¹⁰*. Standardised properties are all prefixed with a `$`¹¹. Currently only four properties are standardised: `$value`, `$description`, `$type` and `$extensions`⁹.
 
 ```json
-<span class="pre--content"><span class="hljs-attr">"token name"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"#224477"</span><br>  <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"color"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"$description"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"A description of this token"</span><br><span class="hljs-punctuation">}</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JSON<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+"token name": {
+  "$value": "#224477"
+  "$type": "color",
+  "$description": "A description of this token"
+}
 ```
 
 This helps us understand what to expect as an input when making w3c tokens work with style dictionary.
@@ -67,7 +71,17 @@ Where ever a design token value is use, you may use a reference¹² to a valid t
 A reference is defined¹² as a string of the *dot notation* of the path through the JSON tree wrapped in curly brackets. For example `"{tokens.color.red.500}"` would reference the following token in your `.json` file:
 
 ```json
-<span class="pre--content"><span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"tokens"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"color"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>      <span class="hljs-attr">"red"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>        <span class="hljs-attr">"500"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>          <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"..."</span><br>        <span class="hljs-punctuation">}</span><br>      <span class="hljs-punctuation">}</span><br>    <span class="hljs-punctuation">}</span><br>  <span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">}</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JSON<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+{
+  "tokens": {
+    "color": {
+      "red": {
+        "500": {
+          "$value": "..."
+        }
+      }
+    }
+  }
+}
 ```
 
 **Note:** Since a reference is a string we can use `500` as part of the dot notation, which would be invalid in javascript.
@@ -147,7 +161,16 @@ The composite types defined so far are:
 - lineHeight — floating point `string` like `"1.2"` without a unit. This is still being discussed and may be changed to use a custom lineHeight type in the future¹⁸.
 
 ```json
-<span class="pre--content"><span class="hljs-attr">"body"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"typography"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"fontFamily"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Noto Sans"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"fontSize"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"{font.size.default}"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"fontWeight"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"700"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"letterSpacing"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0.1px"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"lineHeight"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1.2"</span><br>  <span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">}</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JSON<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+"body": {
+  "$type": "typography",
+  "$value": {
+    "fontFamily": "Noto Sans",
+    "fontSize": "{font.size.default}",
+    "fontWeight": "700",
+    "letterSpacing": "0.1px",
+    "lineHeight": "1.2"
+  }
+}
 ```
 
 ### [Shadow](https://design-tokens.github.io/community-group/format/#shadow)
@@ -165,7 +188,16 @@ There is an ongoing discussion on the shadow specs, especially how *inset* shado
 - spread — `dimension`
 
 ```json
-<span class="pre--content"><span class="hljs-attr">"dropShadow"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"shadow"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"color"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"{color.black.005}"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"offsetX"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0px"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"offsetY"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"1px"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"blur"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2px"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"spread"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0px"</span><br>  <span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">}</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JSON<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+"dropShadow": {
+  "$type": "shadow",
+  "$value": {
+    "color": "{color.black.005}",
+    "offsetX": "0px",
+    "offsetY": "1px",
+    "blur": "2px",
+    "spread": "0px"
+  }
+}
 ```
 
 ### [Border](https://design-tokens.github.io/community-group/format/#border)
@@ -176,10 +208,28 @@ There is an ongoing discussion on the shadow specs, especially how *inset* shado
 
 - color — `color`
 - width — `dimension`
-- style — `[stroke style string](https://design-tokens.github.io/community-group/format/#string-value)`²⁰ or *stroke style token*
+- style — [`stroke style string`](https://design-tokens.github.io/community-group/format/#string-value)²⁰ or *stroke style token*
 
 ```json
-<span class="pre--content"><span class="hljs-attr">"focusOutline"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"border"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"color"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"{color.focus}"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"width"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2px"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"style"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"solid"</span><br>  <span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"imageDrop"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"border"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"color"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"{color.gray.400}"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"width"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2px"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"style"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>      <span class="hljs-attr">"dashArray"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"0.5rem"</span><span class="hljs-punctuation">,</span> <span class="hljs-string">"0.25rem"</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">"lineCap"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"round"</span><br>    <span class="hljs-punctuation">}</span><br>  <span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">}</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JSON<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+"focusOutline": {
+  "$type": "border",
+  "$value": {
+    "color": "{color.focus}",
+    "width": "2px",
+    "style": "solid"
+  }
+},
+"imageDrop": {
+  "$type": "border",
+  "$value": {
+    "color": "{color.gray.400}",
+    "width": "2px",
+    "style": {
+      "dashArray": ["0.5rem", "0.25rem"],
+      "lineCap": "round"
+    }
+  }
+}
 ```
 
 ### [Gradient](https://design-tokens.github.io/community-group/format/#gradient)
@@ -192,7 +242,26 @@ There is an ongoing discussion on the shadow specs, especially how *inset* shado
 - position — `number`
 
 ```json
-<span class="pre--content"><span class="hljs-attr">"gradients"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"position"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"end"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>      <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><br>    <span class="hljs-punctuation">}</span><br>  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"linear"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"gradient"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">{</span><br>        <span class="hljs-attr">"color"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"#0000ff"</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">"position"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><br>      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-punctuation">{</span><br>        <span class="hljs-attr">"color"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"{color.blue}"</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">"position"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"{gradients.position.end}"</span><br>      <span class="hljs-punctuation">}</span><br>    <span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">}</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JSON<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+"gradients": {
+  "position": {
+    "end": {
+      "$value": 1
+    }
+  },
+  "linear": {
+    "$type": "gradient",
+    "$value": [
+      {
+        "color": "#0000ff",
+        "position": 0
+      },
+      {
+        "color": "{color.blue}",
+        "position": "{gradients.position.end}"
+      }
+    ]
+  }
+}
 ```
 
 ### [Transition](https://design-tokens.github.io/community-group/format/#transition)
@@ -206,7 +275,14 @@ There is an ongoing discussion on the shadow specs, especially how *inset* shado
 - timingFunction — `cubicBezier`
 
 ```json
-<span class="pre--content"><span class="hljs-attr">"easeInAndOut"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"transition"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"duration"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"300ms"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"delay"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0ms"</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"timingFunction"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-number">0.4</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.6</span><span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">]</span><br>  <span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">}</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JSON<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+"easeInAndOut": {
+  "$type": "transition",
+  "$value": {
+    "duration": "300ms",
+    "delay": "0ms",
+    "timingFunction": [0.4, 0, 0.6, 1]
+  }
+}
 ```
 
 ### [Stroke style](https://design-tokens.github.io/community-group/format/#stroke-style)
@@ -225,7 +301,23 @@ or
 - lineCap — one of the `string` values: `"round"`, `"butt"` or `"square"`
 
 ```json
-<span class="pre--content"><span class="hljs-comment">// string stroke style</span><br><span class="hljs-attr">"focus-stroke-style"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"strokeStyle"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"solid"</span><br><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span><br><span class="hljs-comment">// object style</span><br><span class="hljs-attr">"info-border-style"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"strokeStyle"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>    <span class="hljs-attr">"dashArray"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">"{dash-short}"</span><span class="hljs-punctuation">,</span> <span class="hljs-string">"0.15rem"</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">"lineCap"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"round"</span><br>  <span class="hljs-punctuation">}</span><br><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">"stroke-short"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><br>  <span class="hljs-attr">"$type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"dimension"</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">"$value"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"5px"</span><br><span class="hljs-punctuation">}</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JSON<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+// string stroke style
+"focus-stroke-style": {
+  "$type": "strokeStyle",
+  "$value": "solid"
+},
+// object style
+"info-border-style": {
+  "$type": "strokeStyle",
+  "$value": {
+    "dashArray": ["{dash-short}", "0.15rem"],
+    "lineCap": "round"
+  }
+},
+"stroke-short": {
+  "$type": "dimension",
+  "$value": "5px"
+}
 ```
 
 ## What is style dictionary?
@@ -292,7 +384,7 @@ While it sounds daunting, a parser for style dictionary is actually a pretty sim
 The `pattern` property holds a simple regex to match a file extension, in our case this would be `/\\.json$/` to match files with the `.json` extension. If you want to allow all extensions⁸ that are defined in the standard, your regex will look like this:
 
 ```javascript
-<span class="pre--content">/\\.<span class="hljs-property">json</span>|\\.<span class="hljs-property">tokens</span>\\.<span class="hljs-property">json</span>|\\.<span class="hljs-property">tokens$</span>/</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JavaScript<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+/\\.json|\\.tokens\\.json|\\.tokens$/
 ```
 
 **Parse function**
@@ -302,13 +394,19 @@ The `parse` property holds a function that gets an object with two `strings` as 
 Since `contents` is a `string` we can use the js `replace` operations on it. Keep in mind that we are working with json, so we must preserve double quotes `"` around the property names.
 
 ```javascript
-<span class="pre--content">contents = contents<br>  <span class="hljs-comment">// replace "$value" with "value"</span><br>  .<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/"$value"/g</span>, <span class="hljs-string">'"value"'</span>)<br>  <span class="hljs-comment">// replace "$description" with "comment"</span><br>  .<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/"$description"/g</span>, <span class="hljs-string">'"comment"'</span>)</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JavaScript<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+contents = contents
+  // replace "$value" with "value"
+  .replace(/"$value"/g, '"value"')
+  // replace "$description" with "comment"
+  .replace(/"$description"/g, '"comment"')
 ```
 
 Once we have our properties replaced we simply return a parsed json object using the built in `JSON.parse` method:
 
 ```javascript
-<span class="pre--content"><span class="hljs-comment">//....</span><br> <span class="hljs-keyword">return</span> <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(contents)<br>}</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">Auto (JavaScript)<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+//....
+ return JSON.parse(contents)
+}
 ```
 
 You can find a complete implementation including one for `JSON5` on github: [w3c-token-json-parser.ts](https://github.com/lukasoppermann/style-dictionary-utils/blob/main/src/parser/w3c-token-json-parser.ts).
@@ -333,7 +431,9 @@ A filter is a simple function that returns a `boolean`. It must return `true` if
 An implementation of a filter for `color` tokens in typescript looks like this:
 
 ```javascript
-<span class="pre--content"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> isColor = (<span class="hljs-attr">token</span>: <span class="hljs-title class_">StyleDictionary</span>.<span class="hljs-property">TransformedToken</span>): <span class="hljs-function"><span class="hljs-params">boolean</span> =></span> {<br>  <span class="hljs-keyword">return</span> token?.<span class="hljs-property">$type</span> === <span class="hljs-string">'color'</span><br>}</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">Auto (JavaScript)<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+export const isColor = (token: StyleDictionary.TransformedToken): boolean => {
+  return token?.$type === 'color'
+}
 ```
 
 A short overview in case you are not familiar with typescript. The parts after the colon `:` are types, which the typescript complier uses to check for errors. They are removed from the output. The question mark after `token` in the return value tells typescript to return `undefined` if `token` is `undefined`. This is simply to prevent errors.
@@ -349,7 +449,20 @@ A style dictionary transformer is an object with a matcher and a transformer fun
 Below is an example of a color transformer that converts all colors into an `rgba` format.
 
 ```javascript
-<span class="pre--content"><span class="hljs-keyword">import</span> <span class="hljs-title class_">StyleDictionary</span> <span class="hljs-keyword">from</span> <span class="hljs-string">'style-dictionary'</span><br><span class="hljs-keyword">import</span> { toRgba } <span class="hljs-keyword">from</span> <span class="hljs-string">'color2k'</span><br><span class="hljs-keyword">import</span> { isColor } <span class="hljs-keyword">from</span> <span class="hljs-string">'../filter/isColor'</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">colorToRgba</span>: <span class="hljs-title class_">StyleDictionary</span>.<span class="hljs-property">Transform</span> = {<br>  <span class="hljs-attr">type</span>: <span class="hljs-string">`value`</span>,<br>  <span class="hljs-attr">transitive</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-comment">// the filter is used to match the correct tokens</span><br>  <span class="hljs-attr">matcher</span>: isColor,<br>  <span class="hljs-comment">// we take the token as the argument but only return the value</span><br>  <span class="hljs-attr">transformer</span>: <span class="hljs-function">(<span class="hljs-params">token: StyleDictionary.TransformedToken</span>) =></span> {<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">toRgba</span>(token.<span class="hljs-property">value</span>)<br>  }<br>}</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">Auto (JavaScript)<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+import StyleDictionary from 'style-dictionary'
+import { toRgba } from 'color2k'
+import { isColor } from '../filter/isColor'
+
+export const colorToRgba: StyleDictionary.Transform = {
+  type: `value`,
+  transitive: true,
+  // the filter is used to match the correct tokens
+  matcher: isColor,
+  // we take the token as the argument but only return the value
+  transformer: (token: StyleDictionary.TransformedToken) => {
+    return toRgba(token.value)
+  }
+}
 ```
 
 You can find transformers for all w3c design tokens in the GitHub repo: [style-dictionary-utils/transformers](https://github.com/lukasoppermann/style-dictionary-utils/tree/main/src/transformer)

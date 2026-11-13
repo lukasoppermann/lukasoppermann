@@ -8,6 +8,14 @@ export default defineConfig({
       entrypoint: 'astro/assets/services/sharp'
     }
   },
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'solarized-light',
+        dark: 'rose-pine-moon',
+      },
+    },
+  },
   integrations: [
     mdx(),
     // favicons({

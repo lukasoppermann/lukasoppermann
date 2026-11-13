@@ -5,8 +5,6 @@ published: "2024-04-25"
 excerpt: "Design systems evolve over time and so do the platforms they are built on. As maintainers, we need to make sure to keep them up to date…"
 ---
 
----
-
 ![Cover showing two Lego bricks and the title of the post.](https://cdn-images-1.medium.com/max/2400/1*nv8XICXoiaWGucezuUfuAA.jpeg)
 
 Design systems evolve over time and so do the platforms they are built on. As maintainers, we need to make sure to keep them up to date. This includes Figma and your Figma design system library. Figma has only a basic versioning, so we need to be careful with changes. But there are some techniques to make sure we don’t release updates that break consumers Figma projects.

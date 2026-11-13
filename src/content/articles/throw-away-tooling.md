@@ -5,8 +5,6 @@ published: "2024-11-21"
 excerpt: "Building lean, single-purpose tools effectively."
 ---
 
----
-
 ![Source of 3D illustration: OpenAI](https://cdn-images-1.medium.com/max/2400/1*JGEywSDp3MVkMy4ue9tPHA.jpeg)
 
 ## What is a throw-away tool
@@ -67,13 +65,15 @@ Also, as long as it works, nobody cares about the code quality. This means you c
 If you want to transform data, the simplest way is often to use the search and replace functionality in a tool like *vscode*² that supports `regex`³.
 
 ```plaintext
-<span class="pre--content">peterschmidt - peter@schmidt.org<br>mikethedev - m.derren@gmail.com<br>tkeys - tanya.dev@corp.com</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">Plain Text<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+peterschmidt - peter@schmidt.org
+mikethedev - m.derren@gmail.com
+tkeys - tanya.dev@corp.com
 ```
 
 We can use the following `regex` to find the `username` and the `email` part:
 
 ```shell
-<span class="pre--content">^(.*?)\s-\s(.*)</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">Shell<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+^(.*?)\s-\s(.*)
 ```
 
 This `regex` finds anything before the `-` (space dash space) and anything afterwards. It also stores this information in two variables.
@@ -81,13 +81,15 @@ This `regex` finds anything before the `-` (space dash space) and anything after
 In the replace box in *vscode* we can use the variables. We just add `$1` and `$2` to fill in the variables like this:
 
 ```javascript
-<span class="pre--content">{<span class="hljs-attr">username</span>: <span class="hljs-string">"$1"</span>, <span class="hljs-attr">email</span>: <span class="hljs-string">"$2"</span>},</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JavaScript<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+{username: "$1", email: "$2"},
 ```
 
 Leaving us with the desired result:
 
 ```javascript
-<span class="pre--content">{<span class="hljs-attr">username</span>: <span class="hljs-string">"peterschmidt"</span>, <span class="hljs-attr">email</span>: <span class="hljs-string">"peter@schmidt.org"</span>},<br>{<span class="hljs-attr">username</span>: <span class="hljs-string">"mikethedev"</span>, <span class="hljs-attr">email</span>: <span class="hljs-string">"m.derren@gmail.com"</span>},<br>{<span class="hljs-attr">username</span>: <span class="hljs-string">"tkeys"</span>, <span class="hljs-attr">email</span>: <span class="hljs-string">"tanya.dev@corp.com"</span>},</span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">JavaScript<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+{username: "peterschmidt", email: "peter@schmidt.org"},
+{username: "mikethedev", email: "m.derren@gmail.com"},
+{username: "tkeys", email: "tanya.dev@corp.com"},
 ```
 
 Save the `regex` and the replace string in a text file somewhere and you have your *“tool”*.
@@ -105,7 +107,7 @@ Since you are building a throw-away tool, you can skip the bells and whistles li
 Just run the script with `node` or `tsx` like this:
 
 ```bash
-<span class="pre--content">npx tsx scripts/generateColors.ts <span class="hljs-comment">#0978DB</span></span><div contenteditable="false" class="codeBlockMenu-button u-noUserSelect u-ignoreBlock">Auto (Bash)<span class="svgIcon svgIcon--codeBlockChevron svgIcon--19px"><svg class="svgIcon-use" width="19" height="19" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_1082_12841)"><path d="M8.354 9.646a.5.5 0 10-.708.708l.708-.708zM12 14l-.354.354a.5.5 0 00.708 0L12 14zm4.354-3.646a.5.5 0 00-.708-.708l.708.708zm-8.708 0l4 4 .708-.708-4-4-.708.708zm4.708 4l4-4-.708-.708-4 4 .708.708z" fill="currentColor"></path></g></svg></span></div>
+npx tsx scripts/generateColors.ts #0978DB
 ```
 
 You know the argument is the `hex` value, and you can hardcode other parameters like steps and contrast values directly in the script, since it is just for your use case.

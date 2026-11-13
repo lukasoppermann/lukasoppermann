@@ -5,8 +5,6 @@ published: "2024-12-18"
 excerpt: "Analyzing the costs and benefits to determine if a design system is worth the investment."
 ---
 
----
-
 ![Picture from Matrix with two hands, one holding a red pill the other one a blue pill, symbolizing a fundamental decision.](https://cdn-images-1.medium.com/max/2400/1*m8Y6YTztz2Jo29lgLlShdg.jpeg)
 
 ## Preface

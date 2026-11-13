@@ -5,8 +5,6 @@ published: "2022-09-19"
 excerpt: "How to implement dark mode with as little effort as possible"
 ---
 
----
-
 ![Cover illustration showing a stepped gradient of colors mimiking the sky from monring to night](https://cdn-images-1.medium.com/max/1600/1*Ng2J87aJBTLzv_oYiCsCKg.jpeg)
 
 This article discusses everything from triggering dark mode, to setting up design tokens to get automatic dark mode for all components.
