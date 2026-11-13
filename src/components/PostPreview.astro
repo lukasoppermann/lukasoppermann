@@ -6,11 +6,14 @@ import Headline from './Headline.astro';
 import Icon from './Icon.astro';
 import Paragraph from './Paragraph.astro';
 
-export interface Props extends HTMLAttributes<'a'>{
+export interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
   article: CollectionEntry<'articles'>['data']
+  href?: string
 }
 
-const { article: {title, url, published, excerpt}, ...attr } = Astro.props
+const { article: {title, url, published, excerpt}, href: providedHref, ...attr } = Astro.props
+const href = providedHref || url
+const isExternal = href.startsWith('http')
 ---
 <style>
   a {
@@ -24,9 +27,9 @@ const { article: {title, url, published, excerpt}, ...attr } = Astro.props
         font-weight: var(--font-weight--bold);
       }
       :global(.svg-icon) {
-        position: absolute;
-        margin-top: 2px;
+        display: inline-block;
         margin-left: 8px;
+        vertical-align: middle;
         path {
           fill: var(--on-background__high-emphasis);
         }
@@ -41,7 +44,7 @@ const { article: {title, url, published, excerpt}, ...attr } = Astro.props
   }
 </style>
 
-<a class:list={[attr.class]} target="_blank" rel="noreferrer" href={url}>
+<a class:list={[attr.class]} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noreferrer' : undefined} href={href}>
   <DateTime class="date-time" from={published} />
   <Headline level="3" class="headline">{title}<Icon class="svg-icon" type="arrowRight" /></Headline>
   <Paragraph>{excerpt}</Paragraph>

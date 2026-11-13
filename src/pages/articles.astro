@@ -58,6 +58,12 @@ const allPosts = (await getCollection("articles")).sort(
   <Svg svgString={svgTitleDefault} class="svg-title svg-title--default" />
   <Svg svgString={svgTitleStacked} class="svg-title svg-title--stacked" />
   <div>
-    {allPosts.map((post) => <PostPreview article={post.data} class="post-preview" />)}
+    {allPosts.map((post) => (
+      <PostPreview
+        article={post.data}
+        href={post.body?.trim() ? `/articles/${post.slug}/` : post.data.url}
+        class="post-preview"
+      />
+    ))}
   </div>
 </Layout>

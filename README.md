@@ -51,9 +51,9 @@ rotating plus/minus stroke. The disclosure label stays fully visible.
 Reduced-motion preferences disable both animations. Process subheadings use
 level-five Markdown headings (`#####`) beneath the Project details heading.
 
-### Syncing Medium Articles
+### Medium Articles
 
-To automatically fetch and add new articles from Medium to the website:
+The article index is populated from Medium's RSS feed:
 
 ```bash
 npm run sync-articles
@@ -66,7 +66,21 @@ This script:
 - Creates safely escaped Markdown frontmatter for new articles and disambiguates filename collisions
 - Preserves existing article files
 
-The script is idempotent - it's safe to run multiple times and will only add articles that don't already exist.
+The feed contains article metadata, but not full article text. Articles without
+a local body link directly to Medium. To publish a readable copy on this site,
+add the article text below its frontmatter in the corresponding Markdown file
+in `src/content/articles/`. Astro then creates `/articles/<slug>/`, and the
+index links to that page. Local copies identify Medium as the canonical source
+and link back to the original.
+
+Article pages use a centered reading column on desktop and the full content
+width on smaller screens. Write links as `[label](url)` (or ``[`code`](url)``),
+not with backticks around the entire link. Fenced code blocks must contain
+plain code, not Medium's editor HTML or syntax-highlighting markup.
+Section dividers use the site's subtle gray border style; do not start an
+article body with a divider beneath the publication date.
+
+The sync script is idempotent and preserves existing article files.
 
 ### Testing
 

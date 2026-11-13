@@ -11,13 +11,15 @@ export interface Props {
   title?: string
   description?: string;
   className?: string;
+  canonicalUrl?: string;
+  ogType?: 'website' | 'article';
 }
 
 const defaults = {
   title:"Lukas Oppermann — Lead UI/UX, Design Systems &amp; Creative Technologist",
   description: "Lukas Oppermann is a design lead and creative director from berlin, germany. He loves creating experiences with a focus on usability."
 }
-const { title, description, className } = Astro.props;
+const { title, description, className, canonicalUrl, ogType } = Astro.props;
 
 ---
 
@@ -26,8 +28,11 @@ const { title, description, className } = Astro.props;
     <title>{title || defaults.title}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta property="og:title" content={`${title || defaults.title}`} />
+    {ogType && <meta property="og:type" content={ogType} />}
+    {ogType === 'article' && <meta property="og:description" content={description || defaults.description} />}
     <meta name="description" content={description || defaults.description} >
     <meta charset="UTF-8">
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg" />
 
