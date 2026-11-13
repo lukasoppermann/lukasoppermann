@@ -100,7 +100,7 @@ When I talk about **AI** in this article, I refer to a collection of ML/DL algor
 
 **Predicting statistical likelihoods** is what large language models (LLMs) like GPT use to create sentences. Basically, the algorithm predicts the likelihood of the next word. For this it considers a certain number of words that come before the current one⁴². GPT-4 for example considers the 37467 words that came before.
 
-**Automating tasks** that are clearly defined is another **computer problem. **This makes it easy for AI as it is, effectively, a computer.
+**Automating tasks** that are clearly defined is another **computer problem.** This makes it easy for AI as it is, effectively, a computer.
 
 ## What is AI bad at?
 

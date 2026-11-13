@@ -82,15 +82,15 @@ We can assess our design system’s components and patterns by measuring them ag
 Some heuristics I find helpful are:
 
 - **Visibility of System State**
- Users should always know what’s happening. Components must clearly convey their state: loading indicators, progress bars, status messages, and notifications with explicit states are all essential to keep users informed.
-- **Match Between System and the World **
- Components should use familiar metaphors and conventions, both from general platforms (web, mobile) and specific industry contexts. This includes state colors, recognizable icons, and expected interaction behaviors.
+  Users should always know what’s happening. Components must clearly convey their state: loading indicators, progress bars, status messages, and notifications with explicit states are all essential to keep users informed.
+- **Match Between System and the World**
+  Components should use familiar metaphors and conventions, both from general platforms (web, mobile) and specific industry contexts. This includes state colors, recognizable icons, and expected interaction behaviors.
 - **Consistency and Standards**
- Stick to platform conventions. Avoid inventing new UI patterns for well-known functionalities, and ensure visual consistency. Buttons should share visual traits with inputs or dropdowns to help users intuitively connect their functions.
+  Stick to platform conventions. Avoid inventing new UI patterns for well-known functionalities, and ensure visual consistency. Buttons should share visual traits with inputs or dropdowns to help users intuitively connect their functions.
 - **Error Prevention**
-Make it easy for developers to apply sensible defaults and constraints, such as providing a `defaultValue` for inputs or built-in validation patterns to prevent mistakes before they happen.
+  Make it easy for developers to apply sensible defaults and constraints, such as providing a `defaultValue` for inputs or built-in validation patterns to prevent mistakes before they happen.
 - **Aesthetic and Minimalist Design**
-Provide components that naturally draw attention to the primary task. Steer clear of overly flashy visuals or cluttered patterns. While they may look appealing on their own, they can distract users and pull focus away from the core workflow when integrated into a full layout.
+  Provide components that naturally draw attention to the primary task. Steer clear of overly flashy visuals or cluttered patterns. While they may look appealing on their own, they can distract users and pull focus away from the core workflow when integrated into a full layout.
 
 **User Testing**
 Observing actual users is key to spotting friction. This is done best in realistic, task-based user tests, where components or patterns are used in context. Observe whether users can complete tasks without confusion, hesitation, or errors. If multiple participants struggle with the same parts, it’s a sign the design isn’t yet intuitive.
@@ -102,7 +102,7 @@ During interviews, pay attention to:
 - Frequent or similar errors
 - Points where users get stuck
 
-User testing won’t tell you the *correct *design solution though. They will only reveal where issues exist. If users encounter no problems, you can be confident in the intuitiveness of your design.
+User testing won’t tell you the *correct* design solution though. They will only reveal where issues exist. If users encounter no problems, you can be confident in the intuitiveness of your design.
 
 **Predictability**
 Controls and actions should behave as users expect based on prior experience. The easiest way to test this is to include this as part of your users tests.
@@ -146,35 +146,36 @@ Once agreed on, publish your principles on the design system website so everyone
 With an official, company-wide set of principles in place, the whole team can measure design decisions against shared standards, making feedback clearer and reducing the subjectivity in the process. It’s a simple way to guide everyone toward better, more consistent design outcomes.
 
 **Example:** Dieter Rams Principles of Good Design
+
 1. **Good design is innovative.**
-It leverages new technology and possibilities, but never for its own sake.
+   It leverages new technology and possibilities, but never for its own sake.
 
-2.** Good design makes a product useful. **
-The product must satisfy both functional and psychological criteria.
+2. **Good design makes a product useful.**
+   The product must satisfy both functional and psychological criteria.
 
-3. **Good design is aesthetic. **
-Only well-executed objects can be beautiful.
+3. **Good design is aesthetic.**
+   Only well-executed objects can be beautiful.
 
-4. **Good design makes a product understandable. **
-It clarifies the product’s structure and function.
+4. **Good design makes a product understandable.**
+   It clarifies the product’s structure and function.
 
-5. **Good design is unobtrusive. **
-Products fulfilling a purpose are like tools — they are neither decorative objects nor works of art.
+5. **Good design is unobtrusive.**
+   Products fulfilling a purpose are like tools — they are neither decorative objects nor works of art.
 
 6. **Good design is honest.**
-It does not make a product appear more innovative, powerful, or valuable than it really is.
+   It does not make a product appear more innovative, powerful, or valuable than it really is.
 
 7. **Good design is long-lasting.**
-It avoids being fashionable and therefore never appears antiquated.
+   It avoids being fashionable and therefore never appears antiquated.
 
 8. **Good design is thorough down to the last detail.**
-Nothing should be arbitrary or left to chance.
+   Nothing should be arbitrary or left to chance.
 
 9. **Good design is environmentally friendly.**
-It conserves resources and minimizes physical and visual pollution.
+   It conserves resources and minimizes physical and visual pollution.
 
 10. **Good design is as little design as possible.**
-Less, but better — focus on the essential aspects.
+    Less, but better — focus on the essential aspects.
 
 ---
 
@@ -184,7 +185,7 @@ Design systems play a powerful role in shaping and maintaining high-quality digi
 
 With standardized processes in place, design systems reduce the subjectivity of design decisions, improve collaboration, and make it easier for designers and engineers to work together. Whether it’s ensuring accessibility, fostering intuitive interfaces, supporting customization, or setting out clear design principles, design systems create a shared foundation for teams to build consistent, scalable, and user-focused products. When used well, the result is not just greater efficiency, but products that delight users and stand out for their cohesion and reliability.
 
-**Ready to take your design system to the next level? **
+**Ready to take your design system to the next level?**
 Get your team together, define your core principles, and start measuring what matters most to your users. Make your design system a true foundation for collaboration, quality, and innovation, let’s build products that everyone loves to use.
 
 ---

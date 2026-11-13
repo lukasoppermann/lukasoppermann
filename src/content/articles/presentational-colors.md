@@ -29,7 +29,7 @@ This is actually beneficial for users with *cvd*. Since you don’t lose informa
 
 ![Customizable UI on Mac OSX includes things like labels and customizing the accent / selection color.](https://cdn-images-1.medium.com/max/2400/1*G2ClAW3O1UgBgDv4jvns-Q.png)
 
-**UI elements **like shortcuts, icons, the profile or the accent colors can be customized by the user⁸. This allows to personalize their experience within boundaries. This change is solely visual and has no influence on the functional aspects of the UI. But it may allow users with *cvd* to choose colors they can differentiate rather than being stuck with defaults.
+**UI elements** like shortcuts, icons, the profile or the accent colors can be customized by the user⁸. This allows to personalize their experience within boundaries. This change is solely visual and has no influence on the functional aspects of the UI. But it may allow users with *cvd* to choose colors they can differentiate rather than being stuck with defaults.
 
 ## Requirements
 
@@ -39,7 +39,7 @@ Depending on your use case, there may be different requirements you need to fulf
 
 For example, you can create a `presentational.blue` from `base.blue`. In light mode this may be a simple reference as is, whereas in dark mode it will be an inverse reference of the scale. You may not have enough steps in your base scale to create a dark and light scale. Consider creating a bigger base scale, e.g., with sixteen steps and use only ten of them in the presentational scale.
 
-**Accessible contrast **between colors allows designers to safely place colored text on backgrounds¹⁰. For example, in labels or alerts. Make sure that certain steps in each scale pair well with black, white or another specific step. This makes it easy for designers to work with your presentational colors.
+**Accessible contrast** between colors allows designers to safely place colored text on backgrounds¹⁰. For example, in labels or alerts. Make sure that certain steps in each scale pair well with black, white or another specific step. This makes it easy for designers to work with your presentational colors.
 
 For example, you could create the scales so that any step above `step 5` as well as black always has a `4.5:1` contrast with `step 1`.
 

@@ -132,13 +132,13 @@ W3c specifies two types of tokens: `simple tokens`¹³ that have a basic value l
 
 **$value:** `ms` string
 
-**Example values: **`"200ms"` or `"10.5ms"`
+**Example values:** `"200ms"` or `"10.5ms"`
 
 ### [Cubic Bézier](https://design-tokens.github.io/community-group/format/#cubic-bezier)
 
 **$type:** `cubicBezier`
 
-**$value: **tuple¹⁶ (`array`) with 4 coordinates (`number`) to describe the curve¹⁷
+**$value:** tuple¹⁶ (`array`) with 4 coordinates (`number`) to describe the curve¹⁷
 
 **Example values:** `[0.24, 0.72, 1, 0.5]`
 
@@ -150,7 +150,7 @@ The composite types defined so far are:
 
 ### [Typography](https://design-tokens.github.io/community-group/format/#typography)
 
-**$type: **`typography`
+**$type:** `typography`
 
 **$value:**
 
