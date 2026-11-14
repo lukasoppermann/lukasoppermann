@@ -57,4 +57,15 @@ describe('Selected work', () => {
     expect(outcome).toContain('30%');
     expect(outcome).toContain('2-star');
   });
+
+  it('shows the Race Scout image caption on the Daimler project', () => {
+    const project = document.querySelector('.project-lab1886')!;
+    const image = project.querySelector('.Project-visual img')!;
+    const caption = project.querySelector('.Project-image-caption')!;
+
+    expect(image.getAttribute('src')).toContain('Race_Scout');
+    expect(caption.querySelector('strong')?.textContent).toBe('Race Scout');
+    expect(caption.textContent).toContain('Connecting the racing community:');
+    expect(caption.textContent).toContain('Team profiles bring drivers, cars, and team information together');
+  });
 });

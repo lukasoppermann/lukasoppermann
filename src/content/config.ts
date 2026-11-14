@@ -28,6 +28,11 @@ const projectCollection = defineCollection({
     endDate: z.string(), //.transform((str) => new Date(str)),
     image: image(),
     imageAlt: z.string(),
+    imageCaption: z.object({
+      title: z.string(),
+      lead: z.string(),
+      description: z.string(),
+    }).optional(),
   }),
 });
 
