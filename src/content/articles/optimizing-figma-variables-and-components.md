@@ -204,7 +204,7 @@ Color variables can have the following scopes:
 
 Numeric variables can have the following scopes:
 
-- **Corner radius: **For the corner radius also known as border radius
+- **Corner radius:** For the corner radius also known as border radius
 - **Width and height:** For the width and height of an element but also for the max and min width and height.
 - **Gap:** Available for all Autolayout spacing properties, gap as well as horizontal and vertical padding
 - **Text content:** This is NOT for typographic variables but only for numbers that should be used as text in a text element.
@@ -218,9 +218,9 @@ Numeric variables can have the following scopes:
 
 String variables can have the following scopes:
 
-- **Text content: **To use the variable as the content of a text field, e.g. a button label
-- **Font Family: **For font family names
-- **Font weight or style: **To define font styles like *italic* or font weights like *bold*
+- **Text content:** To use the variable as the content of a text field, e.g. a button label
+- **Font Family:** For font family names
+- **Font weight or style:** To define font styles like *italic* or font weights like *bold*
 
 ## Development handover
 

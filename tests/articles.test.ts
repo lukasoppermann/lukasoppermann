@@ -34,6 +34,33 @@ describe('Article content', () => {
     expect(links[0].textContent).toBe('@johnlindquist/worktree');
   });
 
+  it.each(files)('%s renders bold formatting without literal markers in prose', file => {
+    const article = readArticle(file.slice(0, -3));
+    const content = article.querySelector('.article-content')!;
+    content.querySelectorAll('pre, code').forEach(element => element.remove());
+    expect(content.textContent).not.toContain('**');
+  });
+
+  it('keeps all ten design principles and their descriptions in one ordered list', () => {
+    const article = readArticle('how-can-design-systems-up-level-design-quality');
+    const principles = [...article.querySelectorAll('.article-content ol')]
+      .find(list => list.querySelector('strong')?.textContent === 'Good design is innovative.')!;
+    const items = [...principles.children];
+    expect(items).toHaveLength(10);
+    expect(items.every(item => item.tagName === 'LI' && item.querySelector('strong'))).toBe(true);
+    expect(items[1].querySelector('strong')?.textContent).toBe('Good design makes a product useful.');
+    expect(items[1].textContent).toContain('The product must satisfy both functional and psychological criteria.');
+    expect(items[9].textContent).toContain('Less, but better');
+    expect(items.every(item => item.textContent!.trim().length >
+      item.querySelector('strong')!.textContent!.length)).toBe(true);
+    const heuristics = [...article.querySelectorAll('.article-content ul')]
+      .find(list => list.textContent?.includes('Visibility of System State'))!;
+    expect(heuristics.children).toHaveLength(5);
+    expect(heuristics.children[1].querySelector('strong')?.textContent)
+      .toBe('Match Between System and the World');
+    expect(heuristics.children[4].textContent).toContain('Provide components');
+  });
+
   it('links back to the articles overview and to other local articles', () => {
     const slug = 'running-multiple-ai-agents-at-once-using-git-worktrees';
     const article = readArticle(slug);

@@ -139,6 +139,100 @@ describe('Homepage motion and experience link', () => {
     }
   });
 
+  it.each([
+    [390, false],
+    [1280, false],
+    [390, true],
+    [1280, true],
+  ] as const)('shows article link feedback at %ipx with reduced motion %s', async (width, reduced) => {
+    const page = await browser.newPage();
+    try {
+      await page.setViewport({ width, height: 900 });
+      await page.emulateMediaFeatures([{
+        name: 'prefers-reduced-motion',
+        value: reduced ? 'reduce' : 'no-preference',
+      }]);
+      await page.setRequestInterception(true);
+      page.on('request', request => {
+        if (request.url().startsWith(url)) void request.continue();
+        else void request.abort();
+      });
+
+      for (const [path, selectors] of [
+        ['/articles/', ['.post-preview']],
+        ['/articles/how-can-design-systems-up-level-design-quality/', [
+          '.eyebrow a', '.more-articles .post-preview', '.all-articles',
+          '.original-link a', '.article-content > ol:last-child a',
+        ]],
+      ] as const) {
+        await page.goto(`${url}${path}`, { waitUntil: 'load' });
+        for (const selector of selectors) {
+          const resource = selector.includes('article-content');
+          const inline = resource || selector.includes('original-link');
+          if (inline) {
+            expect(await page.$eval(selector, element => {
+              const style = getComputedStyle(element);
+              return [style.textDecorationLine, style.backgroundSize];
+            })).toEqual(['none', '0% 2px']);
+          }
+          await page.hover(selector);
+          if (!reduced) {
+            expect(await page.$eval(selector, element =>
+              element.getAnimations({ subtree: true }).length,
+            )).toBeGreaterThan(0);
+          }
+          await page.waitForFunction(selector =>
+            document.querySelector(selector)!.getAnimations({ subtree: true }).length === 0,
+          {}, selector);
+
+          const feedback = () => page.$eval(selector, element => {
+            const style = getComputedStyle(element);
+            const title = element.querySelector('.preview-title');
+            const underline = getComputedStyle(element, '::after');
+            const icon = element.querySelector('.svg-icon');
+            const indicator = title ? getComputedStyle(title) :
+              element.classList.contains('article-nav-link') ? underline : style;
+            return {
+              transform: style.transform,
+              duration: indicator.transitionDuration,
+              underline: element.classList.contains('article-nav-link') ?
+                underline.transform : indicator.backgroundSize,
+              icon: icon ? getComputedStyle(icon).transform : null,
+              outline: style.outlineStyle,
+              focused: element === document.activeElement,
+            };
+          });
+          const hovered = await feedback();
+          const preview = selector.includes('post-preview');
+          expect(hovered.transform).toBe('none');
+          expect(hovered.duration).toBe(reduced ? '0s' : '0.3s');
+          expect(hovered.underline).toBe(preview || inline ? '100% 2px' : 'matrix(1, 0, 0, 1, 0, 0)');
+          if (preview) expect(hovered.icon).toBe('none');
+
+          await page.mouse.move(0, 0);
+          await page.keyboard.press('Tab');
+          await page.focus(selector);
+          await page.waitForFunction(selector =>
+            document.querySelector(selector)!.getAnimations({ subtree: true }).length === 0,
+          {}, selector);
+          const focused = await feedback();
+          expect(focused.focused).toBe(true);
+          expect(focused.outline).toBe('solid');
+          expect(focused.transform).toBe(hovered.transform);
+          expect(focused.underline).toBe(hovered.underline);
+          await page.$eval(selector, element => {
+            if (element instanceof HTMLElement) element.blur();
+          });
+        }
+        expect(await page.evaluate(() =>
+          document.documentElement.scrollWidth <= window.innerWidth,
+        )).toBe(true);
+      }
+    } finally {
+      await page.close();
+    }
+  });
+
   it('animates the icon along opposite curves while preserving original timings', async () => {
     const page = await browser.newPage();
     try {

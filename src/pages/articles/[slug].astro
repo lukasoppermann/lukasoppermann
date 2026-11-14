@@ -47,13 +47,6 @@ const moreArticles = (await getCollection('articles'))
     font-weight: var(--font-weight--bold);
     & a {
       color: inherit;
-      text-decoration: underline;
-      text-decoration-color: var(--ui--fair-contrast);
-      text-underline-offset: 0.2em;
-      &:hover {
-        color: var(--on-background__high-emphasis);
-        text-decoration-color: currentColor;
-      }
     }
   }
   h1 {
@@ -151,11 +144,6 @@ const moreArticles = (await getCollection('articles'))
       max-width: 100%;
       height: auto;
     }
-    & :global(a) {
-      color: inherit;
-      text-decoration: underline;
-      text-underline-offset: 0.15em;
-    }
   }
   .original-link {
     margin-top: 48px;
@@ -180,12 +168,44 @@ const moreArticles = (await getCollection('articles'))
     display: inline-block;
     color: var(--on-background__high-emphasis);
     font-weight: var(--font-weight--bold);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
   }
+  .article-nav-link {
+    position: relative;
+    padding-bottom: 2px;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 2px;
+      background: currentColor;
+      transform: scaleX(0.35);
+      transform-origin: left;
+      transition: transform 300ms var(--easeOutQuint);
+    }
+    &:is(:hover, :focus-visible) {
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 6px;
+    }
+  }
+  .article-content :global(a),
   .original-link a {
-    text-decoration: underline;
-    text-underline-offset: 0.15em;
+    color: inherit;
+    text-decoration: none;
+    background: linear-gradient(currentColor, currentColor) no-repeat left bottom;
+    background-size: 0% 2px;
+    transition: background-size 300ms var(--easeOutQuint);
+    &:is(:hover, :focus-visible) {
+      background-size: 100% 2px;
+    }
+    &:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 4px;
+    }
   }
 </style>
 
@@ -197,7 +217,7 @@ const moreArticles = (await getCollection('articles'))
 >
   <article class="article">
     <div class="eyebrow">
-      <a href="/articles">Articles</a>
+      <a class="article-nav-link" href="/articles">Articles</a>
       <span aria-hidden="true">·</span>
       <DateTime inline from={article.data.published} />
     </div>
@@ -214,7 +234,7 @@ const moreArticles = (await getCollection('articles'))
         {moreArticles.map((entry) => (
           <PostPreview article={entry.data} href={`/articles/${entry.slug}/`} class="post-preview" />
         ))}
-        <a class="all-articles" href="/articles">All articles</a>
+        <a class="all-articles article-nav-link" href="/articles">All articles</a>
       </nav>
     )}
   </article>

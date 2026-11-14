@@ -156,7 +156,7 @@ The `$type` has to be set to `color` and the `$value` object **must** define the
 
 This token defines a numeric size value that is either a *float* like `1.2` or an *integer* like `5` with a unit that is either `px` or `rem`. Dimensions are mainly used for things spacing, sizing, border widths, shadow blur or font sizes.
 
-The `$type` has to be set to `dimension` and the `$value` object **must **define the `value` and `unit`. The unit must be defined even if the value is `0`.
+The `$type` has to be set to `dimension` and the `$value` object **must** define the `value` and `unit`. The unit must be defined even if the value is `0`.
 
 ![Example dimension tokens](https://cdn-images-1.medium.com/max/2400/1*CV7tBT0a9ayjpUd1WOvFtw.png)
 
