@@ -92,8 +92,7 @@ Keep emphasis markers tight to their content: `**bold text**` and `*italic text*
 never `** bold text **`. Put a space after every list marker (`- ` or `1. `)
 and indent continuation paragraphs to align with the list item's content.
 Keep numbered sequences in one list rather than separating their descriptions
-into unindented paragraphs. The article content tests check rendered pages for
-stray bold markers and the design-quality article's complete ten-item list.
+into unindented paragraphs.
 
 Article links animate their underlines on hover and keyboard focus without moving
 the text or icons. Resource links and the original Medium link have no underline
@@ -103,14 +102,14 @@ The sync script is idempotent and preserves existing article files.
 
 ### Testing
 
-Run the unit, build-snapshot, and browser behavior tests with:
+Build the site and run the behavior and focused unit tests with:
 
 ```bash
-npm run build
 npm run test:run
 ```
 
-The website includes automated visual regression testing to catch unintended changes:
+See [tests/README.md](tests/README.md) for coverage and focused commands.
+Optional visual comparisons are available separately, not required by the default suite:
 
 ```bash
 # Run visual regression tests

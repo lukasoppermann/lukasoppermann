@@ -1,11 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { createArticleFilename, parseMediumRSS, createSlug } from '../scripts/medium-sync-utils.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Mock RSS feed for testing
 const mockRSSFeed = `<?xml version="1.0" encoding="UTF-8"?>
@@ -149,24 +143,4 @@ describe('Medium Article Sync', () => {
     });
   });
   
-  describe('Article file structure', () => {
-    it('should verify existing articles have required fields', async () => {
-      const articlesDir = path.join(__dirname, '../src/content/articles');
-      const files = await fs.readdir(articlesDir);
-      
-      for (const file of files) {
-        if (!file.endsWith('.md')) continue;
-        
-        const filePath = path.join(articlesDir, file);
-        const content = await fs.readFile(filePath, 'utf-8');
-        
-        // Check for required frontmatter fields
-        expect(content).toMatch(/^---/m);
-        expect(content).toMatch(/title:\s*["'].+["']/);
-        expect(content).toMatch(/url:\s*["']https?:\/\/.+["']/);
-        expect(content).toMatch(/published:\s*["']\d{4}-\d{2}-\d{2}["']/);
-        expect(content).toMatch(/excerpt:\s*["'].+["']/);
-      }
-    });
-  });
 });

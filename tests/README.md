@@ -1,73 +1,49 @@
 # Testing
 
-## Snapshot Testing
+The default suite checks behavior, not editorial content or exact visual output.
+It does not snapshot HTML, lock down article wording, or assert animation timings.
 
-This project includes snapshot testing for all pages to ensure content consistency and catch unintended changes.
-
-### Running Tests
+## Running tests
 
 ```bash
-# Run all tests
+# Build, type-check, and run every test
+npm run test:run
+
+# Build and run only the browser smoke checks
+npm run test:smoke
+
+# Watch tests during development (build first for browser checks)
+npm run build
 npm test
-
-# Run snapshot tests only
-npm run test:snapshots
-
-# Update snapshots (use after intentional changes)
-npm run test:snapshots:update
 ```
 
-### What's Tested
-
-The snapshot tests capture and compare the full HTML output of all pages:
-
-- Homepage (`/`)
-- About page (`/about/`)
-- Articles page (`/articles/`)
-- Imprint page (`/imprint/`)
-
-### When to Update Snapshots
-
-Update snapshots when you make intentional changes to:
-- Page content
-- HTML structure
-- Styling that affects rendered output
-
-### Test Files
-
-- `tests/snapshots.test.ts` - Main snapshot test file
-- `tests/__snapshots__/` - Generated snapshot files (committed to git)
-
-## Motion and Link Behavior
-
-After building the site, run the browser checks with:
+Browser tests require Puppeteer's matching Chrome installation. If it is missing:
 
 ```bash
-npm run build && npm run test:run -- tests/motion.test.ts
+npx puppeteer browsers install chrome
 ```
 
-These checks use Puppeteer to verify immediate hero visibility with reduced motion,
-instant mobile menu and hover state changes, live motion-preference changes, and
-the distinction between the Experience link and the navigation's Resume link.
-Normal-motion reveals remain unchanged.
-Normal-motion interaction checks preserve the original menu and underline timings
-and verify the 800 ms SVG icon animation: visible stroke segments travel through
-mirrored rightward curves above and below into a centered X, and reverse when
-closing or interrupted. Geometry checks limit the outward excursion and verify
-each curve turns inward only once.
+The smoke suite starts and stops its own local server on an available port.
+External requests and analytics are stubbed; it does not depend on third-party uptime.
 
-Mobile layout checks cover narrow, tall, tablet, and landscape viewports. Rows
-scale from 48 to 112 px, remain grouped at the top, and leave surplus space below.
-CSS caps text by row height and a width allowance for the longest current label;
-recheck that allowance when changing labels or the menu font. Short viewports
-scroll instead of clipping links. No JavaScript measurements drive the layout.
+## Coverage
 
-Closing reverses the link stagger with 30 ms steps from bottom to top: 120 ms
-opacity fades and 200 ms movement finish before the panel collapses at 320 ms.
-Opening retains its original timings. Browser checks also cover rapid toggling.
+- Every generated page loads at mobile and desktop widths without script errors or
+  failed local resource requests. Local link targets exist, and local images load and
+  become visible when scrolled into view.
+- All articles with a body produce routes and appear in the overview. A real
+  click-through exercises the overview, article rendering, related articles,
+  and return navigation without depending on specific text or article names.
+- Mobile navigation opens, closes with Escape, restores focus, and follows links.
+  Project details expand/collapse on mobile and remain expanded on desktop.
+  These interactions run with normal and reduced motion.
+- Project and work-experience collection bodies render, and project content/images
+  remain available without JavaScript.
+- Focused unit tests cover image-loading scheduling and failure recovery, date
+  parsing, SVG sanitization, and RSS parsing/filename collision handling using
+  synthetic inputs. Astro's build validates real collection schemas.
 
-For a manual check, enable reduced motion in the operating system or browser
-devtools and reload the homepage: all hero content and its background should be
-visible immediately. At a mobile width, open and close the menu and hover links;
-states should change without animation. Disable reduced motion and reload to
-confirm the original reveals still run.
+This is a regression safety net, not proof that every possible failure is covered.
+Pixel-level appearance, exact animation choreography, and external services are
+intentionally outside the default suite. The optional visual comparison tool is
+documented in [visual regression testing](../docs/visual-regression-testing.md).
