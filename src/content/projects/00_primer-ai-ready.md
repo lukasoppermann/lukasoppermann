@@ -15,7 +15,7 @@ responsibilities:
   - Cross-functional leadership
   - Engineering collaboration
 image: /src/assets/images/primer-ai-ready.png
-imageAlt: Primer design token definition with structured usage guidance for AI
+imageAlt: Primer design tokens and components alongside a token definition with AI usage guidance
 startDate: "2025-01-01"
 endDate: "2026-12-31"
 ---
