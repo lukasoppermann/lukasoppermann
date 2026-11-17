@@ -1,12 +1,12 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry, RenderResult } from "astro:content";
 import { getImage, Image } from "astro:assets";
 import DateTime from "../DateTime.astro";
 import Link from "../Link.astro";
 
 type Props = CollectionEntry<"projects">["data"] & {
   id: string;
-  Content: Awaited<ReturnType<CollectionEntry<"projects">["render"]>>["Content"];
+  Content: RenderResult["Content"];
 };
 
 const {

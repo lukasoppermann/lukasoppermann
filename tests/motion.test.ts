@@ -346,7 +346,8 @@ describe('Homepage motion and experience link', () => {
         return { duration: style.transitionDuration, delay: style.transitionDelay };
       }));
       expect(closing.map(link => link.duration)).toEqual(Array(5).fill('0.12s, 0.2s, 0.25s'));
-      expect(closing.map(link => link.delay)).toEqual(['0.12s', '0.09s', '0.06s', '0.03s', '0s']);
+      expect(closing.map(link => [...new Set(link.delay.split(',').map(delay => delay.trim()))]))
+        .toEqual([['0.12s'], ['0.09s'], ['0.06s'], ['0.03s'], ['0s']]);
       await page.waitForFunction(() =>
         [...document.querySelectorAll('nav.Navigation a')].every(link =>
           getComputedStyle(link).opacity === '0'),

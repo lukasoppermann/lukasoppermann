@@ -4,7 +4,7 @@ import Intro from '../components/home/Intro.astro';
 import Resume from '../components/home/Resume.astro';
 import HomepageLink from '../components/home/HomepageLink.astro';
 import Project from '../components/home/Project.astro';
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 const homepageLinks = await getCollection("homepageLinks");
 const projects = (await getCollection("projects")).sort((a, b) => a.id.localeCompare(b.id));
 
@@ -15,8 +15,8 @@ const projects = (await getCollection("projects")).sort((a, b) => a.id.localeCom
   <section class="Selected-work Grid" id="selected-work" aria-label="Selected work">
     <div class="Selected-work-projects">
       {projects.map(async (project) => {
-        const { Content } = await project.render();
-        return <Project {...project.data} id={project.slug} Content={Content} />;
+        const { Content } = await render(project);
+        return <Project {...project.data} id={project.id} Content={Content} />;
       })}
     </div>
   </section>
