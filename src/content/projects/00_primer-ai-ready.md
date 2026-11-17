@@ -14,8 +14,8 @@ responsibilities:
   - User research & experimentation
   - Cross-functional leadership
   - Engineering collaboration
-image: /src/assets/images/Design_Tokens.svg
-imageAlt: A diagram illustrating design tokens and their relationships
+image: /src/assets/images/primer-ai-ready.png
+imageAlt: Primer design token definition with structured usage guidance for AI
 startDate: "2025-01-01"
 endDate: "2026-12-31"
 ---
