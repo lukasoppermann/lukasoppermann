@@ -184,7 +184,12 @@ describe('Site behavior', () => {
     await page.waitForFunction(() => document.querySelector<HTMLDetailsElement>('details.Project-details')?.open === false);
     await page.setViewport({ width: 1280, height: 900 });
     await page.waitForFunction(() =>
-      [...document.querySelectorAll<HTMLDetailsElement>('details.Project-details')].every(details => details.open));
+      [...document.querySelectorAll<HTMLDetailsElement>('details.Project-details')].every(details => !details.open));
+    await page.click('details.Project-details summary');
+    await page.waitForFunction(() => document.querySelector<HTMLDetailsElement>('details.Project-details')?.open === true);
+    expect(await page.$eval('.Project-link a', link => link.closest('details')?.open)).toBe(true);
+    await page.click('details.Project-details summary');
+    await page.waitForFunction(() => document.querySelector<HTMLDetailsElement>('details.Project-details')?.open === false);
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
     expect(await page.$eval('.Header--intro__roles', element => getComputedStyle(element).opacity)).toBe('1');
   });
