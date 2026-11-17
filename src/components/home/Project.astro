@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { Image } from "astro:assets";
+import { getImage, Image } from "astro:assets";
 import DateTime from "../DateTime.astro";
 import Link from "../Link.astro";
 
@@ -15,6 +15,14 @@ const {
   buttonLabel, buttonTarget, url,
   responsibilities, startDate, endDate, Content,
 } = Astro.props;
+const revealImage = ["project-lab1886", "project-bosch", "project-copra"].includes(className ?? "");
+const imageOptions = {
+  src: image,
+  alt: imageAlt,
+  widths: [400, 800, 1200],
+  sizes: "(min-width: 1024px) 50vw, 100vw",
+};
+const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
 ---
 
 <article class:list={["Project", className]} aria-labelledby={`${id}-title`}>
@@ -41,7 +49,20 @@ const {
   </div>
   <figure class="Project-visual">
     <div class="Project-image">
-      <Image src={image} alt={imageAlt} widths={[400, 800, 1200]} sizes="(min-width: 1024px) 50vw, 100vw" />
+      {deferredImage ? (
+        <>
+          <img
+            {...deferredImage.attributes}
+            data-project-image
+            data-src={deferredImage.src}
+            data-srcset={deferredImage.srcSet.attribute}
+            hidden
+          />
+          <noscript>
+            <Image {...imageOptions} />
+          </noscript>
+        </>
+      ) : <Image {...imageOptions} />}
     </div>
     {imageCaption && (
       <figcaption class="Project-image-caption">
@@ -71,6 +92,10 @@ const {
 </article>
 
 <script>
+  import { initProjectImages } from "../../assets/scripts/projectImages";
+
+  initProjectImages();
+
   const desktop = window.matchMedia("(min-width: 1024px)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -199,11 +224,32 @@ const {
     background: var(--project-color-tint, var(--project-default-tint));
   }
   .Project-visual { margin: 0; }
+  .Project-image noscript { display: contents; }
   .Project-image img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+  .Project-image img[hidden] { display: none; }
+  .Project-image img[data-state="pending"] {
+    opacity: 0;
+    transform: translateY(64px);
+  }
+  .Project-image img[data-state="ready"] {
+    animation:
+      projectImageFade 1200ms ease-in-out,
+      projectImageSlide 1500ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 1;
+    transform: none;
+  }
+  @keyframes projectImageFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes projectImageSlide {
+    from { transform: translateY(64px); }
+    to { transform: none; }
   }
   .Project-image-caption {
     margin-top: 12px;
@@ -297,6 +343,7 @@ const {
   }
   @media (prefers-reduced-motion: reduce) {
     .Project-toggle::after { transition: none; }
+    .Project-image img[data-state] { animation: none; transform: none; }
   }
   @media (--min-tablet) {
     .Project { gap: 32px; padding-block: 48px; }
