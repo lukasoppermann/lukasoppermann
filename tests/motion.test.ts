@@ -440,4 +440,104 @@ describe('Homepage motion and experience link', () => {
       await page.close();
     }
   });
+
+  it.each([
+    [390, false], [1280, false], [390, true], [1280, true],
+  ] as const)('reveals only the three selected project images at %ipx with reduced motion %s', async (width, reduced) => {
+    const page = await browser.newPage();
+    try {
+      await page.setViewport({ width, height: 900 });
+      await page.emulateMediaFeatures([{
+        name: 'prefers-reduced-motion', value: reduced ? 'reduce' : 'no-preference',
+      }]);
+      await page.goto(url, { waitUntil: 'load' });
+      expect(await page.$$('img[data-project-image]')).toHaveLength(3);
+      expect(await page.$eval('.project-figma img', image => image.hasAttribute('data-project-image'))).toBe(false);
+      await page.waitForFunction(() =>
+        [...document.querySelectorAll<HTMLImageElement>('img[data-project-image]')]
+          .every(image => image.complete && image.naturalWidth > 0),
+      );
+      expect(await page.$eval('.project-copra img', image =>
+        getComputedStyle(image).opacity,
+      )).toBe('0');
+      await page.$eval('.project-copra .Project-image', image => {
+        const bounds = image.getBoundingClientRect();
+        window.scrollBy(0, bounds.top - window.innerHeight + bounds.height * 0.2);
+      });
+      await page.waitForFunction(() => {
+        const bounds = document.querySelector('.project-copra .Project-image')!.getBoundingClientRect();
+        const ratio = (window.innerHeight - bounds.top) / bounds.height;
+        return ratio > 0.18 && ratio < 0.22;
+      });
+      expect(await page.$eval('.project-copra img', image => image.getAttribute('data-state'))).toBe('pending');
+      await page.$eval('.project-copra .Project-image', image => image.scrollIntoView({ block: 'center' }));
+      await page.waitForFunction(() =>
+        document.querySelector('.project-copra img')?.getAttribute('data-state') === 'ready',
+      );
+      const state = await page.$eval('.project-copra img', image => {
+        const style = getComputedStyle(image);
+        const animations = image.getAnimations();
+        return {
+          duration: style.animationDuration,
+          easing: style.animationTimingFunction,
+          animations: animations.length,
+          opacity: style.opacity,
+          transform: style.transform,
+        };
+      });
+      expect(state.duration).toBe(reduced ? '0s' : '1.2s, 1.5s');
+      if (reduced) {
+        expect(state).toMatchObject({ opacity: '1', transform: 'none', animations: 0 });
+      } else {
+        expect(state.animations).toBe(2);
+        expect(state.easing).toBe('ease-in-out, cubic-bezier(0.22, 1, 0.36, 1)');
+        const quarter = await page.$eval('.project-copra img', image => {
+          const animations = image.getAnimations();
+          for (const animation of animations) {
+            animation.pause();
+            animation.currentTime = 375;
+          }
+          const style = getComputedStyle(image);
+          const sample = {
+            opacity: Number(style.opacity),
+            offset: new DOMMatrix(style.transform).m42,
+          };
+          for (const animation of animations) animation.play();
+          return sample;
+        });
+        expect(quarter.opacity).toBeGreaterThan(0);
+        expect(quarter.opacity).toBeLessThan(0.25);
+        expect(quarter.offset).toBeGreaterThan(0);
+        expect(quarter.offset).toBeLessThan(32);
+      }
+      await page.waitForFunction(() =>
+        getComputedStyle(document.querySelector('.project-copra img')!).opacity === '1' &&
+        document.querySelector('.project-copra img')!.getAnimations().length === 0,
+      );
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.$eval('.project-copra .Project-image', image => image.scrollIntoView({ block: 'center' }));
+      expect(await page.$eval('.project-copra img', image => image.getAnimations().length)).toBe(0);
+    } finally {
+      await page.close();
+    }
+  });
+
+  it('keeps project images visible without JavaScript', async () => {
+    const page = await browser.newPage();
+    try {
+      await page.setJavaScriptEnabled(false);
+      await page.goto(url, { waitUntil: 'load' });
+      await page.$eval('.project-copra .Project-image', image => image.scrollIntoView({ block: 'center' }));
+      await page.waitForFunction(() => {
+        const image = document.querySelector<HTMLImageElement>('.project-copra noscript img');
+        return image?.complete && image.naturalWidth > 0;
+      });
+      expect(await page.$eval('.project-copra noscript img', image => {
+        const style = getComputedStyle(image);
+        return [style.display, style.opacity];
+      })).toEqual(['block', '1']);
+    } finally {
+      await page.close();
+    }
+  });
 });

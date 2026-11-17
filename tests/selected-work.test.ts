@@ -26,7 +26,7 @@ describe('Selected work', () => {
         expect(fact.textContent?.trim().length).toBeGreaterThan(0);
         expect(fact.closest('details')).toBeNull();
       }
-      expect(project.querySelectorAll('img')).toHaveLength(1);
+      expect(project.querySelectorAll('img:not(noscript img)')).toHaveLength(1);
       expect(project.querySelector('img')?.getAttribute('alt')).toBeTruthy();
       expect(project.querySelector('.Project-meta .dateTime')).not.toBeNull();
       const headingId = project.getAttribute('aria-labelledby')!;
@@ -63,7 +63,7 @@ describe('Selected work', () => {
     const image = project.querySelector('.Project-visual img')!;
     const caption = project.querySelector('.Project-image-caption')!;
 
-    expect(image.getAttribute('src')).toContain('Race_Scout');
+    expect(image.getAttribute('data-src')).toContain('Race_Scout');
     expect(caption.querySelector('strong')?.textContent).toBe('Race Scout');
     expect(caption.textContent).toContain('Connecting the racing community:');
     expect(caption.textContent).toContain('Team profiles bring drivers, cars, and team information together');
