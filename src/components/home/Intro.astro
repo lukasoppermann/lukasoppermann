@@ -144,8 +144,8 @@ import solvingProblemsSvg from '../../assets/svgs/solving-problems-is-my-passion
       @media (--min-large) {
         grid-column: columns / span 9;
       }
-      & svg {
-        height: 100%;
+      & :global(svg) {
+        height: auto;
         width: 100%;
         fill: var(--on-surface__high-emphasis) !important;
       }
