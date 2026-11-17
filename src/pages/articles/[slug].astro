@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import DateTime from '../../components/DateTime.astro';
 import Layout from '../../layouts/Layout.astro';
 import PostPreview from '../../components/PostPreview.astro';
@@ -10,16 +10,16 @@ export async function getStaticPaths() {
   return articles
     .filter((article) => article.body?.trim())
     .map((article) => ({
-      params: { slug: article.slug },
+      params: { slug: article.id },
       props: { article },
     }));
 }
 
 const { article } = Astro.props;
-const { Content } = await article.render();
+const { Content } = await render(article);
 
 const moreArticles = (await getCollection('articles'))
-  .filter((entry) => entry.body?.trim() && entry.slug !== article.slug && entry.data.url !== article.data.url)
+  .filter((entry) => entry.body?.trim() && entry.id !== article.id && entry.data.url !== article.data.url)
   .sort((a, b) => new Date(b.data.published).getTime() - new Date(a.data.published).getTime())
   .slice(0, 3);
 ---
@@ -232,7 +232,7 @@ const moreArticles = (await getCollection('articles'))
       <nav class="more-articles" aria-labelledby="more-articles-title">
         <h2 id="more-articles-title">More articles</h2>
         {moreArticles.map((entry) => (
-          <PostPreview article={entry.data} href={`/articles/${entry.slug}/`} class="post-preview" />
+          <PostPreview article={entry.data} href={`/articles/${entry.id}/`} class="post-preview" />
         ))}
         <a class="all-articles article-nav-link" href="/articles">All articles</a>
       </nav>

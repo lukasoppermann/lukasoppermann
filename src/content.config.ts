@@ -1,18 +1,20 @@
-// 1. Import utilities from `astro:content`
-import { z, defineCollection } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
+
 // 2. Define your collection(s)
 const articleCollection = defineCollection({
-  type: 'content', // v2.5.0 and later
+  loader: glob({ pattern: '**/*.md', base: './src/content/articles' }),
   schema: z.object({
     title: z.string(),
-    url: z.string().url(),
+    url: z.url(),
     published: z.coerce.date(),
     excerpt: z.string()
   }),
 });
 
 const projectCollection = defineCollection({
-  type: 'content', // v2.5.0 and later
+  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
   schema: ({ image }) => z.object({
     title: z.string(),
     client: z.string(),
@@ -22,7 +24,7 @@ const projectCollection = defineCollection({
     class: z.string(),
     buttonLabel: z.string(),
     buttonTarget: z.enum(['_blank', '_self']).optional(),
-    url: z.string().url(),
+    url: z.url(),
     responsibilities: z.array(z.string()),
     startDate: z.string(), //.transform((str) => new Date(str)),
     endDate: z.string(), //.transform((str) => new Date(str)),
@@ -37,18 +39,18 @@ const projectCollection = defineCollection({
 });
 
 const HomepageLinkCollection = defineCollection({
-  type: 'content', // v2.5.0 and later
+  loader: glob({ pattern: '**/*.md', base: './src/content/homepageLinks' }),
   schema: ({ image }) => z.object({
     title: z.string(),
     subtitle: z.string(),
-    url: z.string().url(),
+    url: z.url(),
     image: image(),
     imageAlt: z.string(),
   }),
 });
 
 const talksCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/talks' }),
   schema: z.object({
     title: z.string(),
     event: z.string(),
@@ -57,7 +59,7 @@ const talksCollection = defineCollection({
 });
 
 const workExperienceCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/work-experience' }),
   schema: z.object({
     title: z.string(),
     company: z.string(),
@@ -66,8 +68,6 @@ const workExperienceCollection = defineCollection({
   }),
 });
 
-// 3. Export a single `collections` object to register your collection(s)
-//    This key should match your collection directory name in "src/content"
 export const collections = {
   'articles': articleCollection,
   'projects': projectCollection,
