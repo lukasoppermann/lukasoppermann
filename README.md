@@ -100,6 +100,56 @@ at rest. Reduced-motion preferences make underline changes immediate.
 
 The sync script is idempotent and preserves existing article files.
 
+### Speaking
+
+The About page lists talks below work experience, newest year first. Entries in
+`src/content/talks/` were imported from the Read.cv export through May 2025,
+including workshops, panels, internal sessions, and a podcast. Add newer talks
+as Markdown files. `order` controls ordering within a year (lower numbers first);
+filenames break ties. Only years are displayed, so exact dates are not required.
+
+Each entry has a `title`, `event`, and numeric `year`. Optional fields are `url`
+(the title's external link), `location`, `speakers` (co-speaker names), and `media`.
+The Markdown body is the short description; missing details are omitted.
+
+```yaml
+---
+title: "Async/Await: Close collaboration across non-overlapping time zones"
+event: "LGTM by GitHub"
+year: 2024
+order: 8
+url: "https://www.youtube.com/watch?v=LN6dGGBfDYs"
+location: "Seattle, USA"
+speakers:
+  - "Katie Langerman"
+media:
+  - type: image
+    image: "../../assets/images/talks/08-01.webp"
+    alt: "Async/Await at LGTM by GitHub, image 1"
+  - type: video
+    title: "Session recording"
+    url: "https://www.youtube.com/watch?v=LN6dGGBfDYs"
+---
+
+Lessons from two years of asynchronous collaboration.
+```
+
+Store images in `src/assets/images/talks/`; paths are relative to the entry.
+Every image gets its own unlabeled, uncropped thumbnail below the description,
+with a light border and subtle shadow. Description links are underlined.
+Hovering or keyboard-focusing a thumbnail enlarges it slightly and lifts it
+with a broader, darker shadow; the border stays unchanged. Reduced-motion
+preferences keep the shadow change but disable movement and transitions.
+The viewer fits the image within the viewport, with no caption, padded
+background, or separate Close button. The image itself is a labeled close
+button: clicking the image or backdrop, Escape, or Enter/Space on the focused
+image dismisses the viewer and returns focus to the card. A zoom-out cursor
+signals click-to-close. Without JavaScript,
+the card links directly to the image. Images are optimized locally, and no
+third-party media is embedded. Video and slide cards use `type: video` or
+`type: slides`, plus `title` and an HTTP(S) `url`, and open the original resource.
+Title links do not automatically create media cards.
+
 ### Testing
 
 Build the site and run the behavior and focused unit tests with:

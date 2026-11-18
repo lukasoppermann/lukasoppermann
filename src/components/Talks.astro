@@ -1,66 +1,352 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import { getImage, Image } from "astro:assets";
 import { render, type CollectionEntry } from "astro:content";
-import Link from "./Link.astro";
-import AboutItem from "./AboutItem.astro";
+import Icon from "./Icon.astro";
+import "@fontsource/source-sans-pro/400-italic.css";
 
-interface Props extends HTMLAttributes<"ul"> {
+interface Props extends HTMLAttributes<"section"> {
   title?: string;
   items: CollectionEntry<"talks">[];
-  moreLink?: string;
 }
 
-const { title = "Talks", items, moreLink, ...attr } = Astro.props;
+const { title = "Speaking", items, ...attr } = Astro.props;
 ---
 
+<section {...attr} aria-label={title}>
+  <h2>{title}</h2>
+  <ol class="talk-list" role="list">
+    {
+      items.map(async (item) => {
+        const { Content } = await render(item);
+        const { year, url, title, event, location, speakers, media } = item.data;
+        return (
+          <li class="talk">
+            <time datetime={String(year)}>{year}</time>
+            <article>
+              <h3>
+                {url ? <a class="talk-title" href={url}>{title}<Icon type="arrowRight" /></a> : title}
+              </h3>
+              <p class="talk-meta">{[event, location].filter(Boolean).join(" · ")}</p>
+              {speakers.length > 0 && <p class="talk-speakers">With {speakers.join(", ")}</p>}
+              {item.body?.trim() && <div class="talk-description"><Content /></div>}
+              {media.length > 0 && (
+                <ul class="talk-media" role="list" aria-label={`Media for ${title}`}>
+                  {media.map(async (attachment, index) => {
+                    if (attachment.type === "image") {
+                      const full = await getImage({
+                        src: attachment.image,
+                        width: Math.min(1920, attachment.image.width),
+                        format: "webp",
+                      });
+                      return (
+                        <li class="image-media">
+                          <a
+                            class="media-card image-card"
+                            href={full.src}
+                            data-talk-image
+                            data-image-alt={attachment.alt}
+                            data-image-width={attachment.image.width}
+                            data-image-height={attachment.image.height}
+                            aria-label={`View image ${index + 1} from ${title}`}
+                          >
+                            <Image
+                              src={attachment.image}
+                              alt={attachment.alt}
+                              width={Math.min(480, attachment.image.width)}
+                              format="webp"
+                              loading="lazy"
+                            />
+                          </a>
+                        </li>
+                      );
+                    }
+                    return (
+                      <li>
+                        <a class="media-card resource-card" href={attachment.url}>
+                          <span class="media-kind">{attachment.type === "video" ? "Video" : "Slides"}</span>
+                          <span class="resource-title">{attachment.title}</span>
+                          <span class="media-label">
+                            {attachment.type === "video" ? "Watch video" : "View slides"}<Icon type="arrowRight" />
+                          </span>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </article>
+          </li>
+        );
+      })
+    }
+  </ol>
+  <dialog class="talk-viewer" aria-label="Talk image viewer">
+    <button class="viewer-image" type="button" aria-label="Close image viewer" autofocus>
+      <span class="viewer-error" role="alert" hidden>Unable to load this image. Click here or press Escape to close and try again.</span>
+    </button>
+  </dialog>
+</section>
+
 <style>
-  h3 {
+  h2 {
     font: var(--typestyle__h5);
-    color: var(--on-background__low-emphasis);
-    margin-bottom: 24px;
+    color: var(--on-background__medium-emphasis);
+    margin: 0 0 32px;
   }
-  .more-link-container {
+  .talk-list {
+    padding: 0;
+    margin: 0;
+  }
+  .talk {
     display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 24px;
-    align-items: start;
-    :global(.more-link) {
-      grid-column: 2;
-      justify-self: start;
+    gap: 12px;
+    padding: 32px 0;
+    border-top: 1px solid var(--ui--fair-contrast);
+    @media (--min-tablet) {
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 24px;
+    }
+  }
+  time, .talk-meta, .talk-speakers {
+    font: var(--typestyle__body--small);
+    color: var(--on-background__medium-emphasis);
+  }
+  time {
+    padding-top: 4px;
+    font: var(--typestyle__caption);
+  }
+  article {
+    min-width: 0;
+  }
+  h3 {
+    margin: 0;
+    font: var(--font-serif-weight-regular) var(--ts-size-md) / var(--ts-line-height-md) var(--font-serif);
+    color: var(--on-background__high-emphasis);
+    text-wrap: pretty;
+  }
+  .talk-title {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--ui--high-contrast);
+    text-underline-offset: 4px;
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+    :global(svg) {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-left: 8px;
+      fill: currentColor;
+    }
+  }
+  .talk-meta {
+    margin: 6px 0 0;
+  }
+  .talk-speakers {
+    margin: 4px 0 0;
+    font-style: italic;
+  }
+  .talk-media {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 0;
+    align-items: flex-start;
+    margin: 20px 0 0;
+    > li {
+      width: 160px;
+      max-width: 100%;
+      @media (--max-mobile) {
+        width: calc(50% - 6px);
+      }
+    }
+    > .image-media {
       width: auto;
     }
   }
+  .media-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--ui--fair-contrast);
+    border-radius: 6px;
+    background: var(--ui--low-contrast);
+    text-decoration: none;
+    color: var(--on-background__high-emphasis);
+    &:not(.image-card):hover {
+      border-color: var(--on-background__medium-emphasis);
+    }
+  }
+  .image-card {
+    display: block;
+    border-radius: 4px;
+    box-shadow: 0 0 1.5px rgba(var(--black-rgb), 0.045), 0 3px 6px -2px rgba(var(--black-rgb), 0.075);
+    transition: box-shadow 180ms ease-out, transform 180ms ease-out;
+    &:hover, &:focus-visible {
+      box-shadow: 0 0 3px rgba(var(--black-rgb), 0.06), 0 8px 16px -3px rgba(var(--black-rgb), 0.16);
+      transform: translateY(-2px) scale(1.02);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+      &:hover, &:focus-visible {
+        transform: none;
+      }
+    }
+    :global(img) {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 112px;
+      @media (--max-mobile) {
+        max-height: 96px;
+      }
+    }
+  }
+  .media-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font: var(--typestyle__body--small);
+    :global(svg) {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+  }
+  .media-kind {
+    padding: 12px 12px 0;
+    font: var(--typestyle__caption);
+    color: var(--on-background__medium-emphasis);
+  }
+  .resource-title {
+    flex: 1;
+    padding: 8px 12px 12px;
+    font: var(--typestyle__body--small);
+    overflow-wrap: anywhere;
+  }
+  .talk-description {
+    font: var(--typestyle__body--small);
+    color: var(--on-background__medium-emphasis);
+    line-height: 1.6;
+    :global(p:first-child) {
+      margin-top: 16px;
+    }
+    :global(p:last-child) {
+      margin-bottom: 0;
+    }
+    :global(ul), :global(ol) {
+      padding-left: 20px;
+    }
+    :global(a) {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      &:hover, &:focus-visible {
+        text-decoration-thickness: 2px;
+      }
+      &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 4px;
+      }
+    }
+  }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--on-background__high-emphasis);
+    outline-offset: 4px;
+  }
+  .talk-viewer {
+    width: max-content;
+    height: max-content;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100dvh - 32px);
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    overflow: visible;
+    background: transparent;
+    color: var(--neutrals-0);
+    cursor: zoom-out;
+    &::backdrop {
+      background: rgba(0, 0, 0, 0.8);
+      cursor: zoom-out;
+    }
+  }
+  .viewer-error {
+    display: block;
+    max-width: min(320px, calc(100vw - 32px));
+    padding: 20px;
+    border-radius: 4px;
+    background: var(--neutrals-1000);
+    font: var(--typestyle__body--small);
+    &[hidden] {
+      display: none;
+    }
+  }
+  .viewer-image {
+    display: block;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    cursor: zoom-out;
+    :global(img) {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: calc(100vw - 32px);
+      max-height: calc(100dvh - 32px);
+      border-radius: inherit;
+    }
+    &:focus-visible {
+      outline-color: var(--neutrals-0);
+    }
+  }
+  :global(html:has(.talk-viewer[open])) {
+    overflow: hidden;
+  }
 </style>
 
-<div class:list={[attr.class]}>
-  <h3>{title}</h3>
-  {
-    items.map(async (item) => {
-      const { Content } = await render(item);
-      return (
-        <AboutItem
-          from={item.data.date}
-          title={item.data.title}
-          event={item.data.event}
-        >
-          <Content />
-        </AboutItem>
-      );
-    })
+<script>
+  const viewer = document.querySelector<HTMLDialogElement>(".talk-viewer");
+  if (viewer) {
+    const imageButton = viewer.querySelector<HTMLButtonElement>(".viewer-image")!;
+    const error = viewer.querySelector<HTMLSpanElement>(".viewer-error")!;
+    let trigger: HTMLAnchorElement | undefined;
+
+    document.querySelectorAll<HTMLAnchorElement>("[data-talk-image]").forEach((link) => {
+      link.setAttribute("aria-haspopup", "dialog");
+      link.addEventListener("click", (event) => {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        trigger = link;
+        error.hidden = true;
+        const image = document.createElement("img");
+        image.alt = link.dataset.imageAlt!;
+        image.width = Number(link.dataset.imageWidth);
+        image.height = Number(link.dataset.imageHeight);
+        imageButton.setAttribute("aria-label", `Close image viewer: ${image.alt}`);
+        image.addEventListener("error", () => {
+          if (!image.isConnected) return;
+          image.remove();
+          error.hidden = false;
+        });
+        image.src = link.href;
+        imageButton.prepend(image);
+        viewer.showModal();
+      });
+    });
+
+    viewer.addEventListener("click", () => viewer.close());
+    viewer.addEventListener("close", () => {
+      imageButton.querySelector("img")?.remove();
+      imageButton.setAttribute("aria-label", "Close image viewer");
+      error.hidden = true;
+      trigger?.focus();
+    });
   }
-  {
-    moreLink && (
-      <div class="more-link-container">
-        <Link
-          style="link"
-          class="more-link"
-          icon
-          href={moreLink}
-          target="_blank"
-        >
-          All talks
-        </Link>
-      </div>
-    )
-  }
-</div>
+</script>
