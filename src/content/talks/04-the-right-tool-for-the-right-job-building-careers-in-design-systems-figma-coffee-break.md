@@ -3,9 +3,8 @@ title: "The right tool for the right job: Building careers in design systems"
 event: "Figma Coffee Break"
 year: 2024
 order: 4
-url: "https://figmagithubcoffeebreak.splashthat.com/?utm_source=event&utm_medium=linkedin&utm_campaign=BerlinGitHubCoffeeBreak"
 location: "Berlin, Germany"
-speakers: ["Luis"]
+speakers: ["Luis Ouriach"]
 media:
   [
     {
