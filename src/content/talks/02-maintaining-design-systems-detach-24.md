@@ -3,7 +3,6 @@ title: "Maintaining Design Systems"
 event: "Detach!24"
 year: 2024
 order: 2
-url: "https://www.linkedin.com/company/detach-24/"
 location: "Brazil"
 media:
   [
