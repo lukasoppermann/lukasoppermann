@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import Svg from "../components/Svg.astro";
 import WorkExperience from "../components/WorkExperience.astro";
+import Talks from "../components/Talks.astro";
 import { getCollection } from "astro:content";
 import svgTitleDefault from "../assets/svgs/about-lukas-oppermann.svg?raw";
 import profilePicture from "../assets/images/lukasoppermann_profile_2x.jpg";
@@ -10,6 +11,10 @@ import Paragraph from "../components/Paragraph.astro";
 
 // Fetch collections
 const workExperience = await getCollection("work-experience");
+const talks = await getCollection("talks");
+const sortedTalks = talks.sort(
+  (a, b) => b.data.year - a.data.year || a.data.order - b.data.order || a.id.localeCompare(b.id)
+);
 
 // Sort work experience by start date (most recent first)
 const sortedWorkExperience = workExperience.sort(
@@ -113,16 +118,11 @@ const sortedWorkExperience = workExperience.sort(
       something I’ve never done before.
     </Paragraph>
   </section>
-  <!-- <Talks
-    class="talks"
-    items={sortedTalks}
-    title="Speaking"
-    moreLink="https://www.linkedin.com/in/lukasoppermann/"
-  /> -->
   <WorkExperience
     class="work-experience"
     items={sortedWorkExperience}
     title="Work Experience"
     moreLink="https://www.linkedin.com/in/lukasoppermann/"
   />
+  <Talks class="talks" items={sortedTalks} title="Speaking" />
 </Layout>

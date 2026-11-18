@@ -51,10 +51,26 @@ const HomepageLinkCollection = defineCollection({
 
 const talksCollection = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/talks' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     event: z.string(),
-    date: z.coerce.date(),
+    year: z.number().int().min(1900).max(9999),
+    order: z.number().int().nonnegative().default(0),
+    url: z.url().regex(/^https?:\/\//).optional(),
+    location: z.string().optional(),
+    speakers: z.array(z.string()).default([]),
+    media: z.array(z.discriminatedUnion('type', [
+      z.object({
+        type: z.literal('image'),
+        image: image(),
+        alt: z.string().min(1),
+      }),
+      z.object({
+        type: z.enum(['video', 'slides']),
+        title: z.string().min(1),
+        url: z.url().regex(/^https?:\/\//),
+      }),
+    ])).default([]),
   }),
 });
 

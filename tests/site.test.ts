@@ -150,6 +150,155 @@ describe('Site behavior', () => {
     expect(new URL(page.url()).pathname.replace(/\/$/, '')).toBe('/articles');
   });
 
+  it.each([390, 1280])('shows speaking entries and opens image cards at %ipx', async width => {
+    await page.setViewport({ width, height: 900 });
+    await page.goto(`${url}/about/`);
+    const speaking = '.talks';
+    expect(await page.$eval(speaking, section =>
+      Boolean(section.previousElementSibling?.classList.contains('work-experience')))).toBe(true);
+    expect(await page.$$(`${speaking} .talk`)).toHaveLength(23);
+    const years = await page.$$eval(`${speaking} time`, elements =>
+      elements.map(element => Number(element.textContent)));
+    expect(years).toEqual([...years].sort((a, b) => b - a));
+    expect(await page.$eval(`${speaking} .talk:first-child .talk-title`, link =>
+      link.getAttribute('href'))).toContain('hellodigital.com');
+    expect(await page.$eval(`${speaking} .talk:first-child .talk-meta`, element =>
+      element.textContent)).toBe('HelloDigital · Berlin, Germany');
+    expect(await page.$$(`${speaking} [data-talk-image]`)).toHaveLength(23);
+    expect(await page.$$eval(`${speaking} .talk`, talks => talks.some(talk =>
+      talk.querySelector('h3')?.textContent?.includes('Getting started with design systems') &&
+      !talk.querySelector('h3 a') && !talk.querySelector('.talk-media')))).toBe(true);
+    expect(await page.$$eval(`${speaking} .talk-speakers`, elements =>
+      elements.some(element => element.textContent?.includes('Katie Langerman')))).toBe(true);
+    expect(await page.$$eval(`${speaking} .image-card`, cards =>
+      cards.every(card => card.textContent?.trim() === ''))).toBe(true);
+    expect(await page.$$eval(`${speaking} .talk-description + .talk-media`, lists =>
+      lists.length)).toBeGreaterThan(0);
+    expect(await page.$$eval(`${speaking} .talk-description a`, links =>
+      links.length > 0 && links.every(link =>
+        getComputedStyle(link).textDecorationLine.includes('underline')))).toBe(true);
+    for (const selector of [
+      '.talk:first-child .image-media:first-child img',
+      '.talk:nth-child(7) .image-media:last-child img',
+    ]) {
+      await page.$eval(`${speaking} ${selector}`, image => image.scrollIntoView({ block: 'center' }));
+      await page.waitForFunction(selector => {
+        const image = document.querySelector<HTMLImageElement>(selector);
+        return image?.complete && image.naturalWidth > 0;
+      }, {}, `${speaking} ${selector}`);
+      const ratios = await page.$eval(`${speaking} ${selector}`, element => {
+        const image = element as HTMLImageElement;
+        const rect = image.getBoundingClientRect();
+        return { displayed: rect.width / rect.height, source: image.naturalWidth / image.naturalHeight };
+      });
+      expect(ratios.displayed).toBeCloseTo(ratios.source, 2);
+    }
+    await page.$eval(`${speaking} [data-talk-image]`, link => link.scrollIntoView({ block: 'center' }));
+    await page.click(`${speaking} [data-talk-image]`);
+    await page.waitForFunction(() => {
+      const dialog = document.querySelector<HTMLDialogElement>('.talk-viewer');
+      const image = dialog?.querySelector('img');
+      return dialog?.open && image?.complete && image.naturalWidth > 0;
+    });
+    expect(await page.$eval('.talk-viewer img', image => image.getAttribute('alt'))).toContain('HelloDigital');
+    expect(await page.$eval('.viewer-image', button => ({
+      focused: document.activeElement === button,
+      label: button.getAttribute('aria-label'),
+    }))).toEqual({ focused: true, label: expect.stringContaining('Close image viewer:') });
+    expect(await page.$eval('.talk-viewer', dialog => {
+      const bounds = dialog.getBoundingClientRect();
+      const image = dialog.querySelector('img')!.getBoundingClientRect();
+      return bounds.width <= innerWidth - 31 && bounds.height <= innerHeight - 31 &&
+        Math.abs(image.width - bounds.width) < 1 && Math.abs(image.height - bounds.height) < 1 &&
+        Math.abs(image.top - bounds.top) < 1 && Math.abs(image.left - bounds.left) < 1;
+    })).toBe(true);
+    expect(await page.$$('.viewer-footer, .viewer-close')).toHaveLength(0);
+    await page.click('.viewer-image img');
+    await page.waitForFunction(() =>
+      !document.querySelector<HTMLDialogElement>('.talk-viewer')?.open &&
+      !document.querySelector('.talk-viewer img'));
+    expect(await page.$eval(`${speaking} [data-talk-image]`, link => document.activeElement === link)).toBe(true);
+    for (const action of ['Escape', 'Enter', 'Space', 'backdrop'] as const) {
+      await page.keyboard.press('Enter');
+      await page.waitForSelector('.talk-viewer[open]');
+      if (action === 'backdrop') {
+        await page.mouse.click(4, 4);
+      } else {
+        await page.keyboard.press(action);
+      }
+      await page.waitForFunction(() =>
+        !document.querySelector<HTMLDialogElement>('.talk-viewer')?.open &&
+        !document.querySelector('.talk-viewer img'));
+      expect(await page.$eval(`${speaking} [data-talk-image]`, link => document.activeElement === link)).toBe(true);
+    }
+    expect(await page.$$('.talk-viewer img')).toHaveLength(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+
+  it.each([false, true])('raises image thumbnails on hover with reduced motion %s', async reduced => {
+    await page.setViewport({ width: 1280, height: 900 });
+    await page.emulateMediaFeatures([{
+      name: 'prefers-reduced-motion', value: reduced ? 'reduce' : 'no-preference',
+    }]);
+    await page.goto(`${url}/about/`);
+    await page.$eval('.image-card', card => card.scrollIntoView({ block: 'center' }));
+    await page.waitForFunction(() => {
+      const image = document.querySelector<HTMLImageElement>('.image-card img');
+      return image?.complete && image.naturalWidth > 0;
+    });
+    const measure = () => page.$eval('.image-card', card => {
+      const bounds = card.getBoundingClientRect();
+      const style = getComputedStyle(card);
+      return {
+        width: bounds.width, top: bounds.top, border: style.borderColor,
+        shadow: style.boxShadow, transition: style.transitionDuration,
+      };
+    });
+    const resting = await measure();
+    await page.hover('.image-card');
+    await page.$eval('.image-card', async card => {
+      await Promise.all(card.getAnimations().map(animation => animation.finished));
+    });
+    const hovered = await measure();
+    expect(hovered.border).toBe(resting.border);
+    expect(hovered.shadow).not.toBe(resting.shadow);
+    if (reduced) {
+      expect(hovered.width).toBeCloseTo(resting.width, 2);
+      expect(hovered.top).toBeCloseTo(resting.top, 2);
+      expect(hovered.transition).toBe('0s');
+    } else {
+      expect(hovered.width - resting.width).toBeGreaterThan(2);
+      expect(hovered.width - resting.width).toBeLessThan(6);
+      expect(hovered.top).toBeLessThan(resting.top);
+    }
+  });
+
+  it('keeps an image load failure dismissible without a separate Close button', async () => {
+    await page.goto(`${url}/about/`);
+    await page.$eval('.talks [data-talk-image]', link => link.setAttribute('href', '/about/'));
+    await page.click('.talks [data-talk-image]');
+    await page.waitForSelector('.viewer-error:not([hidden])', { visible: true });
+    expect(await page.$eval('.viewer-image', button => document.activeElement === button)).toBe(true);
+    await page.keyboard.press('Enter');
+    await page.waitForFunction(() =>
+      !document.querySelector<HTMLDialogElement>('.talk-viewer')?.open &&
+      document.activeElement === document.querySelector('.talks [data-talk-image]'));
+    expect(await page.$eval('.talks [data-talk-image]', link => document.activeElement === link)).toBe(true);
+  });
+
+  it('keeps talk titles and image links available without JavaScript', async () => {
+    await page.setJavaScriptEnabled(false);
+    await page.goto(`${url}/about/`);
+    expect(await page.$$('.talks .talk')).toHaveLength(23);
+    const image = await page.$eval('.talks [data-talk-image]', link => ({
+      href: link.getAttribute('href')!, popup: link.getAttribute('aria-haspopup'),
+    }));
+    expect(image.popup).toBeNull();
+    const response = await page.goto(new URL(image.href, url).href);
+    expect(response?.status()).toBe(200);
+    expect(response?.headers()['content-type']).toBe('image/webp');
+  });
+
   it.each([false, true])('supports mobile navigation and project details with reduced motion %s', async reduced => {
     await page.setViewport({ width: 390, height: 844 });
     await page.emulateMediaFeatures([{
