@@ -71,10 +71,9 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
     )}
   </figure>
   <div class="Project-story">
-    <h4 class="Project-details-heading">Project details</h4>
     <details class="Project-details" open>
       <summary>
-        Project details<span class="sr-only">: {client}</span>
+        <span class="Project-details-label"><span class="Project-details-text">Project details<span class="sr-only">: {client}</span></span></span>
         <span class="Project-toggle" aria-hidden="true"></span>
       </summary>
       <div class="Project-process">
@@ -83,11 +82,11 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
           <h5>Responsibilities</h5>
           <ul>{responsibilities.map(item => <li>{item}</li>)}</ul>
         </aside>
+        <div class="Project-link">
+          <Link href={url} target={buttonTarget} icon={true}>{buttonLabel}</Link>
+        </div>
       </div>
     </details>
-    <div class="Project-link">
-      <Link href={url} target={buttonTarget} icon={true}>{buttonLabel}</Link>
-    </div>
   </div>
 </article>
 
@@ -98,6 +97,14 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
 
   const desktop = window.matchMedia("(min-width: 1024px)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const disclosureObserver = "IntersectionObserver" in window
+    ? new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        const summary = entry.target.querySelector("summary");
+        if (summary) summary.setAttribute("data-visible", String(entry.isIntersecting));
+      }
+    })
+    : undefined;
 
   document.querySelectorAll<HTMLDetailsElement>(".Project-details").forEach(details => {
     const summary = details.querySelector<HTMLElement>("summary")!;
@@ -106,19 +113,21 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
     let animation: Animation | undefined;
     let contentAnimation: Animation | undefined;
 
+    disclosureObserver?.observe(details);
+
     const sync = () => {
       animation?.cancel();
       contentAnimation?.cancel();
       animation = undefined;
       contentAnimation = undefined;
       delete details.dataset.animating;
-      details.open = desktop.matches || mobileOpen;
+      details.open = mobileOpen;
       details.dataset.expanded = String(details.open);
     };
 
     summary.addEventListener("click", event => {
-      event.preventDefault();
       if (desktop.matches) return;
+      event.preventDefault();
 
       mobileOpen = !mobileOpen;
       if (reducedMotion.matches) {
@@ -150,11 +159,7 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
 
     details.addEventListener("toggle", () => {
       if (animation) return;
-      if (desktop.matches) {
-        if (!details.open) details.open = true;
-      } else {
-        mobileOpen = details.open;
-      }
+      mobileOpen = details.open;
       details.dataset.expanded = String(details.open);
     });
     desktop.addEventListener("change", sync);
@@ -171,6 +176,7 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
     border-top: 1px solid var(--ui--medium-contrast);
     color: var(--on-background__high-emphasis);
   }
+  .Project:last-of-type { border-bottom: 1px solid var(--ui--medium-contrast); }
   .Project-meta {
     display: flex;
     flex-wrap: wrap;
@@ -268,10 +274,6 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
   .project-bosch { --project-color-tint: var(--bosch-project-color); }
   .project-copra { --project-color-tint: var(--copra-project-color); }
   .project-figma { --project-color-tint: var(--design-tokens-project-color); }
-  .Project-story {
-    border-top: 1px solid var(--ui--fair-contrast);
-  }
-  .Project-details-heading { display: none; }
   .Project-details[data-animating] { overflow: clip; }
   summary {
     display: flex;
@@ -282,9 +284,63 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
     cursor: pointer;
     list-style: none;
     font: var(--typestyle__h4);
+    transition:
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+  summary[data-visible="false"]:not(:focus-within) .Project-details-text,
+  summary[data-visible="false"]:not(:focus-within) .Project-toggle {
+    opacity: 0;
+  }
+  summary[data-visible="false"]:not(:focus-within) .Project-toggle {
+    translate: 0 24px;
+  }
+  .Project-details-label {
+    position: relative;
+    overflow: hidden;
+  }
+  .Project-details-label::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleX(0);
+    pointer-events: none;
+    --origin-start: left;
+    --origin-end: right;
+  }
+  summary[data-visible="true"] .Project-details-label::after {
+    animation: blockReveal 900ms var(--easeInOutQuint) both;
+  }
+  summary[data-visible="true"] .Project-details-text {
+    animation: projectDetailsTextReveal 900ms step-end both;
+  }
+  @keyframes projectDetailsTextReveal {
+    0% { opacity: 0; }
+    50%, 100% { opacity: 1; }
   }
   summary::-webkit-details-marker { display: none; }
-  summary:hover { color: var(--on-background__highest-emphasis); }
+  summary:hover,
+  summary:focus-visible {
+    background-color: var(--neutrals-50);
+    color: var(--on-background__highest-emphasis);
+  }
+  .Project-details-label,
+  .Project-toggle {
+    transition: transform 200ms ease;
+  }
+  summary:hover .Project-details-label,
+  summary:focus-visible .Project-details-label {
+    transform: translateX(16px);
+  }
+  summary:hover .Project-toggle,
+  summary:focus-visible .Project-toggle {
+    transform: translateX(-16px);
+  }
+  @media (prefers-color-scheme: dark) {
+    summary:hover,
+    summary:focus-visible { background-color: var(--neutrals-950); }
+  }
   summary:focus-visible {
     outline: 2px solid var(--on-background__highest-emphasis);
     outline-offset: 4px;
@@ -294,6 +350,10 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
     width: 16px;
     height: 16px;
     flex: 0 0 16px;
+    transition:
+      transform 200ms ease,
+      opacity 420ms ease,
+      translate 420ms cubic-bezier(0.2, 0, 0, 1);
   }
   .Project-toggle::before,
   .Project-toggle::after {
@@ -328,10 +388,10 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
     max-width: 65ch;
   }
   .Project-process :global(p:last-child) { margin-bottom: 0; }
-  .Project-process :global(a) { color: inherit; text-decoration: underline; }
+  .Project-narrative :global(a) { color: inherit; text-decoration: underline; }
   .Project-process ul { margin: 0; padding-left: 20px; }
   .Project-process li + li { margin-top: 6px; }
-  .Project-link { padding-top: 8px; }
+  .Project-link { grid-column: 1 / -1; padding-top: 8px; }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -342,6 +402,16 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
     white-space: nowrap;
   }
   @media (prefers-reduced-motion: reduce) {
+    summary,
+    .Project-details-label,
+    .Project-toggle { transition: none; }
+    summary[data-visible="false"]:not(:focus-within) .Project-details-text,
+    summary[data-visible="false"]:not(:focus-within) .Project-toggle {
+      opacity: 1;
+      translate: none;
+    }
+    .Project-details-label::after { display: none; }
+    summary[data-visible="true"] .Project-details-text { animation: none; }
     .Project-toggle::after { transition: none; }
     .Project-image img[data-state] { animation: none; transform: none; }
   }
@@ -357,19 +427,20 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
       grid-template-columns: 5fr 6fr;
       column-gap: clamp(40px, 5vw, 80px);
       align-items: center;
-      padding-block: 56px;
+      padding-block: 56px 20px;
+    }
+    .Project:nth-child(even) .Project-summary {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .Project:nth-child(even) .Project-visual {
+      grid-column: 1;
+      grid-row: 1;
     }
     h3 { font: var(--typestyle__h2); margin-bottom: 28px; }
     .Project-facts { grid-template-columns: 1fr; gap: 20px; }
     .Project-image { aspect-ratio: 4 / 3; }
     .Project-story { grid-column: 1 / -1; }
-    .Project-details-heading {
-      display: block;
-      margin: 20px 0 0;
-      font: var(--font-sans-style-normal) var(--font-sans-weight-bold)
-        var(--ts-size-lg) / var(--ts-line-height-lg) var(--font-sans);
-    }
-    summary { display: none; }
     .Project-link { padding-top: 4px; }
   }
 </style>
