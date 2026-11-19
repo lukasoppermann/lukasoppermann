@@ -67,6 +67,30 @@ describe('Project image loading', () => {
     expect(unobserve).toHaveBeenCalledWith(images[0].parentElement);
   });
 
+  it('reveals layered images together even when the overlay loads first', () => {
+    images[0].parentElement!.append(images[1]);
+    initProjectImages();
+    enter(0);
+    expect(images.slice(0, 2).every(image => image.hasAttribute('src'))).toBe(true);
+    complete(1);
+    expect(images[1].dataset.state).toBe('pending');
+    expect(unobserve).not.toHaveBeenCalled();
+    complete(0);
+    expect(images.slice(0, 2).map(image => image.dataset.state)).toEqual(['ready', 'ready']);
+  });
+
+  it('still reveals a loaded layer when the other layer fails', () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    images[0].parentElement!.append(images[1]);
+    initProjectImages();
+    enter(0);
+    complete(0);
+    expect(images[0].dataset.state).toBe('pending');
+    complete(1, false);
+    expect(images[0].dataset.state).toBe('ready');
+    expect(images[1].dataset.state).toBe('error');
+  });
+
   it('preloads one image per idle period, waiting for the preceding load', async () => {
     initProjectImages();
     expect(images.every(image => !image.hasAttribute('src'))).toBe(true);

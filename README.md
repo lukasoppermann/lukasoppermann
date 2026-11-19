@@ -51,9 +51,12 @@ rotating plus/minus stroke. The disclosure label stays fully visible.
 Reduced-motion preferences disable both animations. Process subheadings use
 level-five Markdown headings (`#####`) beneath the Project details heading.
 
-Lab1886, Bosch, and Copra keep their image backgrounds visible while images load.
+Primer, Lab1886, Bosch, and Copra keep their image backgrounds visible while images load.
 Images fade in over 1200ms with ease-in-out and slide up 64px over 1500ms with a
 long ease-out once loaded and at least 35% visible, only once per page visit.
+Primer combines its token panel with an optional `imageOverlay` and
+`imageOverlayAlt`. Both layers load before revealing; the dark overlay follows
+the white panel by 180ms.
 Visible images load first; after the page loads, offscreen images
 preload one at a time during browser idle periods (with a timer fallback).
 Reduced-motion preferences disable the transition. Without JavaScript, native

@@ -81,6 +81,7 @@
   --lab1886-project-color: #ebe5d2;
   --bosch-project-color: #c2e8e3;
   --copra-project-color: #f1dada;
+  --primer-project-color: #e6f5ea;
   --design-tokens-project-color: #fccf2b;
 }
 
@@ -128,6 +129,7 @@
     --bosch-project-color: #212b29;
     --lab1886-project-color: #141415;
     --copra-project-color: #221919;
+    --primer-project-color: #1c2920;
     --design-tokens-project-color: #fccf2b;
     --project-card--background: var(--neutrals-950);
     --project-card--text-high-emphasis: var(--on-background__high-emphasis);

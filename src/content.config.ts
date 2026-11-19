@@ -30,6 +30,8 @@ const projectCollection = defineCollection({
     endDate: z.string().optional(), //.transform((str) => new Date(str)),
     image: image(),
     imageAlt: z.string(),
+    imageOverlay: image().optional(),
+    imageOverlayAlt: z.string().optional(),
     imageCaption: z.object({
       title: z.string(),
       lead: z.string(),
