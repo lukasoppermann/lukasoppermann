@@ -107,6 +107,20 @@ describe('Project image loading', () => {
     expect(images[0].dataset.state).toBe('ready');
   });
 
+  it.each([true, false])('coordinates HTML artwork with overlay loading (success: %s)', success => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const artwork = document.createElement('div');
+    artwork.dataset.projectArtwork = '';
+    images[0].parentElement!.prepend(artwork);
+    initProjectImages();
+    expect(artwork.dataset.state).toBe('pending');
+    enter(0, 0.1);
+    complete(0, success);
+    expect(artwork.dataset.state).toBe('pending');
+    enter(0);
+    expect(artwork.dataset.state).toBe('ready');
+  });
+
   it('loads on first intersection but waits until 35% visible to reveal', () => {
     initProjectImages();
     enter(0, 0.01);

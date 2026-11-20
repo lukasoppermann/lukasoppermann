@@ -54,9 +54,10 @@ level-five Markdown headings (`#####`) beneath the Project details heading.
 Primer, Lab1886, Bosch, and Copra keep their image backgrounds visible while images load.
 Images fade in over 1200ms with ease-in-out and slide up 64px over 1500ms with a
 long ease-out once loaded and at least 35% visible, only once per page visit.
-Primer combines its token panel with an optional `imageOverlay` and
-`imageOverlayAlt`. Both layers load before revealing; the dark overlay follows
-the white panel by 180ms.
+Primer's token artwork is HTML/CSS with individually targetable typography cards,
+color pills, radius samples and spacing bars. It scales from a 1623 × 1579
+reference canvas and combines with `imageOverlay` and `imageOverlayAlt`.
+The artwork reveals when the overlay has loaded; the dark overlay follows by 180ms.
 Visible images load first; after the page loads, offscreen images
 preload one at a time during browser idle periods (with a timer fallback).
 Reduced-motion preferences disable the transition. Without JavaScript, native

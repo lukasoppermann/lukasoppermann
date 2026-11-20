@@ -6,12 +6,18 @@ export function initProjectImages() {
   const loaded = new Set<HTMLImageElement>();
   const requests = new Map<HTMLImageElement, Promise<void>>();
   const revealThreshold = 0.35;
+  for (const artwork of document.querySelectorAll<HTMLElement>("[data-project-artwork]")) {
+    artwork.dataset.state = "pending";
+  }
 
   const reveal = (image: HTMLImageElement) => {
     const layers = images.filter(layer => layer.parentElement === image.parentElement);
     if (layers.every(layer => visible.has(layer) && (loaded.has(layer) || layer.dataset.state === "error"))) {
       for (const layer of layers) {
         if (loaded.has(layer)) layer.dataset.state = "ready";
+      }
+      for (const artwork of image.parentElement!.querySelectorAll<HTMLElement>("[data-project-artwork]")) {
+        artwork.dataset.state = "ready";
       }
       observer?.unobserve(image.parentElement!);
     }
