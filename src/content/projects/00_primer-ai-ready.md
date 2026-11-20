@@ -1,8 +1,8 @@
 ---
 title: Making GitHub's design system AI-ready
 client: GITHUB
-challenge: AI agents struggled to use GitHub's design system, Primer, correctly. They selected wrong tokens, rebuilt existing components, and took too long to produce results.
-role: Led a two-quarter initiative as DRI, defining the strategy, building AI tooling, and working with engineers to improve Primer's architecture.
+challenge: AI agents struggled to use GitHub's design system, Primer, correctly. They selected wrong tokens, rebuilt existing components and took too long to produce results.
+role: Led a two-quarter initiative as DRI, defining the strategy, building AI tooling and working with engineers to improve Primer's architecture.
 outcome: Shipped AI-ready tooling available to GitHub teams, reducing agent execution time by up to 65% and improving the accuracy and quality of generated UI.
 class: project-primer
 responsibilities:
@@ -24,7 +24,7 @@ endDate: "2026-12-31"
 ##### Making Primer understandable to AI
 Design systems contain knowledge that isn't always explicit in their documentation. I added structured usage guidance directly to Primer's design tokens and built specialized MCP search capabilities to help agents find the right tokens faster.
 
-In our evaluations, the MCP reduced execution time by 65%, used 52% fewer input tokens, and achieved 100% valid token selection.
+In our evaluations, the MCP reduced execution time by 65%, used 52% fewer input tokens and achieved 100% valid token selection.
 
 ##### Adapting Primer for AI-generated interfaces
 Agents often rebuilt components when they couldn't customize existing ones. I developed an approach using smaller, composable components and styling APIs that offered more flexibility without sacrificing consistency.
