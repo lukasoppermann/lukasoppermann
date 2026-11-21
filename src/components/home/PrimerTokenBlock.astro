@@ -22,11 +22,19 @@ const colors = [
   { x: 1284, y: 890, width: 295, name: "fgColor.danger", color: "#cf222e", foreground: true },
 ];
 const radii = [
-  { x: 13, y: 1076.5, name: "borderRadius.sm", detail: "3px", radius: 3, ring: 56, dots: 8 },
-  { x: 440, y: 1076.5, name: "borderRadius.large", detail: "12px", radius: 24, ring: 80, dots: 12 },
-  { x: 13, y: 1207.5, name: "borderRadius.mm", detail: "6px – default", radius: 12, ring: 68, dots: 10 },
-  { x: 440, y: 1207.5, name: "borderRadius.full", detail: "9999px", radius: 9999, ring: 100, dots: 16 },
+  { x: 13, y: 1010, name: "borderRadius.sm", detail: "3px", radius: 3, ring: 12 },
+  { x: 600, y: 1010, name: "borderRadius.large", detail: "12px", radius: 24, ring: 48 },
+  { x: 13, y: 1180, name: "borderRadius.mm", detail: "6px – default", radius: 12, ring: 24 },
+  { x: 600, y: 1180, name: "borderRadius.full", detail: "9999px", radius: 9999, ring: 92 },
 ];
+const radiusScale = 1.5;
+const ringStroke = 4;
+const dotPitch = 7;
+const ringPath = (ring: number) => {
+  const r = 50 - (ringStroke / 2) * (100 / ring);
+  const centerline = ring - ringStroke;
+  return { r, strokeWidth: ringStroke * (100 / ring), dots: Math.max(4, Math.round((Math.PI * centerline) / dotPitch)) };
+};
 const spacing = [
   { x: 43.5, width: 3, label: "2px" }, { x: 110, width: 6, label: "4px" },
   { x: 176.5, width: 9, label: "6px" }, { x: 243.5, width: 12, label: "8px" },
@@ -55,8 +63,8 @@ const spacing = [
       </div>
     ))}
     {radii.map(token => (
-      <div class="Token-radius" style={`--x:${token.x};--y:${token.y};--radius:${token.radius};--ring:${token.ring}`}>
-        <span class="Token-radius-shape"><svg class="Token-radius-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" pathLength={token.dots} /></svg></span>
+      <div class="Token-radius" style={`--x:${token.x};--y:${token.y};--radius:${token.radius};--ring:${token.ring};--radius-scale:${radiusScale}`}>
+        <span class="Token-radius-shape"><svg class="Token-radius-ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r={ringPath(token.ring).r} stroke-width={ringPath(token.ring).strokeWidth} pathLength={ringPath(token.ring).dots} /></svg></span>
         <span class="Token-radius-label"><strong>{token.name}</strong><span>{token.detail}</span></span>
       </div>
     ))}
@@ -144,7 +152,13 @@ const spacing = [
     background: var(--color);
   }
   .Token-foreground { color: var(--color); font-size: calc(32 * var(--u)); font-weight: 600; }
-  .Token-radius { display: flex; align-items: flex-start; gap: calc(20 * var(--u)); }
+  .Token-radius {
+    display: flex;
+    align-items: flex-start;
+    gap: calc(20 * var(--u));
+    transform: scale(var(--radius-scale));
+    transform-origin: 0 0;
+  }
   .Token-radius-shape {
     position: relative;
     width: calc(150 * var(--u));
@@ -165,7 +179,6 @@ const spacing = [
   .Token-radius-ring circle {
     fill: #fff;
     stroke: #7c3aed;
-    stroke-width: calc(700 / var(--ring));
     stroke-linecap: round;
     stroke-dasharray: 0 1;
   }
