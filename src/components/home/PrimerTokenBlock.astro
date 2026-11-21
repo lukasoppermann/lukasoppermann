@@ -71,8 +71,8 @@ const spacing = [
 <style>
   .Primer-token-block {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 40px;
+    left: 40px;
     width: calc(100% * 2724 / 2600 * 0.567);
     aspect-ratio: 1623 / 1579;
     container-type: inline-size;
@@ -160,14 +160,7 @@ const spacing = [
     bottom: calc(-4 * var(--u));
     width: calc(var(--ring) * var(--u));
     height: calc(var(--ring) * var(--u));
-    border-radius: 50%;
-    --step: calc(540deg / var(--ring));
-    background: repeating-conic-gradient(#7c3aed 0deg calc(var(--step) / 2), transparent calc(var(--step) / 2) var(--step));
-  }
-  .Token-radius-ring::after {
-    content: "";
-    position: absolute;
-    inset: calc(4 * var(--u));
+    border: max(1px, calc(4 * var(--u))) dotted #7c3aed;
     border-radius: 50%;
     background: #fff;
   }
