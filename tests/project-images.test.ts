@@ -67,6 +67,30 @@ describe('Project image loading', () => {
     expect(unobserve).toHaveBeenCalledWith(images[0].parentElement);
   });
 
+  it('reveals layered images together even when the overlay loads first', () => {
+    images[0].parentElement!.append(images[1]);
+    initProjectImages();
+    enter(0);
+    expect(images.slice(0, 2).every(image => image.hasAttribute('src'))).toBe(true);
+    complete(1);
+    expect(images[1].dataset.state).toBe('pending');
+    expect(unobserve).not.toHaveBeenCalled();
+    complete(0);
+    expect(images.slice(0, 2).map(image => image.dataset.state)).toEqual(['ready', 'ready']);
+  });
+
+  it('still reveals a loaded layer when the other layer fails', () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    images[0].parentElement!.append(images[1]);
+    initProjectImages();
+    enter(0);
+    complete(0);
+    expect(images[0].dataset.state).toBe('pending');
+    complete(1, false);
+    expect(images[0].dataset.state).toBe('ready');
+    expect(images[1].dataset.state).toBe('error');
+  });
+
   it('preloads one image per idle period, waiting for the preceding load', async () => {
     initProjectImages();
     expect(images.every(image => !image.hasAttribute('src'))).toBe(true);
@@ -81,6 +105,20 @@ describe('Project image loading', () => {
     expect(images.map(image => image.hasAttribute('src'))).toEqual([true, true, false]);
     enter(0);
     expect(images[0].dataset.state).toBe('ready');
+  });
+
+  it.each([true, false])('coordinates HTML artwork with overlay loading (success: %s)', success => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const artwork = document.createElement('div');
+    artwork.dataset.projectArtwork = '';
+    images[0].parentElement!.prepend(artwork);
+    initProjectImages();
+    expect(artwork.dataset.state).toBe('pending');
+    enter(0, 0.1);
+    complete(0, success);
+    expect(artwork.dataset.state).toBe('pending');
+    enter(0);
+    expect(artwork.dataset.state).toBe('ready');
   });
 
   it('loads on first intersection but waits until 35% visible to reveal', () => {

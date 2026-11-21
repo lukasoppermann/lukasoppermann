@@ -3,6 +3,7 @@ import type { CollectionEntry, RenderResult } from "astro:content";
 import { getImage, Image } from "astro:assets";
 import DateTime from "../DateTime.astro";
 import Link from "../Link.astro";
+import PrimerTokenBlock from "./PrimerTokenBlock.astro";
 
 type Props = CollectionEntry<"projects">["data"] & {
   id: string;
@@ -11,25 +12,32 @@ type Props = CollectionEntry<"projects">["data"] & {
 
 const {
   id, class: className, title, client, challenge, role, outcome,
-  image, imageAlt, imageCaption,
+  image, imageAlt, imageCaption, imageOverlay, imageOverlayAlt,
   buttonLabel, buttonTarget, url,
   responsibilities, startDate, endDate, Content,
 } = Astro.props;
-const revealImage = ["project-lab1886", "project-bosch", "project-copra"].includes(className ?? "");
+const revealImage = ["project-primer", "project-lab1886", "project-bosch", "project-copra"].includes(className ?? "");
 const imageOptions = {
   src: image,
   alt: imageAlt,
   widths: [400, 800, 1200],
   sizes: "(min-width: 1024px) 50vw, 100vw",
 };
-const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
+const htmlTokens = className === "project-primer";
+const deferredImage = revealImage && !htmlTokens ? await getImage(imageOptions) : undefined;
+const overlayOptions = imageOverlay ? {
+  ...imageOptions,
+  src: imageOverlay,
+  alt: imageOverlayAlt ?? "",
+} : undefined;
+const deferredOverlay = overlayOptions ? await getImage(overlayOptions) : undefined;
 ---
 
 <article class:list={["Project", className]} aria-labelledby={`${id}-title`}>
   <div class="Project-summary">
     <div class="Project-meta">
       <span>{client}</span>
-      <DateTime format="YYYY" from={startDate} to={endDate} />
+      {startDate && <DateTime format="YYYY" from={startDate} to={endDate} />}
     </div>
     <h3 id={`${id}-title`}>{title}</h3>
     <dl class="Project-facts">
@@ -49,7 +57,7 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
   </div>
   <figure class="Project-visual">
     <div class="Project-image">
-      {deferredImage ? (
+      {htmlTokens ? <PrimerTokenBlock /> : deferredImage ? (
         <>
           <img
             {...deferredImage.attributes}
@@ -63,6 +71,21 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
           </noscript>
         </>
       ) : <Image {...imageOptions} />}
+      {deferredOverlay && overlayOptions && (
+        <>
+          <img
+            {...deferredOverlay.attributes}
+            class="Project-image-overlay"
+            data-project-image
+            data-src={deferredOverlay.src}
+            data-srcset={deferredOverlay.srcSet.attribute}
+            hidden
+          />
+          <noscript>
+            <Image {...overlayOptions} class="Project-image-overlay" />
+          </noscript>
+        </>
+      )}
     </div>
     {imageCaption && (
       <figcaption class="Project-image-caption">
@@ -82,9 +105,11 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
           <h5>Responsibilities</h5>
           <ul>{responsibilities.map(item => <li>{item}</li>)}</ul>
         </aside>
-        <div class="Project-link">
-          <Link href={url} target={buttonTarget} icon={true}>{buttonLabel}</Link>
-        </div>
+        {url && buttonLabel && (
+          <div class="Project-link">
+            <Link href={url} target={buttonTarget} icon={true}>{buttonLabel}</Link>
+          </div>
+        )}
       </div>
     </details>
   </div>
@@ -198,6 +223,7 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
     text-wrap: balance;
     color: var(--on-background__highest-emphasis);
   }
+  .project-primer h3 { max-width: none; }
   .Project-facts {
     display: grid;
     gap: 16px;
@@ -274,6 +300,32 @@ const deferredImage = revealImage ? await getImage(imageOptions) : undefined;
   .project-bosch { --project-color-tint: var(--bosch-project-color); }
   .project-copra { --project-color-tint: var(--copra-project-color); }
   .project-figma { --project-color-tint: var(--design-tokens-project-color); }
+  .project-primer { --project-color-tint: var(--primer-project-color); }
+  .project-primer .Project-image {
+    position: relative;
+    width: calc(100% * 2600 / 2724);
+    aspect-ratio: 2600 / 1943.574;
+    overflow: visible;
+    clip-path: inset(0 calc(-100% * 124 / 2600) 0 0);
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .project-primer .Project-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% * 2724 / 2600 * 0.567);
+    height: auto;
+    max-width: none;
+    flex: none;
+  }
+  .project-primer .Project-image img.Project-image-overlay {
+    top: 10.5%;
+    left: calc(100% * 2724 / 2600 * 0.433);
+    z-index: 1;
+    animation-delay: 180ms;
+    animation-fill-mode: backwards;
+  }
   .Project-details[data-animating] { overflow: clip; }
   summary {
     display: flex;
