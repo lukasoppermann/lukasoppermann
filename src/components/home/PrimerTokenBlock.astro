@@ -1,10 +1,10 @@
 ---
 const cards = [
-  { x: 65, y: 55, angle: -20, name: "text.title.medium", detail: "semibold – 20/32", size: 60, weight: 600, offset: 78 },
-  { x: 168, y: 27, angle: -10, name: "text.subtitle", detail: "regular – 20/32", size: 72, weight: 400, offset: 72 },
-  { x: 272, y: 22, angle: 0, name: "text.title.large", detail: "semibold – 32/48", size: 120, weight: 600, offset: 52 },
-  { x: 378, y: 32, angle: 10, name: "text.title.medium", detail: "semibold – 20/32", size: 72, weight: 600, offset: 68 },
-  { x: 477, y: 56, angle: 20, name: "text.display", detail: "semibold – 40/56", size: 150, weight: 600, offset: 48 },
+  { angle: -20, name: "text.title.medium", detail: "semibold – 20/32", size: 60, weight: 600, offset: 78 },
+  { angle: -10, name: "text.subtitle", detail: "regular – 20/32", size: 72, weight: 400, offset: 72 },
+  { angle: 0, name: "text.title.large", detail: "semibold – 32/48", size: 120, weight: 600, offset: 52 },
+  { angle: 10, name: "text.title.medium", detail: "semibold – 20/32", size: 72, weight: 600, offset: 68 },
+  { angle: 20, name: "text.display", detail: "semibold – 40/56", size: 150, weight: 600, offset: 48 },
 ];
 const colors = [
   { x: 12, y: 662, width: 299, name: "bgColor.default", color: "#ffffff" },
@@ -49,8 +49,8 @@ const spacing = [
 
 <div class="Primer-token-block" data-project-artwork role="img" aria-label="Primer typography cards, color tokens, border radii and spacing tokens">
   <div class="Token-artwork" aria-hidden="true">
-    {cards.map(card => (
-      <div class="Token-card" style={`--x:${card.x};--y:${card.y};--angle:${card.angle}deg;--size:${card.size};--weight:${card.weight};--offset:${card.offset}`}>
+    {cards.map((card, index) => (
+      <div class="Token-card" style={`--i:${index};--angle:${card.angle}deg;--size:${card.size};--weight:${card.weight};--offset:${card.offset}`}>
         <span class="Token-font">fontStack/sansSerif</span>
         <span class="Token-sample">Aa</span>
         <div class="Token-type"><strong>{card.name}</strong><span>{card.detail}</span></div>
@@ -108,7 +108,10 @@ const spacing = [
     border-radius: calc(40 * var(--u));
     background: #fff;
     box-shadow: 0 calc(2 * var(--u)) calc(4 * var(--u)) #24292f1a;
+    --x: 272;
+    --y: 22;
     rotate: var(--angle);
+    transform-origin: calc(200 * var(--u)) calc(828 * var(--u));
   }
   .Token-font { white-space: nowrap; font-size: calc(32 * var(--u)); color: #57606a; }
   .Token-sample {
@@ -205,9 +208,22 @@ const spacing = [
   .Primer-token-block[data-state="ready"] {
     animation: tokenFade 1200ms ease-in-out, tokenSlide 1500ms cubic-bezier(0.22, 1, 0.36, 1);
   }
+  .Primer-token-block[data-state="ready"] .Token-card {
+    animation:
+      cardRise 800ms cubic-bezier(0.22, 1, 0.36, 1) both,
+      cardSpread 900ms cubic-bezier(0.3, 0.7, 0.2, 1) calc(650ms + (4 - var(--i)) * 60ms) both;
+  }
+  @keyframes cardRise {
+    from { opacity: 0; translate: 0 calc(240 * var(--u)); }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes cardSpread {
+    from { rotate: -20deg; }
+    to { rotate: var(--angle); }
+  }
   @keyframes tokenFade { from { opacity: 0; } to { opacity: 1; } }
   @keyframes tokenSlide { from { transform: translateY(64px); } to { transform: none; } }
   @media (prefers-reduced-motion: reduce) {
-    .Primer-token-block[data-state] { animation: none; transform: none; }
+    .Primer-token-block[data-state], .Primer-token-block[data-state] .Token-card { animation: none; transform: none; }
   }
 </style>
