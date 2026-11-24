@@ -56,10 +56,14 @@ const spacing = [
         <div class="Token-type"><strong>{card.name}</strong><span>{card.detail}</span></div>
       </div>
     ))}
-    {colors.map(token => (
-      <div class="Token-pill" style={`--x:${token.x};--y:${token.y};--width:${token.width};--color:${token.color}`}>
-        {token.foreground ? <span class="Token-foreground">Aa</span> : <span class="Token-swatch" />}
-        <span>{token.name}</span>
+    {[662, 776, 890].map((y, index) => (
+      <div class="Token-color-row" style={`--y:${y};--row:${index};--slide-from:${index === 1 ? 16 : -16}px`}>
+        {colors.filter(token => token.y === y).map(token => (
+          <div class="Token-pill" style={`--x:${token.x};--width:${token.width};--color:${token.color}`}>
+            {token.foreground ? <span class="Token-foreground">Aa</span> : <span class="Token-swatch" />}
+            <span>{token.name}</span>
+          </div>
+        ))}
       </div>
     ))}
     {radii.map(token => (
@@ -134,7 +138,14 @@ const spacing = [
     white-space: nowrap;
   }
   .Token-type strong { display: block; font-size: calc(36 * var(--u)); font-weight: 600; }
+  .Token-color-row {
+    position: absolute;
+    top: calc(var(--y) * var(--u));
+    width: 100%;
+    height: calc(90 * var(--u));
+  }
   .Token-pill {
+    top: 0;
     display: flex;
     align-items: center;
     gap: calc(16 * var(--u));
@@ -213,6 +224,13 @@ const spacing = [
       cardRise 800ms cubic-bezier(0.22, 1, 0.36, 1) both,
       cardSpread 900ms cubic-bezier(0.3, 0.7, 0.2, 1) calc(650ms + (4 - var(--i)) * 60ms) both;
   }
+  .Primer-token-block[data-state="ready"] .Token-color-row {
+    animation: colorRowReveal 700ms cubic-bezier(0.22, 1, 0.36, 1) calc(100ms + var(--row) * 120ms) both;
+  }
+  @keyframes colorRowReveal {
+    from { opacity: 0; translate: var(--slide-from) 0; }
+    to { opacity: 1; translate: 0 0; }
+  }
   @keyframes cardRise {
     from { opacity: 0; translate: 0 calc(240 * var(--u)); }
     to { opacity: 1; translate: 0 0; }
@@ -224,6 +242,7 @@ const spacing = [
   @keyframes tokenFade { from { opacity: 0; } to { opacity: 1; } }
   @keyframes tokenSlide { from { transform: translateY(64px); } to { transform: none; } }
   @media (prefers-reduced-motion: reduce) {
-    .Primer-token-block[data-state], .Primer-token-block[data-state] .Token-card { animation: none; transform: none; }
+    .Primer-token-block[data-state], .Primer-token-block[data-state] .Token-card,
+    .Primer-token-block[data-state] .Token-color-row { animation: none; transform: none; }
   }
 </style>

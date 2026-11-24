@@ -58,6 +58,8 @@ Primer's token artwork is HTML/CSS with individually targetable typography cards
 color pills, radius samples and spacing bars. It scales from a 1623 × 1579
 reference canvas and combines with `imageOverlay` and `imageOverlayAlt`.
 The artwork reveals when the overlay has loaded; the dark overlay follows by 180ms.
+Color rows fade in with a short horizontal slide from the left, right, then left,
+staggered from top to bottom.
 Visible images load first; after the page loads, offscreen images
 preload one at a time during browser idle periods (with a timer fallback).
 Reduced-motion preferences disable the transition. Without JavaScript, native
