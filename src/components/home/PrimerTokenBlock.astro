@@ -82,6 +82,8 @@ const spacing = [
 
 <style>
   .Primer-token-block {
+    --card-spread-start: 650ms;
+    --details-start: calc(var(--card-spread-start) + 100ms);
     position: absolute;
     top: 40px;
     left: 40px;
@@ -222,10 +224,20 @@ const spacing = [
   .Primer-token-block[data-state="ready"] .Token-card {
     animation:
       cardRise 800ms cubic-bezier(0.22, 1, 0.36, 1) both,
-      cardSpread 900ms cubic-bezier(0.3, 0.7, 0.2, 1) calc(650ms + (4 - var(--i)) * 60ms) both;
+      cardSpread 900ms cubic-bezier(0.3, 0.7, 0.2, 1) calc(var(--card-spread-start) + (4 - var(--i)) * 60ms) both;
   }
   .Primer-token-block[data-state="ready"] .Token-color-row {
-    animation: colorRowReveal 700ms cubic-bezier(0.22, 1, 0.36, 1) calc(100ms + var(--row) * 120ms) both;
+    animation: colorRowReveal 700ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--details-start) + var(--row) * 120ms) both;
+  }
+  .Primer-token-block[data-state="ready"] .Token-radius {
+    animation: detailReveal 700ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--details-start) + 360ms) both;
+  }
+  .Primer-token-block[data-state="ready"] .Token-spacing {
+    animation: detailReveal 700ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--details-start) + 480ms) both;
+  }
+  @keyframes detailReveal {
+    from { opacity: 0; translate: 0 12px; }
+    to { opacity: 1; translate: 0 0; }
   }
   @keyframes colorRowReveal {
     from { opacity: 0; translate: var(--slide-from) 0; }
@@ -244,5 +256,7 @@ const spacing = [
   @media (prefers-reduced-motion: reduce) {
     .Primer-token-block[data-state], .Primer-token-block[data-state] .Token-card,
     .Primer-token-block[data-state] .Token-color-row { animation: none; transform: none; }
+    .Primer-token-block[data-state] .Token-radius,
+    .Primer-token-block[data-state] .Token-spacing { animation: none; }
   }
 </style>

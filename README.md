@@ -59,7 +59,8 @@ color pills, radius samples and spacing bars. It scales from a 1623 × 1579
 reference canvas and combines with `imageOverlay` and `imageOverlayAlt`.
 The artwork reveals when the overlay has loaded; the dark overlay follows by 180ms.
 Color rows fade in with a short horizontal slide from the left, right, then left,
-staggered from top to bottom.
+starting 100ms after the typography cards begin spreading and staggered from top
+to bottom. Radius samples and spacing bars follow with a short upward fade-in.
 Visible images load first; after the page loads, offscreen images
 preload one at a time during browser idle periods (with a timer fallback).
 Reduced-motion preferences disable the transition. Without JavaScript, native
