@@ -323,8 +323,17 @@ const deferredOverlay = overlayOptions ? await getImage(overlayOptions) : undefi
     top: 10.5%;
     left: calc(100% * 2724 / 2600 * 0.433);
     z-index: 1;
-    animation-delay: 1600ms;
+    animation-delay: 1000ms;
     animation-fill-mode: backwards;
+  }
+  .project-primer .Project-image img.Project-image-overlay[data-state="ready"] {
+    animation-name: primerOverlayFade, projectImageSlide;
+    animation-timing-function: linear, cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @keyframes primerOverlayFade {
+    from { opacity: 0; animation-timing-function: ease-out; }
+    50% { opacity: 0.8; animation-timing-function: linear; }
+    to { opacity: 1; }
   }
   .Project-details[data-animating] { overflow: clip; }
   summary {
