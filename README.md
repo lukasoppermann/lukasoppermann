@@ -60,7 +60,7 @@ reference canvas and combines with `imageOverlay` and `imageOverlayAlt`.
 The artwork reveals when the overlay has loaded. Typography cards fade in and rise
 16px without additional movement from the artwork container. The fan-out starts
 150ms into the rise, overlapping the two motions. The dark overlay
-starts after 1000ms, while the left-side reveal is underway. It reaches 80%
+starts after 700ms, while the left-side reveal is underway. It reaches 80%
 opacity halfway through its fade, then completes the remaining 20% gradually.
 Color rows fade in with a short horizontal slide from the left, right, then left,
 starting 100ms after the typography cards begin spreading and staggered from top
