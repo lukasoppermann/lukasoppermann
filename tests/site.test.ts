@@ -130,6 +130,36 @@ describe('Site behavior', () => {
     }
   }, 30_000);
 
+  it.each([390, 1024, 1280])('positions every case study image in display order at %ipx', async width => {
+    await page.setViewport({ width, height: 900 });
+    await page.goto(`${url}/`);
+    const positions = await page.$$eval('.Selected-work .Project', projects =>
+      projects.map(project => {
+        const summary = project.querySelector('.Project-summary')!.getBoundingClientRect();
+        const visual = project.querySelector('.Project-visual')!.getBoundingClientRect();
+        return {
+          imageLeft: visual.right <= summary.left,
+          imageRight: visual.left >= summary.right,
+          imageBelow: visual.top >= summary.bottom,
+          summaryWidth: summary.width,
+          visualWidth: visual.width,
+        };
+      }));
+    expect(positions.length).toBeGreaterThan(1);
+    for (const [index, position] of positions.entries()) {
+      if (width >= 1024) {
+        expect(position.imageLeft, `Case study ${index + 1}`).toBe(index % 2 === 0);
+        expect(position.imageRight, `Case study ${index + 1}`).toBe(index % 2 === 1);
+        expect(position.visualWidth, `Case study ${index + 1}: equal columns`)
+          .toBeCloseTo(position.summaryWidth, 1);
+        expect(position.visualWidth, `Case study ${index + 1}: consistent image width`)
+          .toBeCloseTo(positions[0].visualWidth, 1);
+      } else {
+        expect(position.imageBelow, `Case study ${index + 1}`).toBe(true);
+      }
+    }
+  });
+
   it('opens an article from the overview, follows a related article and returns', async () => {
     await page.goto(`${url}/articles/`);
     const articles = await page.$$eval('main .post-preview', links => links
