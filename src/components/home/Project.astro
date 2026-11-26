@@ -485,16 +485,16 @@ const deferredOverlay = overlayOptions ? await getImage(overlayOptions) : undefi
   }
   @media (--min-desktop) {
     .Project {
-      grid-template-columns: 5fr 6fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       column-gap: clamp(40px, 5vw, 80px);
       align-items: center;
       padding-block: 56px 20px;
     }
-    .Project:nth-child(even) .Project-summary {
+    .Project:nth-of-type(odd) .Project-summary {
       grid-column: 2;
       grid-row: 1;
     }
-    .Project:nth-child(even) .Project-visual {
+    .Project:nth-of-type(odd) .Project-visual {
       grid-column: 1;
       grid-row: 1;
     }

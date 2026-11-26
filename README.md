@@ -37,7 +37,10 @@ This repository includes my personal portfolio website built with Astro.
 ### Homepage project summaries
 
 Projects in `src/content/projects/` appear in filename order under Selected work,
-before the resume. Each project's frontmatter includes `challenge`, `role`, and
+before the resume. At desktop widths (1024px and above), project images alternate
+left, right, left, right, starting on the left, in equal-width columns so image
+size stays consistent on either side. Smaller screens keep each summary
+above its image. Each project's frontmatter includes `challenge`, `role`, and
 `outcome` summaries that remain visible on mobile and desktop. Keep these short
 and use only supported outcome claims.
 
