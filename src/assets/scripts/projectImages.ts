@@ -6,10 +6,19 @@ export function initProjectImages() {
   const loaded = new Set<HTMLImageElement>();
   const requests = new Map<HTMLImageElement, Promise<void>>();
   const revealThreshold = 0.35;
+  for (const artwork of document.querySelectorAll<HTMLElement>("[data-project-artwork]")) {
+    artwork.dataset.state = "pending";
+  }
 
   const reveal = (image: HTMLImageElement) => {
-    if (loaded.has(image) && visible.has(image)) {
-      image.dataset.state = "ready";
+    const layers = images.filter(layer => layer.parentElement === image.parentElement);
+    if (layers.every(layer => visible.has(layer) && (loaded.has(layer) || layer.dataset.state === "error"))) {
+      for (const layer of layers) {
+        if (loaded.has(layer)) layer.dataset.state = "ready";
+      }
+      for (const artwork of image.parentElement!.querySelectorAll<HTMLElement>("[data-project-artwork]")) {
+        artwork.dataset.state = "ready";
+      }
       observer?.unobserve(image.parentElement!);
     }
   };
@@ -31,6 +40,7 @@ export function initProjectImages() {
         } else {
           image.dataset.state = "error";
           console.warn("Could not load project image:", image.dataset.src);
+          reveal(image);
         }
         resolve();
       };
@@ -48,19 +58,20 @@ export function initProjectImages() {
   const observer = "IntersectionObserver" in window
     ? new IntersectionObserver(entries => {
       for (const entry of entries) {
-        const image = images.find(image => image.parentElement === entry.target);
-        if (!image) continue;
-        if (entry.isIntersecting) {
-          void load(image, "high");
-          if (entry.intersectionRatio >= revealThreshold) {
-            visible.add(image);
-            reveal(image);
+        const layers = images.filter(image => image.parentElement === entry.target);
+        for (const image of layers) {
+          if (entry.isIntersecting) {
+            void load(image, "high");
+            if (entry.intersectionRatio >= revealThreshold) {
+              visible.add(image);
+            } else {
+              visible.delete(image);
+            }
           } else {
             visible.delete(image);
           }
-        } else {
-          visible.delete(image);
         }
+        for (const image of layers) reveal(image);
       }
     }, { threshold: revealThreshold })
     : undefined;
